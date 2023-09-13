@@ -1,5 +1,10 @@
 # FurnitureFinder
 
+Run the following command initially to get all of the needed dependencies.
+```
+npm install
+```
+
 To run the project, navigate to the directory and run one of the following npm commands.
 ```
 - cd FurnitureFinder

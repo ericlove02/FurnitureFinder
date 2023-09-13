@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button } from 'react-native';
 
-const InitialInputScreen = ({ navigation }) => {
+const VibeInput = ({ navigation }) => {
     const [vibe, setVibe] = useState('');
 
     const handleVibeInput = (text) => {
@@ -24,4 +24,4 @@ const InitialInputScreen = ({ navigation }) => {
     );
 };
 
-export default InitialInputScreen;
+export default VibeInput;

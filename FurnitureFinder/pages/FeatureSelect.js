@@ -8,11 +8,14 @@ const FeatureSelect = ({ navigation, route }) => {
         <View>
             <Text>Welcome to Furniture Finder</Text>
             <Text>Your Vibe: {vibe}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Feature1')}>
-                <Text>Feature 1</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('ARSearch', { vibe: vibe })}>
+                <Text>ARSearch</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Feature2')}>
-                <Text>Feature 2</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('SearchByProduct', { vibe: vibe })}>
+                <Text>Search By Product</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('SearchByVibe', { vibe: vibe })}>
+                <Text>Search By Vibe</Text>
             </TouchableOpacity>
         </View>
     );

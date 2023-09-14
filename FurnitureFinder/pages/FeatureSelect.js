@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
 const FeatureSelect = ({ navigation, route }) => {
     const vibe = route.params.vibe;
@@ -8,15 +8,9 @@ const FeatureSelect = ({ navigation, route }) => {
         <View>
             <Text>Welcome to Furniture Finder</Text>
             <Text>Your Vibe: {vibe}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('ARSearch', { vibe: vibe })}>
-                <Text>ARSearch</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('SearchByProduct', { vibe: vibe })}>
-                <Text>Search By Product</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('SearchByVibe', { vibe: vibe })}>
-                <Text>Search By Vibe</Text>
-            </TouchableOpacity>
+            <Button title="AR Search" onPress={() => navigation.navigate('ARSearch', { vibe: vibe })} />
+            <Button title="Search By Product" onPress={() => navigation.navigate('SearchByProduct', { vibe: vibe })} />
+            <Button title="Search By Vibe" onPress={() => navigation.navigate('SearchByVibe', { vibe: vibe })} />
         </View>
     );
 };

@@ -1,48 +1,106 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
-import WebView from 'react-native-webview';
-import * as Permissions from 'expo-permissions';
+import {
+  ViroARScene,
+  ViroText,
+  ViroConstants,
+  ViroARSceneNavigator,
+  Viro3DObject,
+  ViroAmbientLight,
+  ViroSpotLight,
+  ViroARPlaneSelector,
+  ViroNode,
+  ViroQuad,
+  ViroAnimations,
+} from '@viro-community/react-viro';
 
-const ARSearch = ({ navigation, route }) => {
-  const vibe = route.params.vibe;
+const ARSearch = () => {
+  const [text, setText] = useState('Initializing AR...');
 
-  // Request camera permission
-  useEffect(() => {
-    (async () => {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      if (status !== 'granted') {
-        console.error('Camera permission not granted');
-      }
-    })();
-  }, []);
-
-  // AR.js HTML content to render in the WebView
-  const arJsHtml = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-        <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.0.8/aframe/build/aframe-ar.js"></script>
-      </head>
-      <body style="margin: 0; overflow: hidden;">
-        <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-          <a-box position="0 0 -1" color="tomato"></a-box>
-        </a-scene>
-      </body>
-    </html>
-  `;
+  function onInitialized(state, reason) {
+    console.log('guncelleme', state, reason);
+    if (state === ViroConstants.TRACKING_NORMAL) {
+      setText('AR Demo!');
+    } else if (state === ViroConstants.TRACKING_NONE) {
+      // Handle loss of tracking
+    }
+  }
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text>AR Search</Text>
-      <Text>Your Vibe: {vibe}</Text>
-      <WebView
-        style={{ flex: 1 }}
-        originWhitelist={['*']}
-        source={{ html: arJsHtml }}
+    <ViroARScene onTrackingUpdated={onInitialized}>
+      <ViroText
+        text={text}
+        scale={[0.5, 0.5, 0.5]}
+        position={[0, 0, -1]}
+        style={styles.arSearchText}
       />
-    </View>
+      <ViroAmbientLight color={"#aaaaaa"} />
+      <ViroARPlaneSelector>
+        <ViroNode position={[0, -.5, 0]} dragType="FixedToWorld" onDrag={() => { }} >
+
+          {/* Spotlight to cast light on the object and a shadow on the surface, see
+              the Viro documentation for more info on lights & shadows */}
+          <ViroSpotLight
+            innerAngle={5}
+            outerAngle={45}
+            direction={[0, -1, -.2]}
+            position={[0, 3, 0]}
+            color="#ffffff"
+            castsShadow={true}
+            influenceBitMask={2}
+            shadowMapSize={2048}
+            shadowNearZ={2}
+            shadowFarZ={5}
+            shadowOpacity={.7} />
+          <Viro3DObject
+            source={require('../test_files/emoji_smile.vrx')}
+            position={[0, .1, 0]}
+            scale={[.2, .2, .2]}
+            type="VRX"
+            lightReceivingBitMask={3}
+            shadowCastingBitMask={2}
+            transformBehaviors={['billboardY']}
+            resources={[require('../test_files/emoji_smile_diffuse.png'),
+            require('../test_files/emoji_smile_specular.png'),
+            require('../test_files/emoji_smile_normal.png')]} />
+          <ViroQuad
+            rotation={[-90, 0, 0]}
+            width={.5} height={.5}
+            arShadowReceiver={true}
+            lightReceivingBitMask={2} />
+        </ViroNode>
+      </ViroARPlaneSelector>
+      {/* <ViroNode position={[0, 0, -1]} dragType="FixedToWorld" onDrag={() => { }} >
+        <Viro3DObject
+          source={require('./emoji_smile.vrx')}
+          position={[0, .1, 0]}
+          scale={[.2, .2, .2]}
+          type="VRX"
+        />
+      </ViroNode> */}
+    </ViroARScene>
   );
 };
 
-export default ARSearch;
+export default () => {
+  return (
+    <ViroARSceneNavigator
+      autofocus={true}
+      initialScene={{
+        scene: ARSearch,
+      }}
+      style={styles.f1}
+    />
+  );
+};
+
+var styles = StyleSheet.create({
+  f1: { flex: 1 },
+  arSearchText: {
+    fontFamily: 'Arial',
+    fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});

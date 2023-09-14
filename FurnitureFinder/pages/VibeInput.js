@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, Image } from 'react-native';
 
 const VibeInput = ({ navigation }) => {
     const [vibe, setVibe] = useState('');
@@ -14,12 +14,13 @@ const VibeInput = ({ navigation }) => {
 
     return (
         <View>
+            <Image source={require("../assets/front-splash1.jpg")} style={{ width: 100, height: 100 }} />
             <TextInput
                 placeholder="Enter Vibe"
                 onChangeText={handleVibeInput}
                 value={vibe}
             />
-            <Button title="Continue" onPress={handleContinue} />
+            <Button title="Enter" onPress={handleContinue} />
         </View>
     );
 };

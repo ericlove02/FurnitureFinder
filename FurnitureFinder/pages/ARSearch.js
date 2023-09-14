@@ -12,13 +12,4 @@ const ARSearch = ({ navigation, route }) => {
   );
 };
 
-var styles = StyleSheet.create({
-  f1: { flex: 1 },
-  arSearchText: {
-    fontFamily: 'Arial',
-    fontSize: 30,
-    color: '#ffffff',
-    textAlignVertical: 'center',
-    textAlign: 'center',
-  },
-});
+export default ARSearch;

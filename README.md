@@ -13,4 +13,4 @@ npx expo start
 ```
 and you can connect to the project on your mobile device.
 
-To set up an android emulator follow (these)[https://docs.expo.dev/workflow/android-studio-emulator/] instructions or for an iOS emulator use XCode on mac.
+To set up an android emulator follow [these](https://docs.expo.dev/workflow/android-studio-emulator/) instructions or for an iOS emulator use XCode on mac.

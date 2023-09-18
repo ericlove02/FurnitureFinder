@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Image } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const VibeInput = ({ navigation }) => {
     const [vibe, setVibe] = useState('');
@@ -13,16 +14,57 @@ const VibeInput = ({ navigation }) => {
     };
 
     return (
-        <View>
-            <Image source={require("../assets/front-splash1.jpg")} style={{ width: 100, height: 100 }} />
-            <TextInput
-                placeholder="Enter Vibe"
-                onChangeText={handleVibeInput}
-                value={vibe}
-            />
-            <Button title="Enter" onPress={handleContinue} />
+        <View style={styles.container}>
+            <LinearGradient
+                colors={['#FFFFFF', '#E5E5E5']}
+                style={styles.background}
+            >
+                <Text style={styles.header}>Furniture Finder</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Type in your vibe"
+                        onChangeText={handleVibeInput}
+                        value={vibe}
+                    />
+                    <Button
+                        title="Get Started"
+                        onPress={handleContinue}
+                        color="white" // Set button text color to white
+                    />
+                </View>
+            </LinearGradient>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    background: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 20,
+    },
+    header: {
+        fontSize: 24,
+        color: 'black',
+        paddingTop: '20%',
+    },
+    inputContainer: {
+        alignItems: 'center',
+        paddingBottom: '25%',
+    },
+    input: {
+        width: '90%',
+        borderWidth: 1,
+        borderColor: 'black',
+        padding: 10,
+        marginBottom: 10,
+        borderRadius: 10, // Rounded input border
+    },
+});
 
 export default VibeInput;

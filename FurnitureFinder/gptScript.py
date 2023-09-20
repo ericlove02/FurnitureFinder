@@ -1,5 +1,4 @@
 import openai
-import json
 
 # Your API key
 openai.api_key = "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"

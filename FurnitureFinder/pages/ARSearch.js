@@ -1,56 +1,55 @@
-'use strict';
-
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import {
   ViroARScene,
   ViroText,
-  ViroMaterials,
-  ViroBox,
-  Viro3DObject,
-  ViroAmbientLight,
-  ViroSpotLight,
-  ViroARPlaneSelector,
-  ViroNode,
-  ViroAnimations,
-} from 'react-viro';
-var createReactClass = require('create-react-class');
-var HelloWorldSceneAR = createReactClass({
-  getInitialState() {
-    return {
-      text: "Initializing AR..."
-    };
-  },
+  ViroConstants,
+  ViroARSceneNavigator,
+} from '@viro-community/react-viro';
 
-  render: function () {
-    return (
-      <ViroARScene onTrackingInitialized={() => { this.setState({ text: "Hello World!" }) }}>
-        <ViroText text={this.state.text} scale={[.1, .1, .1]} height={1} width={4} position={[0, .5, -1]} style={styles.helloWorldTextStyle} />
+const HelloWorldSceneAR = () => {
+  const [text, setText] = useState('Initializing AR...');
 
-        <ViroAmbientLight color={"#aaaaaa"} />
-        <ViroSpotLight innerAngle={5} outerAngle={90} direction={[0, -1, -.2]} position={[0, 3, 1]} color="#ffffff" castsShadow={true} />
+  function onInitialized(state, reason) {
+    console.log('guncelleme', state, reason);
+    if (state === ViroConstants.TRACKING_NORMAL) {
+      setText('Hello World!');
+    } else if (state === ViroConstants.TRACKING_NONE) {
+      // Handle loss of tracking
+    }
+  }
 
-        <Viro3DObject
-          source={require('./res/emoji_smile/emoji_smile.vrx')}
-          position={[0, 0, -1]}
-          scale={[.2, .2, .2]}
-          type="VRX"
-          dragType="FixedDistance" onDrag={() => { }}
-        />
+  return (
+    <ViroARScene onTrackingUpdated={onInitialized}>
+      <ViroText
+        text={text}
+        scale={[0.5, 0.5, 0.5]}
+        position={[0, 0, -1]}
+        style={styles.helloWorldTextStyle}
+      />
+    </ViroARScene>
+  );
+};
 
-      </ViroARScene>
-    );
-  },
-});
+export default () => {
+  return (
+    <ViroARSceneNavigator
+      autofocus={true}
+      initialScene={{
+        scene: HelloWorldSceneAR,
+      }}
+      style={styles.f1}
+    />
+  );
+};
 
 var styles = StyleSheet.create({
+  f1: { flex: 1 },
   helloWorldTextStyle: {
     fontFamily: 'Arial',
-    fontSize: 50,
+    fontSize: 30,
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',
   },
 });
-
-module.exports = HelloWorldSceneAR;

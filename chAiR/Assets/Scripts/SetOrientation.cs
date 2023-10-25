@@ -5,12 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class SetOrientation : MonoBehaviour
 {
+    public bool isLandscape = false;
+
     // Set orientation for scene
     void Start()
     {
-        if (SceneManager.GetActiveScene().name == "ARScene") {
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-        } else {
+        if (isLandscape)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+        }
+        else
+        {
             Screen.orientation = ScreenOrientation.Portrait;
         }
     }

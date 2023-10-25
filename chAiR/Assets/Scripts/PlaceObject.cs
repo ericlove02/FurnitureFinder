@@ -3,11 +3,16 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.UI;
+using System;
 
 public class PlaceObject : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject prefab;
+    [SerializeField] private GameObject[] objPrefabs;
+    [SerializeField] private Image[] uiSprites;
+
+    private bool isDragging = false;
+    private Image selectedSprite;
 
     private ARRaycastManager aRRaycastManager;
     private ARPlaneManager aRPlaneManager;
@@ -17,6 +22,11 @@ public class PlaceObject : MonoBehaviour
     {
         aRRaycastManager = GetComponent<ARRaycastManager>();
         aRPlaneManager = GetComponent<ARPlaneManager>();
+        foreach (Image sprite in uiSprites)
+        {
+            sprite.gameObject.SetActive(false);
+
+        }
     }
 
     private void OnEnable()
@@ -24,37 +34,73 @@ public class PlaceObject : MonoBehaviour
         EnhancedTouch.TouchSimulation.Enable();
         EnhancedTouch.EnhancedTouchSupport.Enable();
         EnhancedTouch.Touch.onFingerDown += FingerDown;
+        EnhancedTouch.Touch.onFingerMove += FingerMove;
+        EnhancedTouch.Touch.onFingerUp += FingerUp;
     }
 
     private void OnDisable()
     {
-        EnhancedTouch.TouchSimulation.Enable();
+        EnhancedTouch.TouchSimulation.Disable();
         EnhancedTouch.EnhancedTouchSupport.Disable();
         EnhancedTouch.Touch.onFingerDown -= FingerDown;
+        EnhancedTouch.Touch.onFingerMove -= FingerMove;
+        EnhancedTouch.Touch.onFingerUp -= FingerUp;
     }
 
     private void FingerDown(EnhancedTouch.Finger finger)
     {
-        if (finger.index != 0) return;
+        if (isDragging) return;
 
-        if (aRRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+        foreach (Image uiSprite in uiSprites)
         {
-            foreach (ARRaycastHit hit in hits)
+            if (RectTransformUtility.RectangleContainsScreenPoint(uiSprite.rectTransform, finger.screenPosition))
             {
-                if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
+                isDragging = true;
+                selectedSprite = uiSprite;
+                uiSprite.transform.position = finger.screenPosition;
+                uiSprite.gameObject.SetActive(true);
+                break;
+            }
+        }
+    }
+
+    private void FingerMove(EnhancedTouch.Finger finger)
+    {
+        if (!isDragging) return;
+
+        if (selectedSprite != null)
+        {
+            selectedSprite.transform.position = finger.screenPosition;
+        }
+    }
+
+    private void FingerUp(EnhancedTouch.Finger finger)
+    {
+        if (!isDragging) return;
+
+        isDragging = false;
+
+        if (selectedSprite != null)
+        {
+            selectedSprite.gameObject.SetActive(false);
+            int selectedIndex = Array.IndexOf(uiSprites, selectedSprite);
+
+            if (selectedIndex >= 0 && selectedIndex < objPrefabs.Length)
+            {
+                if (aRRaycastManager.Raycast(finger.screenPosition, hits, TrackableType.PlaneWithinPolygon))
                 {
-                    Pose pose = hit.pose;
-                    GameObject obj = Instantiate(prefab, pose.position, pose.rotation);
-                    // rotate object to face camera when placed, bugging
-                    // Vector3 position = obj.transform.position;
-                    // position.y = 0f;
-                    // Vector3 cameraPos = Camera.main.transform.position;
-                    // cameraPos.y = 0f;
-                    // Vector3 dir = cameraPos - position;
-                    // Quaternion targetRot = Quaternion.LookRotation(dir);
-                    // obj.transform.rotation = targetRot;
+                    foreach (ARRaycastHit hit in hits)
+                    {
+                        if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
+                        {
+                            Pose pose = hit.pose;
+                            GameObject obj = Instantiate(objPrefabs[selectedIndex], pose.position, pose.rotation);
+                        }
+                    }
                 }
             }
+
+            selectedSprite = null;
         }
     }
 }

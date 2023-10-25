@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 68e46faed18cd4d47bc7f04ebc5f1725, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.04
+      value: 0.0015
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 68e46faed18cd4d47bc7f04ebc5f1725, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.04
+      value: 0.0015
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 68e46faed18cd4d47bc7f04ebc5f1725, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.04
+      value: 0.0015
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 68e46faed18cd4d47bc7f04ebc5f1725, type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,10 +66,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 68e46faed18cd4d47bc7f04ebc5f1725, type: 3}
       propertyPath: m_Name
-      value: IKEA-klubbo_coffe_table-3D
+      value: Default Table
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1535982602085119088, guid: 68e46faed18cd4d47bc7f04ebc5f1725, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68e46faed18cd4d47bc7f04ebc5f1725, type: 3}

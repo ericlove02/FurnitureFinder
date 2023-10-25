@@ -41,8 +41,19 @@ public class PlaceObject : MonoBehaviour
         {
             foreach (ARRaycastHit hit in hits)
             {
-                Pose pose = hit.pose;
-                GameObject obj = Instantiate(prefab, pose.position, pose.rotation);
+                if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
+                {
+                    Pose pose = hit.pose;
+                    GameObject obj = Instantiate(prefab, pose.position, pose.rotation);
+                    // rotate object to face camera when placed, bugging
+                    // Vector3 position = obj.transform.position;
+                    // position.y = 0f;
+                    // Vector3 cameraPos = Camera.main.transform.position;
+                    // cameraPos.y = 0f;
+                    // Vector3 dir = cameraPos - position;
+                    // Quaternion targetRot = Quaternion.LookRotation(dir);
+                    // obj.transform.rotation = targetRot;
+                }
             }
         }
     }

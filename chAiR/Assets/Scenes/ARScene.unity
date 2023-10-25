@@ -2156,7 +2156,7 @@ MonoBehaviour:
   - {fileID: 6020908404802444175, guid: 1f241cd4527994f48b1bfa2d6e063f87, type: 3}
   - {fileID: 7492412711633808758, guid: 3e87412641d9f2446aa1e8fd5accac8b, type: 3}
   - {fileID: 8388894865236877307, guid: 59da6fafc2d461440a512feaf9f4720f, type: 3}
-  - {fileID: 6047870438106527644, guid: 48bd07a03e03ef14f91b7d4b4c0ea37e, type: 3}
+  - {fileID: 2461241736214672074, guid: ec50e91ca6a14004992c06873be6dbd8, type: 3}
   uiSprites:
   - {fileID: 1191621376}
   - {fileID: 879239908}

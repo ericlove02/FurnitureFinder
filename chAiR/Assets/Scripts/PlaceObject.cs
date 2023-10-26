@@ -11,8 +11,14 @@ public class PlaceObject : MonoBehaviour
     [SerializeField] private GameObject[] objPrefabs;
     [SerializeField] private Image[] uiSprites;
 
+    [SerializeField] private Button deleteButton;
+    [SerializeField] private Button viewModelButton;
+    [SerializeField] private Button moveButton;
+    [SerializeField] private Button rotateButton;
+
     private bool isDragging = false;
     private Image selectedSprite;
+    private GameObject selectedObject;
 
     private ARRaycastManager aRRaycastManager;
     private ARPlaneManager aRPlaneManager;
@@ -25,7 +31,24 @@ public class PlaceObject : MonoBehaviour
         foreach (Image sprite in uiSprites)
         {
             sprite.gameObject.SetActive(false);
+        }
+        deleteButton.gameObject.SetActive(false);
+        deleteButton.onClick.AddListener(DeleteObject);
+        viewModelButton.gameObject.SetActive(false);
+        moveButton.gameObject.SetActive(false);
+        rotateButton.gameObject.SetActive(false);
+    }
 
+    private void Update()
+    {
+        if (selectedObject != null)
+        {
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(selectedObject.transform.position);
+
+            deleteButton.transform.position = screenPos + new Vector3(0, 100, 0);
+            viewModelButton.transform.position = screenPos + new Vector3(200, 100, 0);
+            moveButton.transform.position = screenPos + new Vector3(0, -100, 0);
+            rotateButton.transform.position = screenPos + new Vector3(200, -100, 0);
         }
     }
 
@@ -78,6 +101,31 @@ public class PlaceObject : MonoBehaviour
     {
         if (!isDragging) return;
 
+        if (selectedObject == null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(finger.screenPosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject hitObject = hit.transform.gameObject;
+                // if (Array.Exists(objPrefabs, prefab => prefab == hitObject))
+                // {
+                selectedObject = hitObject;
+
+                deleteButton.gameObject.SetActive(true);
+                viewModelButton.gameObject.SetActive(true);
+                moveButton.gameObject.SetActive(true);
+                rotateButton.gameObject.SetActive(true);
+                // }
+            }
+        }
+        else
+        {
+            DeselectObject();
+            return;
+        }
+
         isDragging = false;
 
         if (selectedSprite != null)
@@ -101,6 +149,25 @@ public class PlaceObject : MonoBehaviour
             }
             selectedSprite.rectTransform.localPosition = Vector3.zero;
             selectedSprite = null;
+        }
+    }
+
+    private void DeselectObject()
+    {
+        deleteButton.gameObject.SetActive(false);
+        viewModelButton.gameObject.SetActive(false);
+        moveButton.gameObject.SetActive(false);
+        rotateButton.gameObject.SetActive(false);
+
+        selectedObject = null;
+    }
+
+    private void DeleteObject()
+    {
+        if (selectedObject != null)
+        {
+            Destroy(selectedObject);
+            DeselectObject();
         }
     }
 }

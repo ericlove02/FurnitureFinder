@@ -99,7 +99,7 @@ public class PlaceObject : MonoBehaviour
                     }
                 }
             }
-
+            selectedSprite.rectTransform.localPosition = Vector3.zero;
             selectedSprite = null;
         }
     }

@@ -94,7 +94,7 @@ public class PlaceObject : MonoBehaviour
                         if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
                         {
                             Pose pose = hit.pose;
-                            GameObject obj = Instantiate(objPrefabs[selectedIndex], pose.position, pose.rotation);
+                            GameObject obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
                         }
                     }
                 }

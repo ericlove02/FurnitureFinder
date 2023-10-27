@@ -5,7 +5,7 @@ using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
 using System;
-// using TMPro;
+using TMPro;
 
 public class PlaceObject : MonoBehaviour
 {
@@ -27,6 +27,8 @@ public class PlaceObject : MonoBehaviour
     private bool isDragging = false;
     // state for user moving ar objects
     private bool isMoveMode = false;
+    // state for user rotating ar object
+    private bool isRotateMode = false;
     private Image selectedSprite;
     private GameObject selectedObject;
 
@@ -35,7 +37,11 @@ public class PlaceObject : MonoBehaviour
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
     private List<GameObject> instantiatedModels = new List<GameObject>();
     private Vector3 objPositionBeforeMove;
-    // [SerializeField] TMP_Text debugText;
+    // for rotation
+    private Quaternion objRotationBefore;
+    private Vector2 initialFingerPosition;
+
+    [SerializeField] TMP_Text debugText;
 
     private void Awake()
     {
@@ -104,6 +110,10 @@ public class PlaceObject : MonoBehaviour
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(button.GetComponent<RectTransform>(), finger.screenPosition))
             {
+                if (uiButtonAudioSource != null)
+                {
+                    uiButtonAudioSource.Play();
+                }
                 if (button == deleteButton)
                 {
                     DeleteObject();
@@ -111,10 +121,22 @@ public class PlaceObject : MonoBehaviour
                 else if (button == moveButton)
                 {
                     isMoveMode = true;
+                    objPositionBeforeMove = selectedObject.transform.position;
                     // hide buttons in move mode
                     deleteButton.gameObject.SetActive(false);
                     viewModelButton.gameObject.SetActive(false);
                     rotateButton.gameObject.SetActive(false);
+                    regenButton.gameObject.SetActive(false);
+                }
+                else if (button == rotateButton)
+                {
+                    isRotateMode = true;
+                    objRotationBefore = selectedObject.transform.rotation;
+                    initialFingerPosition = finger.screenPosition;
+                    // hide buttons in rotate mode
+                    deleteButton.gameObject.SetActive(false);
+                    viewModelButton.gameObject.SetActive(false);
+                    moveButton.gameObject.SetActive(false);
                     regenButton.gameObject.SetActive(false);
                 }
                 return;
@@ -136,7 +158,6 @@ public class PlaceObject : MonoBehaviour
                         selectFurnitureAudioSource.Play();
                     }
                     selectedObject = hitObject;
-                    objPositionBeforeMove = selectedObject.transform.position;
 
                     deleteButton.gameObject.SetActive(true);
                     viewModelButton.gameObject.SetActive(true);
@@ -155,9 +176,9 @@ public class PlaceObject : MonoBehaviour
 
     private void FingerMove(EnhancedTouch.Finger finger)
     {
-        if (!isDragging && !isMoveMode) return;
+        if (!isDragging && !isMoveMode && !isRotateMode) return;
 
-        if (selectedSprite != null && !isMoveMode)
+        if (selectedSprite != null && !isMoveMode && !isRotateMode)
         {
             selectedSprite.transform.position = finger.screenPosition;
         }
@@ -175,11 +196,19 @@ public class PlaceObject : MonoBehaviour
                 }
             }
         }
+
+        if (isRotateMode)
+        {
+            Vector2 delta = finger.screenPosition - initialFingerPosition;
+            float rotationAngle = delta.x * -0.5f;
+
+            selectedObject.transform.rotation = objRotationBefore * Quaternion.Euler(0, rotationAngle, 0);
+        }
     }
 
     private void FingerUp(EnhancedTouch.Finger finger)
     {
-        if (!isDragging && !isMoveMode) return;
+        if (!isDragging && !isMoveMode && !isRotateMode) return;
 
         isDragging = false;
 
@@ -242,6 +271,18 @@ public class PlaceObject : MonoBehaviour
             rotateButton.gameObject.SetActive(true);
             regenButton.gameObject.SetActive(true);
         }
+        else if (isRotateMode)
+        {
+            isRotateMode = false;
+            deleteButton.gameObject.SetActive(true);
+            viewModelButton.gameObject.SetActive(true);
+            moveButton.gameObject.SetActive(true);
+            regenButton.gameObject.SetActive(true);
+            if (dropFurnitureAudioSource != null)
+            {
+                dropFurnitureAudioSource.Play();
+            }
+        }
     }
 
     private void DeselectObject()
@@ -259,10 +300,6 @@ public class PlaceObject : MonoBehaviour
     {
         if (selectedObject != null)
         {
-            if (uiButtonAudioSource != null)
-            {
-                uiButtonAudioSource.Play();
-            }
             Destroy(selectedObject);
             DeselectObject();
         }

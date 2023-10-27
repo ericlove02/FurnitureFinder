@@ -3423,6 +3423,7 @@ MonoBehaviour:
   uiButtonAudioSource: {fileID: 651380848}
   dropFurnitureAudioSource: {fileID: 522674338}
   errorAudio: {fileID: 1732570099}
+  debugText: {fileID: 1324095226}
 --- !u!1 &2136955949
 GameObject:
   m_ObjectHideFlags: 0

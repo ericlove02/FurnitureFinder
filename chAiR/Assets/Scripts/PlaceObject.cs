@@ -5,6 +5,7 @@ using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
 using System;
+// using TMPro;
 
 public class PlaceObject : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class PlaceObject : MonoBehaviour
     [SerializeField] private Button moveButton;
     [SerializeField] private Button rotateButton;
 
+    [SerializeField] private AudioSource furnitureAudioSource;
+    [SerializeField] private AudioSource uiButtonAudioSource;
+
     private bool isDragging = false;
     private Image selectedSprite;
     private GameObject selectedObject;
@@ -23,6 +27,8 @@ public class PlaceObject : MonoBehaviour
     private ARRaycastManager aRRaycastManager;
     private ARPlaneManager aRPlaneManager;
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    private List<GameObject> instantiatedModels = new List<GameObject>();
+    // [SerializeField] TMP_Text debugText;
 
     private void Awake()
     {
@@ -33,7 +39,6 @@ public class PlaceObject : MonoBehaviour
             sprite.gameObject.SetActive(false);
         }
         deleteButton.gameObject.SetActive(false);
-        deleteButton.onClick.AddListener(DeleteObject);
         viewModelButton.gameObject.SetActive(false);
         moveButton.gameObject.SetActive(false);
         rotateButton.gameObject.SetActive(false);
@@ -45,10 +50,10 @@ public class PlaceObject : MonoBehaviour
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(selectedObject.transform.position);
 
-            deleteButton.transform.position = screenPos + new Vector3(0, 100, 0);
-            viewModelButton.transform.position = screenPos + new Vector3(200, 100, 0);
-            moveButton.transform.position = screenPos + new Vector3(0, -100, 0);
-            rotateButton.transform.position = screenPos + new Vector3(200, -100, 0);
+            deleteButton.transform.position = screenPos + new Vector3(0, 200, 0);
+            viewModelButton.transform.position = screenPos + new Vector3(200, 200, 0);
+            moveButton.transform.position = screenPos + new Vector3(0, 0, 0);
+            rotateButton.transform.position = screenPos + new Vector3(200, 0, 0);
         }
     }
 
@@ -85,6 +90,47 @@ public class PlaceObject : MonoBehaviour
                 break;
             }
         }
+
+        foreach (Button button in new Button[] { deleteButton, viewModelButton, moveButton, rotateButton })
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(button.GetComponent<RectTransform>(), finger.screenPosition))
+            {
+                if (button == deleteButton)
+                {
+                    DeleteObject();
+                }
+                return;
+            }
+        }
+
+        if (selectedObject == null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(finger.screenPosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject hitObject = hit.transform.gameObject;
+                if (instantiatedModels.Contains(hitObject))
+                {
+                    if (furnitureAudioSource != null)
+                    {
+                        furnitureAudioSource.Play();
+                    }
+                    selectedObject = hitObject;
+
+                    deleteButton.gameObject.SetActive(true);
+                    viewModelButton.gameObject.SetActive(true);
+                    moveButton.gameObject.SetActive(true);
+                    rotateButton.gameObject.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            DeselectObject();
+            return;
+        }
     }
 
     private void FingerMove(EnhancedTouch.Finger finger)
@@ -100,31 +146,6 @@ public class PlaceObject : MonoBehaviour
     private void FingerUp(EnhancedTouch.Finger finger)
     {
         if (!isDragging) return;
-
-        if (selectedObject == null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(finger.screenPosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                GameObject hitObject = hit.transform.gameObject;
-                // if (Array.Exists(objPrefabs, prefab => prefab == hitObject))
-                // {
-                selectedObject = hitObject;
-
-                deleteButton.gameObject.SetActive(true);
-                viewModelButton.gameObject.SetActive(true);
-                moveButton.gameObject.SetActive(true);
-                rotateButton.gameObject.SetActive(true);
-                // }
-            }
-        }
-        else
-        {
-            DeselectObject();
-            return;
-        }
 
         isDragging = false;
 
@@ -143,6 +164,7 @@ public class PlaceObject : MonoBehaviour
                         {
                             Pose pose = hit.pose;
                             GameObject obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                            instantiatedModels.Add(obj);
                         }
                     }
                 }
@@ -166,6 +188,10 @@ public class PlaceObject : MonoBehaviour
     {
         if (selectedObject != null)
         {
+            if (uiButtonAudioSource != null)
+            {
+                uiButtonAudioSource.Play();
+            }
             Destroy(selectedObject);
             DeselectObject();
         }

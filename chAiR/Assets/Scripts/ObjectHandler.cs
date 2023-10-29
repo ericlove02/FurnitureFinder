@@ -6,8 +6,9 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using Random = UnityEngine.Random;
 
-public class PlaceObject : MonoBehaviour
+public class ObjectHandler : MonoBehaviour
 {
     [SerializeField] private GameObject[] objPrefabs;
     [SerializeField] private Image[] uiSprites;
@@ -41,6 +42,14 @@ public class PlaceObject : MonoBehaviour
     private Quaternion objRotationBefore;
     private Vector2 initialFingerPosition;
 
+    private string selectedVibe;
+
+    // array to hold available prefab options
+    // we will store all of the indices of the prefabs to the db and use that to retrieve the correct
+    // prefab for the piece of furniture
+    public GameObject[] furniturePrefabs;
+    private int selectedPrefabIndex = -1;
+
     [SerializeField] TMP_Text debugText;
 
     private void Awake()
@@ -56,10 +65,14 @@ public class PlaceObject : MonoBehaviour
         moveButton.gameObject.SetActive(false);
         rotateButton.gameObject.SetActive(false);
         regenButton.gameObject.SetActive(false);
+
+        // retrive stored vibe or if not set, vibeError
+        selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
     }
 
     private void Update()
     {
+        // if a furn obj is select, move ui elements to follow on each frame update
         if (selectedObject != null)
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(selectedObject.transform.position);
@@ -69,6 +82,17 @@ public class PlaceObject : MonoBehaviour
             moveButton.transform.position = screenPos + new Vector3(0, 0, 0);
             rotateButton.transform.position = screenPos + new Vector3(200, 0, 0);
             regenButton.transform.position = screenPos + new Vector3(100, 0, 0);
+        }
+        else
+        {
+            // not object selected, move ui off screen 
+            Vector3 offScreenPosition = new Vector3(-1000, -1000, 0);
+
+            deleteButton.transform.position = offScreenPosition;
+            viewModelButton.transform.position = offScreenPosition;
+            moveButton.transform.position = offScreenPosition;
+            rotateButton.transform.position = offScreenPosition;
+            regenButton.transform.position = offScreenPosition;
         }
     }
 
@@ -94,6 +118,7 @@ public class PlaceObject : MonoBehaviour
     {
         if (isDragging) return;
 
+        // selecting a default drag sprite
         foreach (Image uiSprite in uiSprites)
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(uiSprite.rectTransform, finger.screenPosition))
@@ -105,7 +130,7 @@ public class PlaceObject : MonoBehaviour
                 break;
             }
         }
-
+        // selecting a ui button
         foreach (Button button in new Button[] { deleteButton, viewModelButton, moveButton, rotateButton, regenButton })
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(button.GetComponent<RectTransform>(), finger.screenPosition))
@@ -139,10 +164,31 @@ public class PlaceObject : MonoBehaviour
                     moveButton.gameObject.SetActive(false);
                     regenButton.gameObject.SetActive(false);
                 }
+                else if (button == regenButton)
+                {
+                    if (selectedObject != null)
+                    {
+                        int randomIndex;
+                        do
+                        {
+                            // get a model different from current one
+                            randomIndex = Random.Range(0, furniturePrefabs.Length);
+                        } while (randomIndex == selectedPrefabIndex);
+                        selectedPrefabIndex = randomIndex;
+
+                        // instantiate the new prefab in the place of the old one, destroy old one
+                        GameObject newPrefab = furniturePrefabs[randomIndex];
+                        Vector3 position = selectedObject.transform.position;
+                        Quaternion rotation = selectedObject.transform.rotation;
+                        Destroy(selectedObject);
+                        selectedObject = Instantiate(newPrefab, position, rotation);
+                        instantiatedModels.Add(selectedObject);
+                    }
+                }
                 return;
             }
         }
-
+        // selecting a furniture object
         if (selectedObject == null)
         {
             Ray ray = Camera.main.ScreenPointToRay(finger.screenPosition);
@@ -178,11 +224,13 @@ public class PlaceObject : MonoBehaviour
     {
         if (!isDragging && !isMoveMode && !isRotateMode) return;
 
+        // dragging a default ui sprite
         if (selectedSprite != null && !isMoveMode && !isRotateMode)
         {
             selectedSprite.transform.position = finger.screenPosition;
         }
 
+        // dragging a furniture object
         if (isMoveMode)
         {
             if (aRRaycastManager.Raycast(finger.screenPosition, hits, TrackableType.PlaneWithinPolygon))
@@ -197,6 +245,7 @@ public class PlaceObject : MonoBehaviour
             }
         }
 
+        // rotating a furniture object
         if (isRotateMode)
         {
             Vector2 delta = finger.screenPosition - initialFingerPosition;
@@ -212,6 +261,7 @@ public class PlaceObject : MonoBehaviour
 
         isDragging = false;
 
+        // placing the default sprite and converting to a furniture object
         if (selectedSprite != null && !isMoveMode)
         {
             selectedSprite.gameObject.SetActive(false);
@@ -219,6 +269,7 @@ public class PlaceObject : MonoBehaviour
 
             if (selectedIndex >= 0 && selectedIndex < objPrefabs.Length)
             {
+                // ui sprite was dropped on an existing ar plane
                 if (aRRaycastManager.Raycast(finger.screenPosition, hits, TrackableType.PlaneWithinPolygon))
                 {
                     foreach (ARRaycastHit hit in hits)
@@ -226,8 +277,21 @@ public class PlaceObject : MonoBehaviour
                         if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
                         {
                             Pose pose = hit.pose;
-                            GameObject obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+
+                            // temp for db and regen test
+                            // if placed object is sofa dont place a filler, place real object
+                            GameObject obj;
+                            if (selectedIndex == 0)
+                            {
+                                GameObject randomPrefab = furniturePrefabs[Random.Range(0, furniturePrefabs.Length)];
+                                obj = Instantiate(randomPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                            }
+                            else
+                            {
+                                obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                            }
                             instantiatedModels.Add(obj);
+
                             if (dropFurnitureAudioSource != null)
                             {
                                 dropFurnitureAudioSource.Play();
@@ -235,14 +299,22 @@ public class PlaceObject : MonoBehaviour
                         }
                     }
                 }
+                else
+                {
+                    if (errorAudio != null)
+                    {
+                        errorAudio.Play();
+                    }
+                }
             }
             selectedSprite.rectTransform.localPosition = Vector3.zero;
             selectedSprite = null;
         }
+        // object placed after being dragging in move mode
         else if (isMoveMode)
         {
             isMoveMode = false;
-
+            // check that is was dropped on a valid ar plane
             if (aRRaycastManager.Raycast(finger.screenPosition, hits, TrackableType.PlaneWithinPolygon))
             {
                 foreach (ARRaycastHit hit in hits)
@@ -271,6 +343,8 @@ public class PlaceObject : MonoBehaviour
             rotateButton.gameObject.SetActive(true);
             regenButton.gameObject.SetActive(true);
         }
+        // figner released after ar mode, position already set during drag and will be valid due to 
+        // no plane change
         else if (isRotateMode)
         {
             isRotateMode = false;

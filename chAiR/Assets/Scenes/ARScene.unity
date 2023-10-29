@@ -2074,7 +2074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1324095225
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2091,8 +2091,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -87.6, y: 394.6}
+  m_SizeDelta: {x: 1004.3, y: 157.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1324095226
 MonoBehaviour:
@@ -2114,7 +2114,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3423,6 +3423,14 @@ MonoBehaviour:
   uiButtonAudioSource: {fileID: 651380848}
   dropFurnitureAudioSource: {fileID: 522674338}
   errorAudio: {fileID: 1732570099}
+  furniturePrefabs:
+  - {fileID: 4251332497163991304, guid: bb4acefa60c60f04987f747593c9299e, type: 3}
+  - {fileID: 81404301077227161, guid: 16b82da5fbe22f94abfaa85b55ac4b8f, type: 3}
+  - {fileID: 8450349980501170344, guid: 5f7daf2d42179134e98f2715d3d1a2c1, type: 3}
+  - {fileID: 5823362233377097707, guid: 255eb440b99826741af6827297e8c928, type: 3}
+  - {fileID: 1710222370027603669, guid: 38e823cc8e8d7c14b9c1028498df8c39, type: 3}
+  - {fileID: 2135226589491461677, guid: a3c9e259930490c478080e82a577e556, type: 3}
+  - {fileID: 465715841198784415, guid: 2e7e35d7adedb9d47bc18463a50c52d7, type: 3}
   debugText: {fileID: 1324095226}
 --- !u!1 &2136955949
 GameObject:

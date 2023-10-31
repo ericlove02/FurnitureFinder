@@ -13,6 +13,8 @@ public class ObjectHandler : MonoBehaviour
     [SerializeField] private GameObject[] objPrefabs;
     [SerializeField] private Image[] uiSprites;
 
+    [SerializeField] private Loader3DS loader3DS;
+
     [SerializeField] private Button deleteButton;
     [SerializeField] private Button viewModelButton;
     [SerializeField] private Button moveButton;
@@ -286,6 +288,12 @@ public class ObjectHandler : MonoBehaviour
                                 GameObject randomPrefab = furniturePrefabs[Random.Range(0, furniturePrefabs.Length)];
                                 obj = Instantiate(randomPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
                             }
+                            // if chair, load test 3ds chair
+                            else if (selectedIndex == 1)
+                            {
+                                Load3DSModel("Assets/HENRIKSDAL_Chair.3ds");
+                                obj = new GameObject("bruh");
+                            }
                             else
                             {
                                 obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
@@ -377,5 +385,28 @@ public class ObjectHandler : MonoBehaviour
             Destroy(selectedObject);
             DeselectObject();
         }
+    }
+
+    private void Load3DSModel(string path)
+    {
+        // create empty obj as palceholder
+        GameObject modelPlaceholder = new GameObject("3DSModelPlaceholder");
+        modelPlaceholder.transform.position = Vector3.zero;
+
+        // assign callback to recieve obj
+        loader3DS.OnLoadingComplete += (loadedObject) =>
+        {
+            // destory placeholder
+            Destroy(modelPlaceholder);
+
+            // replace with loaded
+            if (selectedObject != null)
+            {
+                Destroy(selectedObject);
+            }
+            selectedObject = loadedObject;
+        };
+
+        StartCoroutine(loader3DS.Loader(path));
     }
 }

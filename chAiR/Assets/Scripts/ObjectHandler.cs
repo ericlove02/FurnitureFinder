@@ -56,6 +56,10 @@ public class ObjectHandler : MonoBehaviour
 
     private void Awake()
     {
+        debugText.text = "test text";
+        TextAsset objData = (TextAsset)Resources.Load("test");
+        debugText.text = objData.text;
+
         aRRaycastManager = GetComponent<ARRaycastManager>();
         aRPlaneManager = GetComponent<ARPlaneManager>();
         foreach (Image sprite in uiSprites)
@@ -293,7 +297,7 @@ public class ObjectHandler : MonoBehaviour
                                 // load obj and mtl files from assets
                                 TextAsset objData = Resources.Load("IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj") as TextAsset;
                                 TextAsset mtlData = Resources.Load("IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl") as TextAsset;
-
+                                debugText.text = objData.text;
                                 // convert testAssets to MemoryStreams for runtime loaders
                                 MemoryStream objStream = new MemoryStream(objData.bytes);
                                 MemoryStream mtlStream = new MemoryStream(mtlData.bytes);

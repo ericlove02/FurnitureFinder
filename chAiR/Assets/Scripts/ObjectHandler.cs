@@ -6,6 +6,7 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using System.IO;
 using Random = UnityEngine.Random;
 using Dummiesman; // OBJLoader, MTLLoader
 
@@ -289,13 +290,26 @@ public class ObjectHandler : MonoBehaviour
                             }
                             else if (selectedIndex == 1)
                             {
-                                GameObject loadedObject = new OBJLoader().Load("Assets/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
+                                // load obj and mtl files from assets
+                                TextAsset objData = Resources.Load("IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj") as TextAsset;
+                                TextAsset mtlData = Resources.Load("IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl") as TextAsset;
+
+                                // convert testAssets to MemoryStreams for runtime loaders
+                                MemoryStream objStream = new MemoryStream(objData.bytes);
+                                MemoryStream mtlStream = new MemoryStream(mtlData.bytes);
+                                debugText.text = "streams loaded";
+
+                                GameObject loadedObject = new OBJLoader().Load(objStream);
+                                if (loadedObject)
+                                    debugText.text = loadedObject.ToString();
+                                else
+                                    debugText.text = "object null";
                                 // add box collider
                                 BoxCollider boxCollider = loadedObject.AddComponent<BoxCollider>();
 
-                                // get materials from MTL file
+                                // get materials from MTL file 
                                 MTLLoader mtlLoader = new MTLLoader();
-                                Dictionary<string, Material> materials = mtlLoader.Load("Assets/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
+                                Dictionary<string, Material> materials = mtlLoader.Load(mtlStream);
 
                                 // apply loaded materials to object
                                 Renderer[] renderers = loadedObject.GetComponentsInChildren<Renderer>();

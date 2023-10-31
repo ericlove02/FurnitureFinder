@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using Random = UnityEngine.Random;
+using Dummiesman; // OBJLoader, MTLLoader
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -285,6 +286,33 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 GameObject randomPrefab = furniturePrefabs[Random.Range(0, furniturePrefabs.Length)];
                                 obj = Instantiate(randomPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                            }
+                            else if (selectedIndex == 1)
+                            {
+                                GameObject loadedObject = new OBJLoader().Load("Assets/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
+                                // add box collider
+                                BoxCollider boxCollider = loadedObject.AddComponent<BoxCollider>();
+
+                                // get materials from MTL file
+                                MTLLoader mtlLoader = new MTLLoader();
+                                Dictionary<string, Material> materials = mtlLoader.Load("Assets/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
+
+                                // apply loaded materials to object
+                                Renderer[] renderers = loadedObject.GetComponentsInChildren<Renderer>();
+                                Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
+
+                                foreach (Renderer renderer in renderers)
+                                {
+                                    if (materials.TryGetValue(renderer.material.name, out Material material))
+                                    {
+                                        renderer.material = material;
+                                    }
+                                    // include renderer in box collider bounds
+                                    bounds.Encapsulate(renderer.bounds);
+                                }
+                                boxCollider.size = bounds.size;
+
+                                obj = Instantiate(loadedObject, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
                             }
                             else
                             {

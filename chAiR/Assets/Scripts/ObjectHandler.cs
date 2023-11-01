@@ -294,12 +294,14 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 // load obj
                                 var objLoad = new WWW("https://people.tamu.edu/~eric.love02/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
-                                while (!objLoad.isDone)
+                                var mtlLoad = new WWW("https://people.tamu.edu/~eric.love02/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
+                                while (!objLoad.isDone || !mtlLoad.isDone)
                                     System.Threading.Thread.Sleep(1);
 
                                 // create stream and load
                                 var objStream = new MemoryStream(Encoding.UTF8.GetBytes(objLoad.text));
-                                obj = new OBJLoader().Load(objStream);
+                                var mtlStream = new MemoryStream(Encoding.UTF8.GetBytes(mtlLoad.text));
+                                obj = new OBJLoader().Load(objStream, mtlStream);
 
                                 obj.transform.position = pose.position;
                                 obj.transform.rotation = hit.pose.rotation * Quaternion.Euler(Vector3.up * 180);

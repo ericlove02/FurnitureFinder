@@ -292,17 +292,14 @@ public class ObjectHandler : MonoBehaviour
                             }
                             else if (selectedIndex == 1)
                             {
-                                // load obj and mtl files from assets
-                                var objLoad = new WWW("https://people.sc.fsu.edu/~jburkardt/data/obj/lamp.obj");
-                                // var objLoad = new WWW("https://www.mediafire.com/file/f8ihu6kejcu8rtx/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
-                                // var mtlLoad = new WWW("https://www.mediafire.com/file/mhu5tb3b6652l35/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
-                                while (!objLoad.isDone /*&& !mtlLoad.isDone*/)
+                                // load obj
+                                var objLoad = new WWW("https://people.tamu.edu/~eric.love02/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
+                                while (!objLoad.isDone)
                                     System.Threading.Thread.Sleep(1);
 
                                 // create stream and load
                                 var objStream = new MemoryStream(Encoding.UTF8.GetBytes(objLoad.text));
-                                // var mtlStream = new MemoryStream(Encoding.UTF8.GetBytes(mtlLoad.text));
-                                obj = new OBJLoader().Load(objStream/*, mtlStream*/);
+                                obj = new OBJLoader().Load(objStream);
 
                                 obj.transform.position = pose.position;
                                 obj.transform.rotation = hit.pose.rotation * Quaternion.Euler(Vector3.up * 180);

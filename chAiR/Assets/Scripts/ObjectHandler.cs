@@ -293,45 +293,38 @@ public class ObjectHandler : MonoBehaviour
                             else if (selectedIndex == 1)
                             {
                                 // load obj and mtl files from assets
-                                var objLoad = new WWW("https://ericclove.com/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
-                                var mtlLoad = new WWW("https://ericclove.com/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
-                                while (!objLoad.isDone && !mtlLoad.isDone)
+                                var objLoad = new WWW("https://people.sc.fsu.edu/~jburkardt/data/obj/lamp.obj");
+                                // var objLoad = new WWW("https://www.mediafire.com/file/f8ihu6kejcu8rtx/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
+                                // var mtlLoad = new WWW("https://www.mediafire.com/file/mhu5tb3b6652l35/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
+                                while (!objLoad.isDone /*&& !mtlLoad.isDone*/)
                                     System.Threading.Thread.Sleep(1);
 
                                 // create stream and load
                                 var objStream = new MemoryStream(Encoding.UTF8.GetBytes(objLoad.text));
-                                var mtlStream = new MemoryStream(Encoding.UTF8.GetBytes(mtlLoad.text));
-                                obj = new OBJLoader().Load(objStream, mtlStream);
+                                // var mtlStream = new MemoryStream(Encoding.UTF8.GetBytes(mtlLoad.text));
+                                obj = new OBJLoader().Load(objStream/*, mtlStream*/);
 
                                 obj.transform.position = pose.position;
                                 obj.transform.rotation = hit.pose.rotation * Quaternion.Euler(Vector3.up * 180);
 
                                 // add box collider
-                                // BoxCollider boxCollider = obj.AddComponent<BoxCollider>();
-                                // Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
-                                // Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
+                                BoxCollider boxCollider = obj.AddComponent<BoxCollider>();
 
-                                // foreach (Renderer renderer in renderers)
-                                // {
-                                // include renderer in box collider bounds
-                                //     bounds.Encapsulate(renderer.bounds);
-                                // }
-                                // boxCollider.size = bounds.size;
+                                if (obj)
+                                {
+                                    Bounds bounds = CalculateBoundingBox(obj);
+                                    boxCollider.size = bounds.size;
 
-                                // if (obj)
-                                // {
-                                //     Bounds bounds = CalculateBoundingBox(obj);
+                                    float maxSize = 1.0f;
+                                    float scaleFactor = maxSize / Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
+                                    obj.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
-                                //     float maxSize = 1.0f;
-                                //     float scaleFactor = maxSize / Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
-                                //     obj.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-
-                                //     debugText.text = obj.name + "\n" + obj.transform.position + "\n" + bounds.size.x + ", " + bounds.size.y;
-                                // }
-                                // else
-                                // {
-                                //     debugText.text = "object null";
-                                // }
+                                    debugText.text = obj.name + "\n" + obj.transform.position + "\n" + bounds.size.x + ", " + bounds.size.y;
+                                }
+                                else
+                                {
+                                    debugText.text = "object null";
+                                }
                             }
                             else
                             {

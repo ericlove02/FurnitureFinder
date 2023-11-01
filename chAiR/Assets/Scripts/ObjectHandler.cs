@@ -9,6 +9,7 @@ using TMPro;
 using System.IO;
 using Random = UnityEngine.Random;
 using Dummiesman; // OBJLoader, MTLLoader
+using System.Text;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -56,9 +57,6 @@ public class ObjectHandler : MonoBehaviour
 
     private void Awake()
     {
-        debugText.text = "test text";
-        TextAsset objData = (TextAsset)Resources.Load("test");
-        debugText.text = objData.text;
 
         aRRaycastManager = GetComponent<ARRaycastManager>();
         aRPlaneManager = GetComponent<ARPlaneManager>();
@@ -295,42 +293,45 @@ public class ObjectHandler : MonoBehaviour
                             else if (selectedIndex == 1)
                             {
                                 // load obj and mtl files from assets
-                                TextAsset objData = Resources.Load("IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj") as TextAsset;
-                                TextAsset mtlData = Resources.Load("IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl") as TextAsset;
-                                debugText.text = objData.text;
-                                // convert testAssets to MemoryStreams for runtime loaders
-                                MemoryStream objStream = new MemoryStream(objData.bytes);
-                                MemoryStream mtlStream = new MemoryStream(mtlData.bytes);
-                                debugText.text = "streams loaded";
+                                var objLoad = new WWW("https://ericclove.com/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
+                                var mtlLoad = new WWW("https://ericclove.com/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
+                                while (!objLoad.isDone && !mtlLoad.isDone)
+                                    System.Threading.Thread.Sleep(1);
 
-                                GameObject loadedObject = new OBJLoader().Load(objStream);
-                                if (loadedObject)
-                                    debugText.text = loadedObject.ToString();
-                                else
-                                    debugText.text = "object null";
+                                // create stream and load
+                                var objStream = new MemoryStream(Encoding.UTF8.GetBytes(objLoad.text));
+                                var mtlStream = new MemoryStream(Encoding.UTF8.GetBytes(mtlLoad.text));
+                                obj = new OBJLoader().Load(objStream, mtlStream);
+
+                                obj.transform.position = pose.position;
+                                obj.transform.rotation = hit.pose.rotation * Quaternion.Euler(Vector3.up * 180);
+
                                 // add box collider
-                                BoxCollider boxCollider = loadedObject.AddComponent<BoxCollider>();
+                                // BoxCollider boxCollider = obj.AddComponent<BoxCollider>();
+                                // Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+                                // Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
 
-                                // get materials from MTL file 
-                                MTLLoader mtlLoader = new MTLLoader();
-                                Dictionary<string, Material> materials = mtlLoader.Load(mtlStream);
+                                // foreach (Renderer renderer in renderers)
+                                // {
+                                // include renderer in box collider bounds
+                                //     bounds.Encapsulate(renderer.bounds);
+                                // }
+                                // boxCollider.size = bounds.size;
 
-                                // apply loaded materials to object
-                                Renderer[] renderers = loadedObject.GetComponentsInChildren<Renderer>();
-                                Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
+                                // if (obj)
+                                // {
+                                //     Bounds bounds = CalculateBoundingBox(obj);
 
-                                foreach (Renderer renderer in renderers)
-                                {
-                                    if (materials.TryGetValue(renderer.material.name, out Material material))
-                                    {
-                                        renderer.material = material;
-                                    }
-                                    // include renderer in box collider bounds
-                                    bounds.Encapsulate(renderer.bounds);
-                                }
-                                boxCollider.size = bounds.size;
+                                //     float maxSize = 1.0f;
+                                //     float scaleFactor = maxSize / Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
+                                //     obj.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
-                                obj = Instantiate(loadedObject, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                //     debugText.text = obj.name + "\n" + obj.transform.position + "\n" + bounds.size.x + ", " + bounds.size.y;
+                                // }
+                                // else
+                                // {
+                                //     debugText.text = "object null";
+                                // }
                             }
                             else
                             {
@@ -423,5 +424,20 @@ public class ObjectHandler : MonoBehaviour
             Destroy(selectedObject);
             DeselectObject();
         }
+    }
+
+    private Bounds CalculateBoundingBox(GameObject obj)
+    {
+        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+        if (renderers.Length > 0)
+        {
+            Bounds bounds = renderers[0].bounds;
+            for (int i = 1; i < renderers.Length; i++)
+            {
+                bounds.Encapsulate(renderers[i].bounds);
+            }
+            return bounds;
+        }
+        return new Bounds(obj.transform.position, Vector3.zero);
     }
 }

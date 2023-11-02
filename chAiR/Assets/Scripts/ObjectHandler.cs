@@ -293,8 +293,8 @@ public class ObjectHandler : MonoBehaviour
                             else if (selectedIndex == 1)
                             {
                                 // load obj
-                                var objLoad = new WWW("https://people.tamu.edu/~eric.love02/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
-                                var mtlLoad = new WWW("https://people.tamu.edu/~eric.love02/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
+                                var objLoad = new WWW("https://people.tamu.edu/~eric.love02/test_obj/IKEA-Ektorp_Armchair_Vallsta_Red-3D.obj");
+                                var mtlLoad = new WWW("https://people.tamu.edu/~eric.love02/test_obj/IKEA-Ektorp_Armchair_Vallsta_Red-3D.mtl");
                                 while (!objLoad.isDone || !mtlLoad.isDone)
                                     System.Threading.Thread.Sleep(1);
 

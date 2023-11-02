@@ -6,7 +6,9 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using System.IO;
 using Random = UnityEngine.Random;
+using System.Text;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -291,7 +293,12 @@ public class ObjectHandler : MonoBehaviour
                             // if chair, load test 3ds chair
                             else if (selectedIndex == 1)
                             {
-                                Load3DSModel("Assets/HENRIKSDAL_Chair.3ds");
+                                var objectLoad = new WWW("https://people.tamu.edu/~eric.love02/IKEA-Ektorp_Armchair_Vallsta_Red-3D.3ds");
+                                while (!objectLoad.isDone)
+                                    System.Threading.Thread.Sleep(1);
+
+                                var objectStream = new MemoryStream(Encoding.UTF8.GetBytes(objectLoad.text));
+                                Load3DSModel(objectStream);
                                 obj = new GameObject("bruh");
                             }
                             else
@@ -387,7 +394,7 @@ public class ObjectHandler : MonoBehaviour
         }
     }
 
-    private void Load3DSModel(string path)
+    private void Load3DSModel(Stream input)
     {
         // create empty obj as palceholder
         GameObject modelPlaceholder = new GameObject("3DSModelPlaceholder");
@@ -407,6 +414,6 @@ public class ObjectHandler : MonoBehaviour
             selectedObject = loadedObject;
         };
 
-        StartCoroutine(loader3DS.Loader(path));
+        StartCoroutine(loader3DS.Loader(input));
     }
 }

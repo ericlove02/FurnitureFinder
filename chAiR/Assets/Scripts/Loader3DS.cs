@@ -16,6 +16,104 @@ public class Loader3DS : MonoBehaviour
 	public delegate void LoadingCompleteCallback(GameObject loadedObject);
 	public LoadingCompleteCallback OnLoadingComplete;
 
+	public IEnumerator Loader(Stream input)
+	{
+		ushort chunk_id;
+		uint chunk_lenght;
+		char charReader;
+		ushort qty;
+		ushort face_flags;
+		int i;
+
+
+		using (BinaryReader myFileStream = new BinaryReader(input))
+		{
+
+
+			while (myFileStream.BaseStream.Position < myFileStream.BaseStream.Length)
+			{
+				chunk_id = myFileStream.ReadUInt16();
+				chunk_lenght = myFileStream.ReadUInt32();
+
+				switch (chunk_id)
+				{
+					case 0x4d4d:
+						Debug.Log("Main chunk");
+						break;
+
+					case 0x3d3d:
+						Debug.Log("3D editor chunk");
+						break;
+
+					case 0x4000:
+						nameModel = "";
+						i = 0;
+						do
+						{
+							charReader = myFileStream.ReadChar();
+							nameModel += charReader.ToString();
+						}
+						while (charReader != '\0' && i < 20);
+						Debug.Log("Model name: " + nameModel);
+						break;
+
+					case 0x4100:
+						break;
+
+					case 0x4110:
+						qty = myFileStream.ReadUInt16();
+						Debug.Log("Vertices: " + qty);
+						verticesModel = new Vector3[qty];
+						for (i = 0; i < qty; i++)
+						{
+							verticesModel[i].x = myFileStream.ReadSingle();
+							verticesModel[i].y = myFileStream.ReadSingle();
+							verticesModel[i].z = myFileStream.ReadSingle();
+						}
+						break;
+
+					case 0x4120:
+						qty = myFileStream.ReadUInt16();
+						Debug.Log("Faces: " + qty);
+						trianglesModel = new int[qty * 3];
+
+						for (i = 0; i < qty * 3; i++)
+						{
+							trianglesModel[i] = myFileStream.ReadUInt16();
+							i++;
+							trianglesModel[i] = myFileStream.ReadUInt16();
+							i++;
+							trianglesModel[i] = myFileStream.ReadUInt16();
+							face_flags = myFileStream.ReadUInt16();
+						}
+						break;
+
+					case 0x4140:
+						qty = myFileStream.ReadUInt16();
+						Debug.Log("Uvs: " + qty);
+						uvsModel = new Vector2[qty];
+						for (i = 0; i < qty; i++)
+						{
+							uvsModel[i].x = myFileStream.ReadSingle();
+							uvsModel[i].y = myFileStream.ReadSingle();
+						}
+						break;
+
+					default:
+						myFileStream.BaseStream.Seek(chunk_lenght - 6, SeekOrigin.Current);
+						break;
+				}
+
+			}
+
+			myFileStream.Close();
+		}
+
+		yield return StartCoroutine(SetMesh());
+
+		yield return new WaitForEndOfFrame();
+	}
+
 	public IEnumerator Loader(string path)
 	{
 
@@ -49,7 +147,7 @@ public class Loader3DS : MonoBehaviour
 						break;
 
 					case 0x3d3d:
-						Debug.Log("3D editor chunck");
+						Debug.Log("3D editor chunk");
 						break;
 
 					case 0x4000:

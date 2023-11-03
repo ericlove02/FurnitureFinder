@@ -303,6 +303,8 @@ public class ObjectHandler : MonoBehaviour
                                 var mtlStream = new MemoryStream(Encoding.UTF8.GetBytes(mtlLoad.text));
                                 obj = new OBJLoader().Load(objStream, mtlStream);
 
+                                // debugText.text = mtlLoad.text;
+
                                 obj.transform.position = pose.position;
                                 obj.transform.rotation = hit.pose.rotation * Quaternion.Euler(Vector3.up * 180);
 

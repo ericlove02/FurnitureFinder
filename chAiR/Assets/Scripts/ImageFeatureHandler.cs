@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImageFeatureHandler : MonoBehaviour
 {
-    public Sprite[] scrollingImages;
+    public Image[] scrollingImages;
 
     // Start is called before the first frame update
     void Start()

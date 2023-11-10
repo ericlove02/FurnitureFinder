@@ -80,7 +80,7 @@ public class ImageFeatureHandler : MonoBehaviour
             GameObject imageObject = Instantiate(imagePrefab, transform);
             RectTransform rectTransform = imageObject.GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(imageWidth, imageHeight);
-            rectTransform.anchoredPosition = new Vector2(-50f + i * imageWidth, 225f);
+            rectTransform.anchoredPosition = new Vector2(-50f + i * (imageWidth - 10f), 225f);
 
             Image imageComponent = imageObject.GetComponent<Image>();
             imageComponent.sprite = vibeImages[i];
@@ -121,10 +121,10 @@ public class ImageFeatureHandler : MonoBehaviour
             rectTransform.anchoredPosition += Vector2.right * imageSpeed * Time.deltaTime;
 
             // Check if the image is completely off the screen
-            if (rectTransform.anchoredPosition.x > -50f + (vibeImages.Length - 1) * imageWidth)
+            if (rectTransform.anchoredPosition.x > -50f + (vibeImages.Length - 1) * (imageWidth - 10f))
             {
                 // Move the image back to the starting position
-                rectTransform.anchoredPosition = new Vector2(-50f - imageWidth, 225f);
+                rectTransform.anchoredPosition = new Vector2(-50f - (imageWidth - 10f), 225f);
             }
         }
     }

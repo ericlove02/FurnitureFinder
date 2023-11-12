@@ -182,6 +182,7 @@ public class ObjectHandler : MonoBehaviour
                         Quaternion rotation = selectedObject.transform.rotation;
                         Destroy(selectedObject);
                         selectedObject = Instantiate(newPrefab, position, rotation);
+                        CollisionHandler collisionHandler = selectedObject.AddComponent<CollisionHandler>();
                         instantiatedModels.Add(selectedObject);
                     }
                 }
@@ -290,6 +291,7 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
                             }
+                            CollisionHandler collisionHandler = obj.AddComponent<CollisionHandler>();
                             instantiatedModels.Add(obj);
 
                             if (dropFurnitureAudioSource != null)

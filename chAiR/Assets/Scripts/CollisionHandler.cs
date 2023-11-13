@@ -6,25 +6,17 @@ public class CollisionHandler : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Destroy the colliding object
-
-        // Optionally, you can also destroy the current object
-        Destroy(gameObject);
+        if(collision.gameObject.tag == "Furniture")
+        {
+            // make red outline happen
+        }
     }
 
-    /*
-    private void OnTriggerEnter(Collision collision)
+    private void OnCollisonExit(Collision collision)
     {
-        // Destroy the colliding object
-
-        // Optionally, you can also destroy the current object
-        Destroy(gameObject);
-    }
-    */
-
-    private void OnCollisionStay(Collision collision)
-    {
-        // Destroy the colliding object
-        // Optionally, you can also destroy the current object
-        Destroy(gameObject);
+        if(collision.gameObject.tag == Furniture)
+        {
+            // make red outline go away
+        }
     }
 }

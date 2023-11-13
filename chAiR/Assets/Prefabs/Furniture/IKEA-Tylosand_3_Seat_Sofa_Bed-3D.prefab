@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IKEA-Tylosand_3_Seat_Sofa_Bed-3D
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9cd7a562deeda194b85ac7f3b0e63e83, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -145,5 +149,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0

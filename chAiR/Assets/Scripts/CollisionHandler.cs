@@ -1,22 +1,51 @@
 using UnityEngine;
+using cakeslice;
 
 public class CollisionHandler : MonoBehaviour
 {
-    // Triggered when a collision occurs
-    private void OnCollisionEnter(Collision collision)
+    private Outline[] outlines;
+
+    void Start()
     {
-        // Destroy the colliding object
-        if(collision.gameObject.tag == "Furniture")
+        // check for outline in parent
+        Outline pOutline = GetComponent<Outline>();
+
+        // if outline not in parent, check in children
+        if (pOutline != null)
         {
-            // make red outline happen
+            outlines = new Outline[] { pOutline };
+        }
+        else
+        {
+            outlines = GetComponentsInChildren<Outline>();
+        }
+
+        // start outline disabled
+        foreach (var outline in outlines)
+        {
+            outline.enabled = false;
         }
     }
 
-    private void OnCollisonExit(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == Furniture)
+        if (collision.gameObject.tag == "Furniture")
         {
-            // make red outline go away
+            foreach (var outline in outlines)
+            {
+                outline.enabled = true;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Furniture")
+        {
+            foreach (var outline in outlines)
+            {
+                outline.enabled = false;
+            }
         }
     }
 }

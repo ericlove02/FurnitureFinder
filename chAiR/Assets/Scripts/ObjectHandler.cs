@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -182,6 +183,7 @@ public class ObjectHandler : MonoBehaviour
                         Quaternion rotation = selectedObject.transform.rotation;
                         Destroy(selectedObject);
                         selectedObject = Instantiate(newPrefab, position, rotation);
+                        CollisionHandler collisionHandler = selectedObject.AddComponent<CollisionHandler>();
                         instantiatedModels.Add(selectedObject);
                     }
                 }
@@ -290,6 +292,7 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
                             }
+                            CollisionHandler collisionHandler = obj.AddComponent<CollisionHandler>();
                             instantiatedModels.Add(obj);
 
                             if (dropFurnitureAudioSource != null)
@@ -374,8 +377,17 @@ public class ObjectHandler : MonoBehaviour
     {
         if (selectedObject != null)
         {
-            Destroy(selectedObject);
-            DeselectObject();
+            // move the object out of the scene
+            selectedObject.transform.position = new Vector3(-10000, -10000, -10000);
+            StartCoroutine(DestroyObjectAfterFixedUpdate());
         }
+    }
+
+    private IEnumerator DestroyObjectAfterFixedUpdate()
+    {
+        // wait for the next FixedUpdate to register collision exit
+        yield return new WaitForFixedUpdate();
+        Destroy(selectedObject);
+        DeselectObject();
     }
 }

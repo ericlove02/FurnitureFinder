@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IKEA-lilberg_2_seat-3D
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -75,7 +79,38 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1996886710999466040}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2126804888212148851}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8974534428802830242}
+    - targetCorrespondingSourceObject: {fileID: 2548489492842245292, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2710021870392022685}
+    - targetCorrespondingSourceObject: {fileID: 1171954899114125784, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3729666324726977558}
   m_SourcePrefab: {fileID: 100100000, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+--- !u!1 &5499539517296268130 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1171954899114125784, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+  m_PrefabInstance: {fileID: 6634317685357492922}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3729666324726977558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5499539517296268130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &5823362233377097707 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
@@ -102,3 +137,61 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1249.9174, y: 849.3895, z: 940}
   m_Center: {x: -14.156433, y: 486.30524, z: -17.739502}
+--- !u!114 &2126804888212148851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823362233377097707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b97de7f63de461b42892936d4158eed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &-8974534428802830242
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823362233377097707}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!1 &9173790075740116502 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2548489492842245292, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+  m_PrefabInstance: {fileID: 6634317685357492922}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2710021870392022685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173790075740116502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0

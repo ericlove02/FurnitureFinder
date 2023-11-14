@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -376,8 +377,17 @@ public class ObjectHandler : MonoBehaviour
     {
         if (selectedObject != null)
         {
-            Destroy(selectedObject);
-            DeselectObject();
+            // move the object out of the scene
+            selectedObject.transform.position = new Vector3(-10000, -10000, -10000);
+            StartCoroutine(DestroyObjectAfterFixedUpdate());
         }
+    }
+
+    private IEnumerator DestroyObjectAfterFixedUpdate()
+    {
+        // wait for the next FixedUpdate to register collision exit
+        yield return new WaitForFixedUpdate();
+        Destroy(selectedObject);
+        DeselectObject();
     }
 }

@@ -1,5 +1,3 @@
-<!-- Database code for reference -->
-
 <?php
 function OpenCon()
  {

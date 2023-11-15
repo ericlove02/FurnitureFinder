@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using Random = UnityEngine.Random;
+using UnityEngine.Networking;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -53,6 +54,22 @@ public class ObjectHandler : MonoBehaviour
 
     [SerializeField] TMP_Text debugText;
 
+    [System.Serializable]
+    public class FurnitureData
+    {
+        public int FUR_ID { get; set; }
+        public string FUR_NAME { get; set; }
+        public string FUR_LINK { get; set; }
+        public string FUR_DESC { get; set; }
+        public int FUR_COST { get; set; }
+        public int FUR_DIM_L { get; set; }
+        public int FUR_DIM_W { get; set; }
+        public int FUR_DIM_H { get; set; }
+        public string FUR_TYPE { get; set; }
+    }
+
+    private List<FurnitureData> furnitureData;
+
     private void Awake()
     {
         aRRaycastManager = GetComponent<ARRaycastManager>();
@@ -69,6 +86,41 @@ public class ObjectHandler : MonoBehaviour
 
         // retrive stored vibe or if not set, vibeError
         selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
+        StartCoroutine(GetFurnitureData(selectedVibe));
+    }
+
+    private IEnumerator GetFurnitureData(string vibeName)
+    {
+        string apiUrl = "https://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
+        debugText.text = apiUrl;
+
+        using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
+        {
+            debugText.text = "sending request";
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError(www.error);
+                debugText.text = "error";
+            }
+            else
+            {
+                // parse JSON and store data
+                string json = www.downloadHandler.text;
+                debugText.text = "parsing...";
+                try
+                {
+                    furnitureData = JsonUtility.FromJson<List<FurnitureData>>(json);
+                    debugText.text = furnitureData[0].FUR_ID.ToString();
+                }
+                catch (Exception e)
+                {
+                    debugText.text = e.Message;
+                }
+
+            }
+        }
     }
 
     private void Update()

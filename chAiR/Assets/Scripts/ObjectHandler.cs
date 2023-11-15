@@ -9,6 +9,7 @@ using System;
 using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -111,7 +112,7 @@ public class ObjectHandler : MonoBehaviour
                 debugText.text = "parsing...";
                 try
                 {
-                    furnitureData = JsonUtility.FromJson<List<FurnitureData>>(json);
+                    furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
                     debugText.text = furnitureData[0].FUR_ID.ToString();
                 }
                 catch (Exception e)

@@ -8,6 +8,9 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using Random = UnityEngine.Random;
+using UnityEngine.Networking;
+using Newtonsoft.Json;
+using System.Linq;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -32,12 +35,17 @@ public class ObjectHandler : MonoBehaviour
     // state for user rotating ar object
     private bool isRotateMode = false;
     private Image selectedSprite;
-    private GameObject selectedObject;
+    private class FurnitureObject
+    {
+        public GameObject furnModel;
+        public FurnitureData furnData;
+    }
+    private FurnitureObject selectedFurniture;
 
     private ARRaycastManager aRRaycastManager;
     private ARPlaneManager aRPlaneManager;
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
-    private List<GameObject> instantiatedModels = new List<GameObject>();
+    private List<FurnitureObject> instantiatedFurniture = new List<FurnitureObject>();
     private Vector3 objPositionBeforeMove;
     // for rotation
     private Quaternion objRotationBefore;
@@ -49,9 +57,30 @@ public class ObjectHandler : MonoBehaviour
     // we will store all of the indices of the prefabs to the db and use that to retrieve the correct
     // prefab for the piece of furniture
     public GameObject[] furniturePrefabs;
-    private int selectedPrefabIndex = -1;
 
     [SerializeField] TMP_Text debugText;
+
+    [System.Serializable]
+    public class FurnitureData
+    {
+        public int FUR_ID { get; set; }
+        public string FUR_NAME { get; set; }
+        public string FUR_LINK { get; set; }
+        public string FUR_DESC { get; set; }
+        public float FUR_COST { get; set; }
+        public float FUR_DIM_L { get; set; }
+        public float FUR_DIM_W { get; set; }
+        public float FUR_DIM_H { get; set; }
+        public string FUR_TYPE { get; set; }
+    }
+
+    private List<FurnitureData> furnitureData;
+    private FurnitureData[] sofas;
+    private FurnitureData[] chairs;
+    private FurnitureData[] lamps;
+    private FurnitureData[] tables;
+    private FurnitureData[] tvStands;
+
 
     private void Awake()
     {
@@ -69,14 +98,49 @@ public class ObjectHandler : MonoBehaviour
 
         // retrive stored vibe or if not set, vibeError
         selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
+        StartCoroutine(GetFurnitureData(selectedVibe));
+    }
+
+    private IEnumerator GetFurnitureData(string vibeName)
+    {
+        string apiUrl = "https://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
+
+        using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError(www.error);
+            }
+            else
+            {
+                // parse JSON and store data
+                string json = www.downloadHandler.text;
+                try
+                {
+                    furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
+                    sofas = furnitureData.Where(furniture => furniture.FUR_TYPE == "Sofa").ToArray();
+                    chairs = furnitureData.Where(furniture => furniture.FUR_TYPE == "Chair").ToArray();
+                    lamps = furnitureData.Where(furniture => furniture.FUR_TYPE == "Lamp").ToArray();
+                    tables = furnitureData.Where(furniture => furniture.FUR_TYPE == "Table").ToArray();
+                    tvStands = furnitureData.Where(furniture => furniture.FUR_TYPE == "TV Stand").ToArray();
+                }
+                catch (Exception e)
+                {
+                    debugText.text = e.Message;
+                }
+
+            }
+        }
     }
 
     private void Update()
     {
         // if a furn obj is select, move ui elements to follow on each frame update
-        if (selectedObject != null)
+        if (selectedFurniture?.furnModel != null)
         {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(selectedObject.transform.position);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(selectedFurniture.furnModel.transform.position);
 
             deleteButton.transform.position = screenPos + new Vector3(0, 200, 0);
             viewModelButton.transform.position = screenPos + new Vector3(200, 200, 0);
@@ -147,7 +211,7 @@ public class ObjectHandler : MonoBehaviour
                 else if (button == moveButton)
                 {
                     isMoveMode = true;
-                    objPositionBeforeMove = selectedObject.transform.position;
+                    objPositionBeforeMove = selectedFurniture.furnModel.transform.position;
                     // hide buttons in move mode
                     deleteButton.gameObject.SetActive(false);
                     viewModelButton.gameObject.SetActive(false);
@@ -157,7 +221,7 @@ public class ObjectHandler : MonoBehaviour
                 else if (button == rotateButton)
                 {
                     isRotateMode = true;
-                    objRotationBefore = selectedObject.transform.rotation;
+                    objRotationBefore = selectedFurniture.furnModel.transform.rotation;
                     initialFingerPosition = finger.screenPosition;
                     // hide buttons in rotate mode
                     deleteButton.gameObject.SetActive(false);
@@ -167,45 +231,74 @@ public class ObjectHandler : MonoBehaviour
                 }
                 else if (button == regenButton)
                 {
-                    if (selectedObject != null)
+                    if (selectedFurniture?.furnModel != null)
                     {
-                        int randomIndex;
-                        do
+                        try
                         {
-                            // get a model different from current one
-                            randomIndex = Random.Range(0, furniturePrefabs.Length);
-                        } while (randomIndex == selectedPrefabIndex);
-                        selectedPrefabIndex = randomIndex;
+                            FurnitureData selectedFurnData = furnitureData[0];
+                            // find random piece of furniture in data that matches type and instantiate it
+                            if (selectedFurniture.furnData.FUR_TYPE == "Sofa") // FUR_TYPE: "Sofa"
+                            {
+                                selectedFurnData = sofas[Random.Range(0, sofas.Length)];
+                            }
+                            else if (selectedFurniture.furnData.FUR_TYPE == "Chair") // FUR_TYPE: "Chair"
+                            {
+                                selectedFurnData = chairs[Random.Range(0, chairs.Length)];
+                            }
+                            else if (selectedFurniture.furnData.FUR_TYPE == "Lamp") // FUR_TYPE: "Lamp"
+                            {
+                                selectedFurnData = lamps[Random.Range(0, lamps.Length)];
+                            }
+                            else if (selectedFurniture.furnData.FUR_TYPE == "Table") // FUR_TYPE: "Table"
+                            {
+                                selectedFurnData = tables[Random.Range(0, tables.Length)];
+                            }
+                            else if (selectedFurniture.furnData.FUR_TYPE == "TV Stand") // FUR_TYPE: "TV Stand"
+                            {
+                                selectedFurnData = tvStands[Random.Range(0, tvStands.Length)];
+                            }
+                            // instantiate the new prefab in the place of the old one, destroy old one
+                            FurnitureObject newFurnitureObject = new FurnitureObject();
+                            newFurnitureObject.furnData = selectedFurnData;
+                            Vector3 position = selectedFurniture.furnModel.transform.position;
+                            Quaternion rotation = selectedFurniture.furnModel.transform.rotation;
+                            instantiatedFurniture.Remove(selectedFurniture);
+                            Destroy(selectedFurniture.furnModel);
+                            newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurnData.FUR_ID - 1], position, rotation);
+                            CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                            instantiatedFurniture.Add(newFurnitureObject);
+                            selectedFurniture = newFurnitureObject;
 
-                        // instantiate the new prefab in the place of the old one, destroy old one
-                        GameObject newPrefab = furniturePrefabs[randomIndex];
-                        Vector3 position = selectedObject.transform.position;
-                        Quaternion rotation = selectedObject.transform.rotation;
-                        Destroy(selectedObject);
-                        selectedObject = Instantiate(newPrefab, position, rotation);
-                        CollisionHandler collisionHandler = selectedObject.AddComponent<CollisionHandler>();
-                        instantiatedModels.Add(selectedObject);
+                        }
+                        catch (Exception e)
+                        {
+                            debugText.text = e.Message;
+                            if (errorAudio != null)
+                            {
+                                errorAudio.Play();
+                            }
+                        }
                     }
                 }
                 return;
             }
         }
         // selecting a furniture object
-        if (selectedObject == null)
+        if (selectedFurniture?.furnModel == null)
         {
             Ray ray = Camera.main.ScreenPointToRay(finger.screenPosition);
             RaycastHit hit;
-
             if (Physics.Raycast(ray, out hit))
             {
                 GameObject hitObject = hit.transform.gameObject;
-                if (instantiatedModels.Contains(hitObject))
+                // selected item set to first matching model in object array or null default
+                selectedFurniture = instantiatedFurniture.FirstOrDefault(furnitureObject => furnitureObject.furnModel == hitObject);
+                if (selectedFurniture != null)
                 {
                     if (selectFurnitureAudioSource != null)
                     {
                         selectFurnitureAudioSource.Play();
                     }
-                    selectedObject = hitObject;
 
                     deleteButton.gameObject.SetActive(true);
                     viewModelButton.gameObject.SetActive(true);
@@ -241,7 +334,7 @@ public class ObjectHandler : MonoBehaviour
                 {
                     if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
                     {
-                        selectedObject.transform.position = hit.pose.position;
+                        selectedFurniture.furnModel.transform.position = hit.pose.position;
                     }
                 }
             }
@@ -253,7 +346,7 @@ public class ObjectHandler : MonoBehaviour
             Vector2 delta = finger.screenPosition - initialFingerPosition;
             float rotationAngle = delta.x * -0.5f;
 
-            selectedObject.transform.rotation = objRotationBefore * Quaternion.Euler(0, rotationAngle, 0);
+            selectedFurniture.furnModel.transform.rotation = objRotationBefore * Quaternion.Euler(0, rotationAngle, 0);
         }
     }
 
@@ -279,21 +372,44 @@ public class ObjectHandler : MonoBehaviour
                         if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
                         {
                             Pose pose = hit.pose;
-
-                            // temp for db and regen test
-                            // if placed object is sofa dont place a filler, place real object
-                            GameObject obj;
-                            if (selectedIndex == 0)
+                            try
                             {
-                                GameObject randomPrefab = furniturePrefabs[Random.Range(0, furniturePrefabs.Length)];
-                                obj = Instantiate(randomPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                FurnitureData selectedFurn = furnitureData[0];
+                                // find random piece of furniture in data that matches type and instantiate it
+                                if (selectedIndex == 0) // FUR_TYPE: "Sofa"
+                                {
+                                    selectedFurn = sofas[Random.Range(0, sofas.Length)];
+                                }
+                                else if (selectedIndex == 1) // FUR_TYPE: "Chair"
+                                {
+                                    selectedFurn = chairs[Random.Range(0, chairs.Length)];
+                                }
+                                else if (selectedIndex == 2) // FUR_TYPE: "Lamp"
+                                {
+                                    selectedFurn = lamps[Random.Range(0, lamps.Length)];
+                                }
+                                else if (selectedIndex == 3) // FUR_TYPE: "Table"
+                                {
+                                    selectedFurn = tables[Random.Range(0, tables.Length)];
+                                }
+                                else if (selectedIndex == 4) // FUR_TYPE: "TV Stand"
+                                {
+                                    selectedFurn = tvStands[Random.Range(0, tvStands.Length)];
+                                }
+                                FurnitureObject newFurnitureObject = new FurnitureObject();
+                                newFurnitureObject.furnData = selectedFurn;
+                                newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurn.FUR_ID - 1], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                                instantiatedFurniture.Add(newFurnitureObject);
                             }
-                            else
+                            catch (Exception e)
                             {
-                                obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                debugText.text = e.Message;
+                                if (errorAudio != null)
+                                {
+                                    errorAudio.Play();
+                                }
                             }
-                            CollisionHandler collisionHandler = obj.AddComponent<CollisionHandler>();
-                            instantiatedModels.Add(obj);
 
                             if (dropFurnitureAudioSource != null)
                             {
@@ -324,7 +440,7 @@ public class ObjectHandler : MonoBehaviour
                 {
                     if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
                     {
-                        selectedObject.transform.position = hit.pose.position;
+                        selectedFurniture.furnModel.transform.position = hit.pose.position;
                         if (dropFurnitureAudioSource != null)
                         {
                             dropFurnitureAudioSource.Play();
@@ -335,7 +451,7 @@ public class ObjectHandler : MonoBehaviour
             else
             {
                 // reset pose if not on a valid plane
-                selectedObject.transform.position = objPositionBeforeMove;
+                selectedFurniture.furnModel.transform.position = objPositionBeforeMove;
                 if (errorAudio != null)
                 {
                     errorAudio.Play();
@@ -370,15 +486,15 @@ public class ObjectHandler : MonoBehaviour
         rotateButton.gameObject.SetActive(false);
         regenButton.gameObject.SetActive(false);
 
-        selectedObject = null;
+        selectedFurniture = null;
     }
 
     private void DeleteObject()
     {
-        if (selectedObject != null)
+        if (selectedFurniture?.furnModel != null)
         {
             // move the object out of the scene
-            selectedObject.transform.position = new Vector3(-10000, -10000, -10000);
+            selectedFurniture.furnModel.transform.position = new Vector3(-10000, -10000, -10000);
             StartCoroutine(DestroyObjectAfterFixedUpdate());
         }
     }
@@ -387,7 +503,8 @@ public class ObjectHandler : MonoBehaviour
     {
         // wait for the next FixedUpdate to register collision exit
         yield return new WaitForFixedUpdate();
-        Destroy(selectedObject);
+        instantiatedFurniture.Remove(selectedFurniture);
+        Destroy(selectedFurniture.furnModel);
         DeselectObject();
     }
 }

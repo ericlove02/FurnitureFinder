@@ -3919,12 +3919,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objPrefabs:
-  - {fileID: 81404301077227161, guid: 16b82da5fbe22f94abfaa85b55ac4b8f, type: 3}
-  - {fileID: 8450349980501170344, guid: 5f7daf2d42179134e98f2715d3d1a2c1, type: 3}
-  - {fileID: 5823362233377097707, guid: 255eb440b99826741af6827297e8c928, type: 3}
-  - {fileID: 1710222370027603669, guid: 38e823cc8e8d7c14b9c1028498df8c39, type: 3}
-  - {fileID: 2135226589491461677, guid: a3c9e259930490c478080e82a577e556, type: 3}
-  - {fileID: 465715841198784415, guid: 2e7e35d7adedb9d47bc18463a50c52d7, type: 3}
+  - {fileID: 6020908404802444175, guid: 1f241cd4527994f48b1bfa2d6e063f87, type: 3}
+  - {fileID: 7492412711633808758, guid: 3e87412641d9f2446aa1e8fd5accac8b, type: 3}
+  - {fileID: 8388894865236877307, guid: 59da6fafc2d461440a512feaf9f4720f, type: 3}
+  - {fileID: 2461241736214672074, guid: ec50e91ca6a14004992c06873be6dbd8, type: 3}
   uiSprites:
   - {fileID: 1191621376}
   - {fileID: 879239908}

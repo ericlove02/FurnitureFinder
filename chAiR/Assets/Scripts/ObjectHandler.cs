@@ -10,6 +10,7 @@ using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using System.Linq;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -70,6 +71,11 @@ public class ObjectHandler : MonoBehaviour
     }
 
     private List<FurnitureData> furnitureData;
+    private FurnitureData[] sofas;
+    private FurnitureData[] chairs;
+    private FurnitureData[] lamps;
+    private FurnitureData[] tables;
+    private FurnitureData[] tvStands;
 
     private void Awake()
     {
@@ -97,23 +103,24 @@ public class ObjectHandler : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
         {
-            debugText.text = "sending request";
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError(www.error);
-                debugText.text = "error";
             }
             else
             {
                 // parse JSON and store data
                 string json = www.downloadHandler.text;
-                debugText.text = "parsing...";
                 try
                 {
                     furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
-                    debugText.text = furnitureData[0].FUR_ID.ToString();
+                    sofas = furnitureData.Where(furniture => furniture.FUR_TYPE == "Sofa").ToArray();
+                    chairs = furnitureData.Where(furniture => furniture.FUR_TYPE == "Chair").ToArray();
+                    lamps = furnitureData.Where(furniture => furniture.FUR_TYPE == "Lamp").ToArray();
+                    tables = furnitureData.Where(furniture => furniture.FUR_TYPE == "Table").ToArray();
+                    tvStands = furnitureData.Where(furniture => furniture.FUR_TYPE == "TV Stand").ToArray();
                 }
                 catch (Exception e)
                 {
@@ -332,21 +339,42 @@ public class ObjectHandler : MonoBehaviour
                         if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
                         {
                             Pose pose = hit.pose;
-
-                            // temp for db and regen test
-                            // if placed object is sofa dont place a filler, place real object
-                            GameObject obj;
-                            if (selectedIndex == 0)
+                            try
                             {
-                                GameObject randomPrefab = furniturePrefabs[Random.Range(0, furniturePrefabs.Length)];
-                                obj = Instantiate(randomPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                FurnitureData selectedFurn = furnitureData[0];
+                                // find random piece of furniture in data that matches type and instantiate it
+                                if (selectedIndex == 0) // FUR_TYPE: "Sofa"
+                                {
+                                    selectedFurn = sofas[Random.Range(0, sofas.Length)];
+                                }
+                                else if (selectedIndex == 1) // FUR_TYPE: "Chair"
+                                {
+                                    selectedFurn = chairs[Random.Range(0, chairs.Length)];
+                                }
+                                else if (selectedIndex == 3) // FUR_TYPE: "Lamp"
+                                {
+                                    selectedFurn = lamps[Random.Range(0, lamps.Length)];
+                                }
+                                else if (selectedIndex == 3) // FUR_TYPE: "Table"
+                                {
+                                    selectedFurn = tables[Random.Range(0, tables.Length)];
+                                }
+                                else if (selectedIndex == 4) // FUR_TYPE: "TV Stand"
+                                {
+                                    selectedFurn = tvStands[Random.Range(0, tvStands.Length)];
+                                }
+                                GameObject obj = Instantiate(furniturePrefabs[selectedFurn.FUR_ID - 1], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                CollisionHandler collisionHandler = obj.AddComponent<CollisionHandler>();
+                                instantiatedModels.Add(obj);
                             }
-                            else
+                            catch (Exception e)
                             {
-                                obj = Instantiate(objPrefabs[selectedIndex], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                debugText.text = e.Message;
+                                if (errorAudio != null)
+                                {
+                                    errorAudio.Play();
+                                }
                             }
-                            CollisionHandler collisionHandler = obj.AddComponent<CollisionHandler>();
-                            instantiatedModels.Add(obj);
 
                             if (dropFurnitureAudioSource != null)
                             {

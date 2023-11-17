@@ -143,11 +143,11 @@ public class ObjectHandler : MonoBehaviour
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(selectedFurniture.furnModel.transform.position);
 
-            deleteButton.transform.position = screenPos + new Vector3(0, 200, 0);
-            viewModelButton.transform.position = screenPos + new Vector3(200, 200, 0);
-            moveButton.transform.position = screenPos + new Vector3(0, 0, 0);
-            rotateButton.transform.position = screenPos + new Vector3(200, 0, 0);
-            regenButton.transform.position = screenPos + new Vector3(100, 0, 0);
+            deleteButton.transform.position = screenPos + new Vector3(-300, 300, 0);
+            regenButton.transform.position = screenPos + new Vector3(-150, 300, 0);
+            viewModelButton.transform.position = screenPos + new Vector3(300, 300, 0);
+            moveButton.transform.position = screenPos + new Vector3(-100, -150, 0);
+            rotateButton.transform.position = screenPos + new Vector3(100, -150, 0);
         }
         else
         {

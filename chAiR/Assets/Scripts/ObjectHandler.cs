@@ -78,7 +78,8 @@ public class ObjectHandler : MonoBehaviour
     private FurnitureData[] chairs;
     private FurnitureData[] lamps;
     private FurnitureData[] tables;
-    private FurnitureData[] tvStands;
+    private FurnitureData[] desks;
+    private FurnitureData[] drawers;
 
 
     private void Awake()
@@ -123,7 +124,8 @@ public class ObjectHandler : MonoBehaviour
                     chairs = furnitureData.Where(furniture => furniture.FUR_TYPE == "Chair").ToArray();
                     lamps = furnitureData.Where(furniture => furniture.FUR_TYPE == "Lamp").ToArray();
                     tables = furnitureData.Where(furniture => furniture.FUR_TYPE == "Table").ToArray();
-                    tvStands = furnitureData.Where(furniture => furniture.FUR_TYPE == "TV Stand").ToArray();
+                    desks = furnitureData.Where(furniture => furniture.FUR_TYPE == "Desk").ToArray();
+                    drawers = furnitureData.Where(furniture => furniture.FUR_TYPE == "Drawers").ToArray();
                 }
                 catch (Exception e)
                 {
@@ -252,9 +254,13 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 selectedFurnData = tables[Random.Range(0, tables.Length)];
                             }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "TV Stand") // FUR_TYPE: "TV Stand"
+                            else if (selectedFurniture.furnData.FUR_TYPE == "Desk") // FUR_TYPE: "Desk"
                             {
-                                selectedFurnData = tvStands[Random.Range(0, tvStands.Length)];
+                                selectedFurnData = desks[Random.Range(0, desks.Length)];
+                            }
+                            else if (selectedFurniture.furnData.FUR_TYPE == "Drawers") // FUR_TYPE: "Drawers"
+                            {
+                                selectedFurnData = drawers[Random.Range(0, drawers.Length)];
                             }
                             // instantiate the new prefab in the place of the old one, destroy old one
                             FurnitureObject newFurnitureObject = new FurnitureObject();
@@ -388,9 +394,13 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 selectedFurn = tables[Random.Range(0, tables.Length)];
                             }
-                            else if (selectedIndex == 4) // FUR_TYPE: "TV Stand"
+                            else if (selectedIndex == 4) // FUR_TYPE: "Desk"
                             {
-                                selectedFurn = tvStands[Random.Range(0, tvStands.Length)];
+                                selectedFurn = desks[Random.Range(0, desks.Length)];
+                            }
+                            else if (selectedIndex == 5) // FUR_TYPE: "Drawers"
+                            {
+                                selectedFurn = drawers[Random.Range(0, drawers.Length)];
                             }
                             FurnitureObject newFurnitureObject = new FurnitureObject();
                             newFurnitureObject.furnData = selectedFurn;

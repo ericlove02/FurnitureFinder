@@ -14,7 +14,6 @@ using System.Linq;
 
 public class ObjectHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject[] objPrefabs;
     [SerializeField] private Image[] uiSprites;
 
     [SerializeField] private Button deleteButton;
@@ -361,69 +360,65 @@ public class ObjectHandler : MonoBehaviour
         {
             selectedSprite.gameObject.SetActive(false);
             int selectedIndex = Array.IndexOf(uiSprites, selectedSprite);
-
-            if (selectedIndex >= 0 && selectedIndex < objPrefabs.Length)
+            // ui sprite was dropped on an existing ar plane
+            if (aRRaycastManager.Raycast(finger.screenPosition, hits, TrackableType.PlaneWithinPolygon))
             {
-                // ui sprite was dropped on an existing ar plane
-                if (aRRaycastManager.Raycast(finger.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+                foreach (ARRaycastHit hit in hits)
                 {
-                    foreach (ARRaycastHit hit in hits)
+                    if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
                     {
-                        if (aRPlaneManager.GetPlane(hit.trackableId).alignment == PlaneAlignment.HorizontalUp)
+                        Pose pose = hit.pose;
+                        try
                         {
-                            Pose pose = hit.pose;
-                            try
+                            FurnitureData selectedFurn = furnitureData[0];
+                            // find random piece of furniture in data that matches type and instantiate it
+                            if (selectedIndex == 0) // FUR_TYPE: "Sofa"
                             {
-                                FurnitureData selectedFurn = furnitureData[0];
-                                // find random piece of furniture in data that matches type and instantiate it
-                                if (selectedIndex == 0) // FUR_TYPE: "Sofa"
-                                {
-                                    selectedFurn = sofas[Random.Range(0, sofas.Length)];
-                                }
-                                else if (selectedIndex == 1) // FUR_TYPE: "Chair"
-                                {
-                                    selectedFurn = chairs[Random.Range(0, chairs.Length)];
-                                }
-                                else if (selectedIndex == 2) // FUR_TYPE: "Lamp"
-                                {
-                                    selectedFurn = lamps[Random.Range(0, lamps.Length)];
-                                }
-                                else if (selectedIndex == 3) // FUR_TYPE: "Table"
-                                {
-                                    selectedFurn = tables[Random.Range(0, tables.Length)];
-                                }
-                                else if (selectedIndex == 4) // FUR_TYPE: "TV Stand"
-                                {
-                                    selectedFurn = tvStands[Random.Range(0, tvStands.Length)];
-                                }
-                                FurnitureObject newFurnitureObject = new FurnitureObject();
-                                newFurnitureObject.furnData = selectedFurn;
-                                newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurn.FUR_ID - 1], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
-                                CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
-                                instantiatedFurniture.Add(newFurnitureObject);
+                                selectedFurn = sofas[Random.Range(0, sofas.Length)];
                             }
-                            catch (Exception e)
+                            else if (selectedIndex == 1) // FUR_TYPE: "Chair"
                             {
-                                debugText.text = e.Message;
-                                if (errorAudio != null)
-                                {
-                                    errorAudio.Play();
-                                }
+                                selectedFurn = chairs[Random.Range(0, chairs.Length)];
                             }
+                            else if (selectedIndex == 2) // FUR_TYPE: "Lamp"
+                            {
+                                selectedFurn = lamps[Random.Range(0, lamps.Length)];
+                            }
+                            else if (selectedIndex == 3) // FUR_TYPE: "Table"
+                            {
+                                selectedFurn = tables[Random.Range(0, tables.Length)];
+                            }
+                            else if (selectedIndex == 4) // FUR_TYPE: "TV Stand"
+                            {
+                                selectedFurn = tvStands[Random.Range(0, tvStands.Length)];
+                            }
+                            FurnitureObject newFurnitureObject = new FurnitureObject();
+                            newFurnitureObject.furnData = selectedFurn;
+                            newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurn.FUR_ID - 1], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                            CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                            instantiatedFurniture.Add(newFurnitureObject);
+                        }
+                        catch (Exception e)
+                        {
+                            debugText.text = e.Message;
+                            if (errorAudio != null)
+                            {
+                                errorAudio.Play();
+                            }
+                        }
 
-                            if (dropFurnitureAudioSource != null)
-                            {
-                                dropFurnitureAudioSource.Play();
-                            }
+                        if (dropFurnitureAudioSource != null)
+                        {
+                            dropFurnitureAudioSource.Play();
                         }
                     }
                 }
-                else
+            }
+            else
+            {
+                if (errorAudio != null)
                 {
-                    if (errorAudio != null)
-                    {
-                        errorAudio.Play();
-                    }
+                    errorAudio.Play();
                 }
             }
             selectedSprite.rectTransform.localPosition = Vector3.zero;

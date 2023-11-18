@@ -80,6 +80,11 @@ public class ObjectHandler : MonoBehaviour
     private FurnitureData[] tables;
     private FurnitureData[] desks;
     private FurnitureData[] drawers;
+    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private TMP_Text loadingPanelText;
+    [SerializeField] private GameObject loadingPanelIcon;
+    private bool isLoading = true;
+    [SerializeField] private GameObject updateDisplay;
 
 
     private void Awake()
@@ -96,6 +101,10 @@ public class ObjectHandler : MonoBehaviour
         rotateButton.gameObject.SetActive(false);
         regenButton.gameObject.SetActive(false);
 
+        loadingPanel.SetActive(false);
+        updateDisplay.SetActive(false);
+        updateDisplay.transform.localPosition = new Vector3(9999f, 0f, 0f);
+
         // retrive stored vibe or if not set, vibeError
         selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
         StartCoroutine(GetFurnitureData(selectedVibe));
@@ -103,37 +112,66 @@ public class ObjectHandler : MonoBehaviour
 
     private IEnumerator GetFurnitureData(string vibeName)
     {
-        string apiUrl = "https://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
-
-        using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
+        int retryCount = 0;
+        do
         {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            string apiUrl = "https://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
+            // alternate endpoint to test on retry, finishes with another try on main endpoint
+            if (retryCount == 1)
+                apiUrl = "http://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
+            using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
             {
-                Debug.LogError(www.error);
-            }
-            else
-            {
-                // parse JSON and store data
-                string json = www.downloadHandler.text;
-                try
-                {
-                    furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
-                    sofas = furnitureData.Where(furniture => furniture.FUR_TYPE == "Sofa").ToArray();
-                    chairs = furnitureData.Where(furniture => furniture.FUR_TYPE == "Chair").ToArray();
-                    lamps = furnitureData.Where(furniture => furniture.FUR_TYPE == "Lamp").ToArray();
-                    tables = furnitureData.Where(furniture => furniture.FUR_TYPE == "Table").ToArray();
-                    desks = furnitureData.Where(furniture => furniture.FUR_TYPE == "Desk").ToArray();
-                    drawers = furnitureData.Where(furniture => furniture.FUR_TYPE == "Drawers").ToArray();
-                }
-                catch (Exception e)
-                {
-                    debugText.text = e.Message;
-                }
+                yield return www.SendWebRequest();
 
+                if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    loadingPanel.SetActive(true);
+                    Debug.LogError(www.error);
+                    // wait 3 seconds before retrying
+                    yield return new WaitForSeconds(3);
+                    retryCount++;
+                }
+                else
+                {
+                    // parse JSON and store data
+                    string json = www.downloadHandler.text;
+                    try
+                    {
+                        furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
+                        sofas = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Sofa" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        chairs = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Chair" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        lamps = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Lamp" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        tables = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Table" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        desks = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Desk" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        drawers = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Drawers" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+
+                        loadingPanel.SetActive(false);
+                        isLoading = false;
+
+                        // check that all FUR_ID are within the bounds of the prefab array
+                        foreach (var furnitureItem in furnitureData)
+                        {
+                            if (furnitureItem.FUR_ID <= furniturePrefabs.Length)
+                            {
+                                updateDisplay.SetActive(true);
+                                updateDisplay.transform.localPosition = Vector3.zero;
+                            }
+                        }
+
+                        yield break;
+                    }
+                    catch (Exception e)
+                    {
+                        debugText.text = e.Message;
+                    }
+
+                }
             }
-        }
+        } while (retryCount < 4);
+
+        // if reached here, all retry attempts failed
+        loadingPanelText.text = "Failed to retrieve data after multiple attempts";
+        loadingPanelIcon.SetActive(false);
     }
 
     private void Update()
@@ -182,7 +220,7 @@ public class ObjectHandler : MonoBehaviour
 
     private void FingerDown(EnhancedTouch.Finger finger)
     {
-        if (isDragging) return;
+        if (isDragging || isLoading) return;
 
         // selecting a default drag sprite
         foreach (Image uiSprite in uiSprites)
@@ -511,5 +549,15 @@ public class ObjectHandler : MonoBehaviour
         instantiatedFurniture.Remove(selectedFurniture);
         Destroy(selectedFurniture.furnModel);
         DeselectObject();
+    }
+
+    public void CloseUpdatePanel()
+    {
+        if (uiButtonAudioSource != null)
+        {
+            uiButtonAudioSource.Play();
+        }
+        updateDisplay.SetActive(false);
+        updateDisplay.transform.localPosition = new Vector3(9999f, 0f, 0f);
     }
 }

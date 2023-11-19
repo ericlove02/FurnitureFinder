@@ -840,6 +840,12 @@ MonoBehaviour:
   - {fileID: 1710222370027603669, guid: 38e823cc8e8d7c14b9c1028498df8c39, type: 3}
   - {fileID: 2135226589491461677, guid: a3c9e259930490c478080e82a577e556, type: 3}
   - {fileID: 465715841198784415, guid: 2e7e35d7adedb9d47bc18463a50c52d7, type: 3}
+  furnImages:
+  - {fileID: 21300000, guid: 47dc550cb2f134640908d8255cd10384, type: 3}
+  - {fileID: 21300000, guid: 5ea898346669ceb40b6ce60c2d19bd96, type: 3}
+  - {fileID: 21300000, guid: 8cb34406454dca642b0bb46fa130513c, type: 3}
+  - {fileID: 21300000, guid: 209911cad8de5c643bf0cb58238cbcf0, type: 3}
+  - {fileID: 21300000, guid: 74e5e37a5bd4a0a40bb80041e2a041ad, type: 3}
 --- !u!1 &1378973108
 GameObject:
   m_ObjectHideFlags: 0

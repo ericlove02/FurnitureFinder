@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
@@ -56,6 +57,7 @@ public class ObjectHandler : MonoBehaviour
     // we will store all of the indices of the prefabs to the db and use that to retrieve the correct
     // prefab for the piece of furniture
     public GameObject[] furniturePrefabs;
+    public Sprite[] furnitureSprites;
 
     [SerializeField] TMP_Text debugText;
 
@@ -93,6 +95,8 @@ public class ObjectHandler : MonoBehaviour
     [SerializeField] private TMP_Text infoDesc;
     [SerializeField] private TMP_Text infoDims;
     [SerializeField] private TMP_Text infoCost;
+    [SerializeField] private Image infoImage;
+    private string productUrl;
     private bool showingInfoPanel = false;
 
 
@@ -590,10 +594,12 @@ public class ObjectHandler : MonoBehaviour
     private void OpenInfoPanel()
     {
         showingInfoPanel = true;
+        infoImage.sprite = furnitureSprites[selectedFurniture.furnData.FUR_ID - 1];
         infoName.text = selectedFurniture.furnData.FUR_NAME;
         infoDesc.text = selectedFurniture.furnData.FUR_DESC;
-        infoCost.text = selectedFurniture.furnData.FUR_COST.ToString();
-        infoDims.text = selectedFurniture.furnData.FUR_DIM_L.ToString() + "x" + selectedFurniture.furnData.FUR_DIM_W.ToString() + "x" + selectedFurniture.furnData.FUR_DIM_H.ToString();
+        infoCost.text = "$" + selectedFurniture.furnData.FUR_COST.ToString();
+        infoDims.text = selectedFurniture.furnData.FUR_DIM_L.ToString() + "x" + selectedFurniture.furnData.FUR_DIM_W.ToString() + "x" + selectedFurniture.furnData.FUR_DIM_H.ToString() + " cm";
+        productUrl = selectedFurniture.furnData.FUR_LINK.Replace("\\/", "/").Replace("\n", "").Replace("\r", "");
         infoPanel.transform.localPosition = Vector3.zero;
         infoPanel.SetActive(true);
     }
@@ -603,5 +609,10 @@ public class ObjectHandler : MonoBehaviour
         showingInfoPanel = false;
         infoPanel.SetActive(false);
         infoPanel.transform.localPosition = new Vector3(9999f, 0f, 0f);
+    }
+
+    public void OpenProductLink()
+    {
+        Application.OpenURL(productUrl);
     }
 }

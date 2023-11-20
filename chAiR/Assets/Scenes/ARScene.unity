@@ -3365,7 +3365,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1175330992}
         m_TargetAssemblyTypeName: ExportHandler, Assembly-CSharp
-        m_MethodName: CancelExport
+        m_MethodName: ShareImage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4964,6 +4964,11 @@ MonoBehaviour:
   imageDisplayPanel: {fileID: 2071378290}
   imageDisplay: {fileID: 38970345}
   closeButton: {fileID: 1457731769}
+  imageExportPanel: {fileID: 0}
+  imageExport: {fileID: 0}
+  saveButton: {fileID: 0}
+  cancelButton: {fileID: 0}
+  shareButton: {fileID: 0}
 --- !u!1 &1578499862
 GameObject:
   m_ObjectHideFlags: 0

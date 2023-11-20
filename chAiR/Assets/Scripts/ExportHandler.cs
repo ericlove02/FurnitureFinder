@@ -78,6 +78,19 @@ public class ExportHandler : MonoBehaviour
         imageDisplayPanel.transform.localPosition = new Vector3(9999f, 0f, 0f);
     }
 
+    public void ShareImage()
+    {
+        // StartCoroutine (ShareImageInAndroid());
+
+        string screenshotPath = Application.persistentDataPath + "/export.png";
+
+		if (!Application.isEditor) {
+            new NativeShare().AddFile(screenshotPath).Share();
+        }
+        imageExportPanel.SetActive(false);
+        imageExportPanel.transform.localPosition = new Vector3(9999f, 0f, 0f);
+    }
+
     public void CancelExport()
     {
         imageExportPanel.SetActive(false);

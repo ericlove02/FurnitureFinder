@@ -47,7 +47,7 @@ public class FurnInfoController : MonoBehaviour
     {
         // Loop through the number of objects you want to add
         int id = SelectedFurniture.clickedFurnitureId; 
-        Debug.Log("PopulateScrollView started");
+        Debug.Log("PopulateScrollView started: " + id.ToString());
         int retryCount = 0;
         string apiUrl = "https://hammy-exchanges.000webhostapp.com/all_furn.php";
         using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
@@ -73,12 +73,15 @@ public class FurnInfoController : MonoBehaviour
                         furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
                         FurnitureData furniture = furnitureData[id - 1];
                         furnitureName.text = furniture.FUR_NAME;
+                        Debug.Log(furnitureName.text);
+                        Debug.Log(furniture.FUR_NAME);
                         furnitureCostText.text = "$" + furniture.FUR_COST.ToString();
-                        furniturePurchaseLink = furniture.FUR_LINK;
+                        furniturePurchaseLink = furniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
+                        Debug.Log(furniturePurchaseLink);
                     }
                     catch (Exception e)
                     {
-                        debugText.text = e.Message;
+                        // debugText.text = e.Message;
                     }
                 }
             }
@@ -87,5 +90,6 @@ public class FurnInfoController : MonoBehaviour
     public void OpenWebpageOnClick()
     {
         Application.OpenURL(FurnInfoController.furniturePurchaseLink);
+        Debug.Log(FurnInfoController.furniturePurchaseLink);
     }
 }

@@ -77,7 +77,7 @@ public class ScrollViewManager : MonoBehaviour
                             if (textComponent != null)
                             {
                                 textComponent[0].text = furnitureData[i].FUR_NAME;
-                                textComponent[1].text = furnitureData[i].FUR_ID.ToString();
+                                textComponent[1].text = furnitureData[i].FUR_ID.ToString(); 
                             }
                         }
                         yield break;

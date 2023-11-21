@@ -1,15 +1,27 @@
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using System;
+using TMPro;
+using UnityEngine.Networking;
+using Newtonsoft.Json;
+using System.Linq;
 
 public class ButtonClickScript : MonoBehaviour
 {
     // Set the scene name you want to load in the inspector
     public string sceneToLoad;
+    Canvas canvas; 
+    GameObject panel;
 
     void Start()
     {
         // Attach the method to the button's onClick event
+        canvas = FindCanvasInHierarchy(transform);
+        Transform panelTransform = canvas.transform.Find("Panel");
+        panel = panelTransform.gameObject;
         Button button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
     }
@@ -31,7 +43,9 @@ public class ButtonClickScript : MonoBehaviour
 
             // Set the text value to the static variable and record the page that we came from
             SelectedFurniture.clickedFurnitureName = name;
-            int.TryParse(id, out SelectedFurniture.clickedFurnitureId);
+            int furnitureId;
+            int.TryParse(id, out furnitureId);
+            SelectedFurniture.clickedFurnitureId = furnitureId;
             SelectedFurniture.previousPage = "AllFurn";
 
             // Print the static variable for verification
@@ -39,11 +53,38 @@ public class ButtonClickScript : MonoBehaviour
             Debug.Log("ID: " + SelectedFurniture.clickedFurnitureId);
 
             // Change the scene
-            SceneManager.LoadScene(sceneToLoad);
+            List<ScrollViewManager.FurnitureData> furnitureData = ScrollViewManager.furnitureData;
+            ScrollViewManager.FurnitureData selectedFurniture = furnitureData[furnitureId - 1];
+
+            panel.SetActive(!panel.activeSelf);
+            
+
         }
         else
         {
             Debug.LogError("Text component not found among the children.");
+        }
+    }
+
+    Canvas FindCanvasInHierarchy(Transform obj)
+    {
+        if (obj == null)
+        {
+            return null;
+        }
+
+        // Check if the current object has a canvas component
+        Canvas canvas = obj.GetComponent<Canvas>();
+
+        if (canvas != null)
+        {
+            // Canvas found, return it
+            return canvas;
+        }
+        else
+        {
+            // If the current object doesn't have the canvas, recursively check its parent
+            return FindCanvasInHierarchy(obj.parent);
         }
     }
 }

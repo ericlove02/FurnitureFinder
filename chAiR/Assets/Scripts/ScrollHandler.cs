@@ -99,5 +99,11 @@ public class ScrollViewManager : MonoBehaviour
         contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, contentHeight);
     }
 
+    public void OpenWebpageOnClick()
+    {
+        Application.OpenURL(SelectedFurniture.furniturePurchaseLink);
+        Debug.Log(SelectedFurniture.furniturePurchaseLink);
+    }
+
 
 }

@@ -12,7 +12,7 @@ using System.Linq;
 public class ButtonClickScript : MonoBehaviour
 {
     // Set the scene name you want to load in the inspector
-    public string sceneToLoad;
+    public string furniturePurchaseLink;
     Canvas canvas; 
     GameObject panel;
 
@@ -56,6 +56,11 @@ public class ButtonClickScript : MonoBehaviour
             List<ScrollViewManager.FurnitureData> furnitureData = ScrollViewManager.furnitureData;
             ScrollViewManager.FurnitureData selectedFurniture = furnitureData[furnitureId - 1];
 
+            Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            furnitureName.text = selectedFurniture.FUR_NAME;
+            furnitureCost.text = selectedFurniture.FUR_COST.ToString();
+            furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
             panel.SetActive(!panel.activeSelf);
             
 
@@ -86,5 +91,11 @@ public class ButtonClickScript : MonoBehaviour
             // If the current object doesn't have the canvas, recursively check its parent
             return FindCanvasInHierarchy(obj.parent);
         }
+    }
+
+    public void OpenWebpageOnClick()
+    {
+        Application.OpenURL(furniturePurchaseLink);
+        Debug.Log(furniturePurchaseLink);
     }
 }

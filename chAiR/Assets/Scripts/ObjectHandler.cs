@@ -102,7 +102,6 @@ public class ObjectHandler : MonoBehaviour
         // retrive stored vibe or if not set, vibeError
         selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
         StartCoroutine(GetFurnitureData(selectedVibe));
-        StartCoroutine(DisplayFurnitureCosts());
     }
 
     private IEnumerator GetFurnitureData(string vibeName)
@@ -140,19 +139,19 @@ public class ObjectHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator DisplayFurnitureCosts()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1f); // Update the cost display every 1 second (you can adjust this interval)
+    // private IEnumerator DisplayFurnitureCosts()
+    // {
+    //     while (true)
+    //     {
+    //         yield return new WaitForSeconds(1f); // Update the cost display every 1 second (you can adjust this interval)
 
-            // Calculate the total cost of all instantiated furniture
-            totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
+    //         // Calculate the total cost of all instantiated furniture
+    //         totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
 
-            // Update the UI Dropdown with the total cost and individual furniture items
-            UpdateDropdown(totalCost);
-        }
-    }
+    //         // Update the UI Dropdown with the total cost and individual furniture items
+    //         UpdateDropdown(totalCost);
+    //     }
+    // }
 
     private void UpdateDropdown(float totalCost)
     {
@@ -448,6 +447,11 @@ public class ObjectHandler : MonoBehaviour
                             newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurn.FUR_ID - 1], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
                             CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
                             instantiatedFurniture.Add(newFurnitureObject);
+                            // Calculate the total cost of all instantiated furniture
+                            totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
+
+                            // Update the UI Dropdown with the total cost and individual furniture items
+                            UpdateDropdown(totalCost);
                         }
                         catch (Exception e)
                         {

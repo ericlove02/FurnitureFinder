@@ -313,7 +313,11 @@ public class ObjectHandler : MonoBehaviour
                             CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
                             instantiatedFurniture.Add(newFurnitureObject);
                             selectedFurniture = newFurnitureObject;
+                            // Calculate the total cost of all instantiated furniture
+                            totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
 
+                            // Update the UI Dropdown with the total cost and individual furniture items
+                            UpdateDropdown(totalCost);
                         }
                         catch (Exception e)
                         {

@@ -105,5 +105,8 @@ public class ScrollViewManager : MonoBehaviour
         Debug.Log(SelectedFurniture.furniturePurchaseLink);
     }
 
-
+    public void TogglePanel()
+    {
+        panelInScene.SetActive(!panelInScene.activeSelf);
+    }
 }

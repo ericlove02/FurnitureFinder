@@ -15,16 +15,23 @@ public class ExportHandler : MonoBehaviour
     [SerializeField] private Button saveButton;
     [SerializeField] private Button cancelButton;
     [SerializeField] private Button shareButton;
+    [SerializeField] private GameObject canvas;
 
     public void CaptureImage()
     {
-        ScreenCapture.CaptureScreenshot("export.png");
         StartCoroutine(DisplayScreenshot());
     }
 
     private IEnumerator DisplayScreenshot()
     {
-        yield return new WaitForSeconds(1f);
+        yield return null;
+        // canvas.transform.localPosition = new Vector3(9999f, 0f, 0f);
+        canvas.SetActive(false);
+        yield return new WaitForEndOfFrame();
+        ScreenCapture.CaptureScreenshot("export.png");
+        canvas.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        // canvas.transform.localPosition = Vector3.zero;
 
         string screenshotPath = Application.persistentDataPath + "/export.png";
 

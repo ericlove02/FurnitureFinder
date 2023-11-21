@@ -1045,7 +1045,6 @@ GameObject:
   - component: {fileID: 334233881}
   - component: {fileID: 334233880}
   - component: {fileID: 334233879}
-  - component: {fileID: 334233882}
   m_Layer: 5
   m_Name: CancelButton
   m_TagString: Untagged
@@ -1117,7 +1116,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 334233882}
+      - m_Target: {fileID: 1558294240}
         m_TargetAssemblyTypeName: ExportHandler, Assembly-CSharp
         m_MethodName: CancelExport
         m_Mode: 1
@@ -1167,26 +1166,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334233877}
   m_CullTransparentMesh: 1
---- !u!114 &334233882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 334233877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f2df8426d1a6f4d917841e96351c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageDisplayPanel: {fileID: 2071378290}
-  imageDisplay: {fileID: 38970345}
-  closeButton: {fileID: 1457731769}
-  imageExportPanel: {fileID: 63992573}
-  imageExport: {fileID: 1405853446}
-  saveButton: {fileID: 1908216279}
-  cancelButton: {fileID: 334233879}
-  shareButton: {fileID: 1175330989}
 --- !u!1 &335186441
 GameObject:
   m_ObjectHideFlags: 0
@@ -3259,7 +3238,6 @@ GameObject:
   - component: {fileID: 1002349301}
   - component: {fileID: 1002349300}
   - component: {fileID: 1002349299}
-  - component: {fileID: 1002349302}
   m_Layer: 5
   m_Name: ExportButton
   m_TagString: Untagged
@@ -3331,7 +3309,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1002349302}
+      - m_Target: {fileID: 1558294240}
         m_TargetAssemblyTypeName: ExportHandler, Assembly-CSharp
         m_MethodName: CaptureImage
         m_Mode: 1
@@ -3381,26 +3359,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002349297}
   m_CullTransparentMesh: 1
---- !u!114 &1002349302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1002349297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f2df8426d1a6f4d917841e96351c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageDisplayPanel: {fileID: 2071378290}
-  imageDisplay: {fileID: 38970345}
-  closeButton: {fileID: 1457731769}
-  imageExportPanel: {fileID: 63992573}
-  imageExport: {fileID: 1405853446}
-  saveButton: {fileID: 1908216279}
-  cancelButton: {fileID: 334233879}
-  shareButton: {fileID: 1175330989}
 --- !u!1 &1062201054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3862,7 +3820,6 @@ GameObject:
   - component: {fileID: 1175330991}
   - component: {fileID: 1175330990}
   - component: {fileID: 1175330989}
-  - component: {fileID: 1175330992}
   m_Layer: 5
   m_Name: ShareButton
   m_TagString: Untagged
@@ -3934,7 +3891,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1175330992}
+      - m_Target: {fileID: 1558294240}
         m_TargetAssemblyTypeName: ExportHandler, Assembly-CSharp
         m_MethodName: ShareImage
         m_Mode: 1
@@ -3984,26 +3941,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175330987}
   m_CullTransparentMesh: 1
---- !u!114 &1175330992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1175330987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f2df8426d1a6f4d917841e96351c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageDisplayPanel: {fileID: 2071378290}
-  imageDisplay: {fileID: 38970345}
-  closeButton: {fileID: 1457731769}
-  imageExportPanel: {fileID: 63992573}
-  imageExport: {fileID: 1405853446}
-  saveButton: {fileID: 1908216279}
-  cancelButton: {fileID: 334233879}
-  shareButton: {fileID: 1175330989}
 --- !u!1 &1191621374
 GameObject:
   m_ObjectHideFlags: 0
@@ -4766,7 +4703,6 @@ GameObject:
   - component: {fileID: 1457731771}
   - component: {fileID: 1457731770}
   - component: {fileID: 1457731769}
-  - component: {fileID: 1457731772}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -4838,7 +4774,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1457731772}
+      - m_Target: {fileID: 1558294240}
         m_TargetAssemblyTypeName: ExportHandler, Assembly-CSharp
         m_MethodName: ClosePanel
         m_Mode: 1
@@ -4888,26 +4824,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457731767}
   m_CullTransparentMesh: 1
---- !u!114 &1457731772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1457731767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f2df8426d1a6f4d917841e96351c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageDisplayPanel: {fileID: 2071378290}
-  imageDisplay: {fileID: 38970345}
-  closeButton: {fileID: 1457731769}
-  imageExportPanel: {fileID: 63992573}
-  imageExport: {fileID: 1405853446}
-  saveButton: {fileID: 1908216279}
-  cancelButton: {fileID: 334233879}
-  shareButton: {fileID: 1175330989}
 --- !u!1 &1481326294
 GameObject:
   m_ObjectHideFlags: 0
@@ -5668,11 +5584,12 @@ MonoBehaviour:
   imageDisplayPanel: {fileID: 2071378290}
   imageDisplay: {fileID: 38970345}
   closeButton: {fileID: 1457731769}
-  imageExportPanel: {fileID: 0}
-  imageExport: {fileID: 0}
-  saveButton: {fileID: 0}
-  cancelButton: {fileID: 0}
-  shareButton: {fileID: 0}
+  imageExportPanel: {fileID: 63992573}
+  imageExport: {fileID: 1405853446}
+  saveButton: {fileID: 1908216279}
+  cancelButton: {fileID: 334233879}
+  shareButton: {fileID: 1175330989}
+  canvas: {fileID: 1097369677}
 --- !u!1 &1578499862
 GameObject:
   m_ObjectHideFlags: 0
@@ -6782,7 +6699,6 @@ GameObject:
   - component: {fileID: 1908216281}
   - component: {fileID: 1908216280}
   - component: {fileID: 1908216279}
-  - component: {fileID: 1908216282}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -6854,7 +6770,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1908216282}
+      - m_Target: {fileID: 1558294240}
         m_TargetAssemblyTypeName: ExportHandler, Assembly-CSharp
         m_MethodName: SaveScreenshot
         m_Mode: 1
@@ -6904,26 +6820,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908216277}
   m_CullTransparentMesh: 1
---- !u!114 &1908216282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908216277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f2df8426d1a6f4d917841e96351c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageDisplayPanel: {fileID: 2071378290}
-  imageDisplay: {fileID: 38970345}
-  closeButton: {fileID: 1457731769}
-  imageExportPanel: {fileID: 63992573}
-  imageExport: {fileID: 1405853446}
-  saveButton: {fileID: 1908216279}
-  cancelButton: {fileID: 334233879}
-  shareButton: {fileID: 1175330989}
 --- !u!1 &1908588881
 GameObject:
   m_ObjectHideFlags: 0

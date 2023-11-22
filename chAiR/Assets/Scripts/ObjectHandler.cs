@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using System.Linq;
+using System.IO;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -98,6 +99,11 @@ public class ObjectHandler : MonoBehaviour
     [SerializeField] private Image infoImage;
     private string productUrl;
     private bool showingInfoPanel = false;
+    // favorite button references
+    [SerializeField] private Image favoriteButtonImage;
+    [SerializeField] private Sprite filledHeart;
+    [SerializeField] private Sprite unfilledHeart;
+    private int[] favFurnIds;
 
 
     private void Awake()
@@ -114,12 +120,16 @@ public class ObjectHandler : MonoBehaviour
         rotateButton.gameObject.SetActive(false);
         regenButton.gameObject.SetActive(false);
 
-        loadingPanel.SetActive(false);
+        loadingPanel.SetActive(true);
         updateDisplay.SetActive(false);
         updateDisplay.transform.localPosition = new Vector3(9999f, 0f, 0f);
 
         infoPanel.SetActive(false);
         infoPanel.transform.localPosition = new Vector3(9999f, 0f, 0f);
+
+        // parse favorites file into array
+        LoadFavoriteFurnitureIds();
+        // debugText.text = string.Join(", ", favFurnIds.Select(id => id.ToString()).ToArray());
 
         // retrive stored vibe or if not set, vibeError
         selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
@@ -600,6 +610,10 @@ public class ObjectHandler : MonoBehaviour
         infoCost.text = "$" + selectedFurniture.furnData.FUR_COST.ToString();
         infoDims.text = selectedFurniture.furnData.FUR_DIM_L.ToString() + "x" + selectedFurniture.furnData.FUR_DIM_W.ToString() + "x" + selectedFurniture.furnData.FUR_DIM_H.ToString() + " cm";
         productUrl = selectedFurniture.furnData.FUR_LINK.Replace("\\/", "/").Replace("\n", "").Replace("\r", "");
+        if (favFurnIds.Contains(selectedFurniture.furnData.FUR_ID))
+            favoriteButtonImage.sprite = filledHeart;
+        else
+            favoriteButtonImage.sprite = unfilledHeart;
         infoPanel.transform.localPosition = Vector3.zero;
         infoPanel.SetActive(true);
     }
@@ -614,5 +628,59 @@ public class ObjectHandler : MonoBehaviour
     public void OpenProductLink()
     {
         Application.OpenURL(productUrl);
+    }
+
+    public void ClickedFavoriteButton()
+    {
+        int selectedFurnitureId = selectedFurniture.furnData.FUR_ID;
+        // check if in array
+        if (favFurnIds.Contains(selectedFurnitureId))
+        {
+            // if in, remove and change sprite to empty
+            favFurnIds = favFurnIds.Where(id => id != selectedFurnitureId).ToArray();
+            favoriteButtonImage.sprite = unfilledHeart;
+        }
+        else
+        {
+            // if not in, add and cahnge sprite to filled
+            favFurnIds = favFurnIds.Concat(new[] { selectedFurnitureId }).ToArray();
+            favoriteButtonImage.sprite = filledHeart;
+        }
+
+        // save array back to the file
+        SaveFavoriteFurnitureIds();
+    }
+
+    private void LoadFavoriteFurnitureIds()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
+
+        if (File.Exists(filePath))
+        {
+            string[] idStrings = File.ReadAllLines(filePath);
+            favFurnIds = new int[idStrings.Length];
+
+            for (int i = 0; i < idStrings.Length; i++)
+            {
+                if (int.TryParse(idStrings[i], out int id))
+                {
+                    favFurnIds[i] = id;
+                }
+                else
+                {
+                    Debug.LogError("Error parsing furniture ID from file.");
+                }
+            }
+        }
+        else
+        {
+            favFurnIds = new int[0];
+        }
+    }
+
+    private void SaveFavoriteFurnitureIds()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
+        File.WriteAllLines(filePath, favFurnIds.Select(id => id.ToString()).ToArray());
     }
 }

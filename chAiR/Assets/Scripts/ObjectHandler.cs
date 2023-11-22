@@ -493,17 +493,17 @@ public class ObjectHandler : MonoBehaviour
                             // check if renderer is on the parent object first
                             Renderer pRenderer = newFurnitureObject.furnModel.GetComponent<Renderer>();
 
-
                             if (pRenderer != null)
                             {
                                 Bounds bounds = pRenderer.bounds;
 
                                 // scale the object to correct dimensions
-                                float scaleX = selectedFurn.FUR_DIM_L / 100f / bounds.size.x;
-                                float scaleY = selectedFurn.FUR_DIM_W / 100f / bounds.size.y;
-                                float scaleZ = selectedFurn.FUR_DIM_H / 100f / bounds.size.z;
-
-                                newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                                Vector3 rescale = newFurnitureObject.furnModel.transform.localScale;
+                                rescale.x = (selectedFurn.FUR_DIM_L / 100f) * rescale.x / bounds.size.x;
+                                rescale.y = (selectedFurn.FUR_DIM_W / 100f) * rescale.y / bounds.size.y;
+                                rescale.z = (selectedFurn.FUR_DIM_H / 100f) * rescale.z / bounds.size.z;
+                                // debugText.text = "normalBounds: " + rescale.ToString();
+                                newFurnitureObject.furnModel.transform.localScale = rescale;
                             }
                             else
                             {
@@ -519,11 +519,12 @@ public class ObjectHandler : MonoBehaviour
                                         combinedBounds.Encapsulate(childRenderers[i].bounds);
                                     }
                                     // scale the object to correct dimensions
-                                    float scaleX = selectedFurn.FUR_DIM_L / 100f / combinedBounds.size.x;
-                                    float scaleY = selectedFurn.FUR_DIM_W / 100f / combinedBounds.size.y;
-                                    float scaleZ = selectedFurn.FUR_DIM_H / 100f / combinedBounds.size.z;
-
-                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                                    Vector3 rescale = newFurnitureObject.furnModel.transform.localScale;
+                                    rescale.x = (selectedFurn.FUR_DIM_L / 100f) * rescale.x / combinedBounds.size.x;
+                                    rescale.y = (selectedFurn.FUR_DIM_W / 100f) * rescale.y / combinedBounds.size.y;
+                                    rescale.z = (selectedFurn.FUR_DIM_H / 100f) * rescale.z / combinedBounds.size.z;
+                                    // debugText.text = "combinedBounds: " + rescale.ToString();
+                                    newFurnitureObject.furnModel.transform.localScale = rescale;
                                 }
                             }
                             CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();

@@ -120,6 +120,7 @@ public class ObjectHandler : MonoBehaviour
         rotateButton.gameObject.SetActive(false);
         regenButton.gameObject.SetActive(false);
 
+        loadingPanelText.text = "Waiting for data...";
         loadingPanel.SetActive(true);
         updateDisplay.SetActive(false);
         updateDisplay.transform.localPosition = new Vector3(9999f, 0f, 0f);
@@ -144,7 +145,10 @@ public class ObjectHandler : MonoBehaviour
             string apiUrl = "https://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
             // alternate endpoint to test on retry, finishes with another try on main endpoint
             if (retryCount == 1)
+            {
                 apiUrl = "http://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
+                loadingPanelText.text = "Sorry, couldn't get the data. Retrying...";
+            }
             using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
             {
                 yield return www.SendWebRequest();
@@ -500,6 +504,46 @@ public class ObjectHandler : MonoBehaviour
                             else
                             {
                                 debugText.text = "Prefab not yet created for id " + selectedFurn.FUR_ID.ToString();
+                            }
+
+                            // scale the object to correct dimensions
+                            // get objects renderer to measures its current size
+                            // check if renderer is on the parent object first
+                            Renderer pRenderer = newFurnitureObject.furnModel.GetComponent<Renderer>();
+
+                            if (pRenderer != null)
+                            {
+                                Bounds bounds = pRenderer.bounds;
+
+                                // scale the object to correct dimensions
+                                Vector3 rescale = newFurnitureObject.furnModel.transform.localScale;
+                                rescale.x = (selectedFurn.FUR_DIM_L / 100f) * rescale.x / bounds.size.x;
+                                rescale.y = (selectedFurn.FUR_DIM_W / 100f) * rescale.y / bounds.size.y;
+                                rescale.z = (selectedFurn.FUR_DIM_H / 100f) * rescale.z / bounds.size.z;
+                                // debugText.text = "normalBounds: " + rescale.ToString();
+                                newFurnitureObject.furnModel.transform.localScale = rescale;
+                            }
+                            else
+                            {
+                                // renderer is not in parent, use the childrens renderers
+                                Renderer[] childRenderers = newFurnitureObject.furnModel.GetComponentsInChildren<Renderer>();
+
+                                if (childRenderers.Length > 0)
+                                {
+                                    // encapsulate the object bounds
+                                    Bounds combinedBounds = childRenderers[0].bounds;
+                                    for (int i = 1; i < childRenderers.Length; i++)
+                                    {
+                                        combinedBounds.Encapsulate(childRenderers[i].bounds);
+                                    }
+                                    // scale the object to correct dimensions
+                                    Vector3 rescale = newFurnitureObject.furnModel.transform.localScale;
+                                    rescale.x = (selectedFurn.FUR_DIM_L / 100f) * rescale.x / combinedBounds.size.x;
+                                    rescale.y = (selectedFurn.FUR_DIM_W / 100f) * rescale.y / combinedBounds.size.y;
+                                    rescale.z = (selectedFurn.FUR_DIM_H / 100f) * rescale.z / combinedBounds.size.z;
+                                    // debugText.text = "combinedBounds: " + rescale.ToString();
+                                    newFurnitureObject.furnModel.transform.localScale = rescale;
+                                }
                             }
                         }
                         catch (Exception e)

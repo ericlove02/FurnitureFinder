@@ -40,6 +40,7 @@ public class ScrollViewManager : MonoBehaviour
     {
         // Call a method to populate the scroll view with objects
         panelInScene.SetActive(!panelInScene.activeSelf);
+        SelectedFurniture.furniturePics = furnitureSprites;
         StartCoroutine(PopulateScrollView());
         staticPanel = panelInScene;
     }
@@ -76,10 +77,11 @@ public class ScrollViewManager : MonoBehaviour
                             
                             GameObject newObject = Instantiate(prefab, content);
                             Text[] textComponent = newObject.GetComponentsInChildren<Text>();
-                            if (textComponent != null)
-                            {
-                                textComponent[0].text = furnitureData[i].FUR_NAME;
-                                textComponent[1].text = furnitureData[i].FUR_ID.ToString(); 
+                            Image[] furnitureImages = newObject.GetComponentsInChildren<Image>();
+                            textComponent[0].text = furnitureData[i].FUR_NAME;
+                            textComponent[1].text = furnitureData[i].FUR_ID.ToString(); 
+                            if(i < SelectedFurniture.furniturePics.Length){
+                                furnitureImages[1].sprite = SelectedFurniture.furniturePics[i];
                             }
                         }
                         yield break;

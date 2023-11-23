@@ -82,7 +82,7 @@ public class FurnInfoController : MonoBehaviour
                     }
                     catch (Exception e)
                     {
-                        // debugText.text = e.Message;
+                        Debug.LogError(e);
                     }
                 }
             }

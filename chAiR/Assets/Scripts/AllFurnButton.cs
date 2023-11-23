@@ -58,9 +58,16 @@ public class ButtonClickScript : MonoBehaviour
 
             Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
             Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
-            Debug.Log("Furniture name: " + selectedFurniture.FUR_NAME);
-            Debug.Log("Furniture cost: " + selectedFurniture.FUR_COST);
-            Debug.Log("Furniture Link: " + selectedFurniture.FUR_LINK);
+            Image furnitureSprite = panel.transform.Find("FurnImage").GetComponent<Image>(); // Replace "TextObjectName" with the actual name of your Text component
+            try
+            {
+                if(furnitureId < SelectedFurniture.furniturePics.Length)
+                {
+                    furnitureSprite.sprite = SelectedFurniture.furniturePics[furnitureId - 1];
+                }
+            }catch(Exception e){
+                Debug.LogError(e);
+            }
             furnitureName.text = selectedFurniture.FUR_NAME;
             furnitureCost.text = "$" + selectedFurniture.FUR_COST.ToString();
             SelectedFurniture.furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");

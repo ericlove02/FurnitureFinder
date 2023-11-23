@@ -71,13 +71,11 @@ public class ScrollViewManager : MonoBehaviour
                     try
                     {
                         furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
-                        Debug.Log(furnitureData.Count);
                         for(int i = 0; i < furnitureData.Count; i++)
                         {
                             
                             GameObject newObject = Instantiate(prefab, content);
                             Text[] textComponent = newObject.GetComponentsInChildren<Text>();
-                            Debug.Log("loading");
                             if (textComponent != null)
                             {
                                 textComponent[0].text = furnitureData[i].FUR_NAME;

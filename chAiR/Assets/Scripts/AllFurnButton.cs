@@ -58,9 +58,13 @@ public class ButtonClickScript : MonoBehaviour
 
             Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
             Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            Debug.Log("Furniture name: " + selectedFurniture.FUR_NAME);
+            Debug.Log("Furniture cost: " + selectedFurniture.FUR_COST);
+            Debug.Log("Furniture Link: " + selectedFurniture.FUR_LINK);
             furnitureName.text = selectedFurniture.FUR_NAME;
-            furnitureCost.text = selectedFurniture.FUR_COST.ToString();
-            furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
+            furnitureCost.text = "$" + selectedFurniture.FUR_COST.ToString();
+            SelectedFurniture.furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
+            Debug.Log("New Furniture Purchase Link: " + SelectedFurniture.furniturePurchaseLink);
             panel.SetActive(!panel.activeSelf);
             
 
@@ -95,7 +99,7 @@ public class ButtonClickScript : MonoBehaviour
 
     public void OpenWebpageOnClick()
     {
-        Application.OpenURL(furniturePurchaseLink);
-        Debug.Log(furniturePurchaseLink);
+        Application.OpenURL(SelectedFurniture.furniturePurchaseLink);
+        Debug.Log("Clicked link: " + SelectedFurniture.furniturePurchaseLink);
     }
 }

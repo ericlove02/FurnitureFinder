@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dcf636ad78d55424aac751b33f013347, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -48,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dcf636ad78d55424aac751b33f013347, type: 3}
       propertyPath: m_Name
       value: IKEA-Poang_Armchair-3D
@@ -65,7 +81,32 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dcf636ad78d55424aac751b33f013347, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6393504545079873943}
+    - targetCorrespondingSourceObject: {fileID: 2548489492842245292, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6888537768538562722}
+    - targetCorrespondingSourceObject: {fileID: 1171954899114125784, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4221639334024790728}
   m_SourcePrefab: {fileID: 100100000, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+--- !u!1 &937683826591622512 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1171954899114125784, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+  m_PrefabInstance: {fileID: 2107909740379409576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4221639334024790728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937683826591622512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &1261471255960990201 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dcf636ad78d55424aac751b33f013347, type: 3}
@@ -90,8 +131,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 396.1, y: 532.42, z: 397.6}
+  m_Center: {x: 0, y: 275.96, z: 46.3}
 --- !u!114 &4055793983956891163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,3 +172,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!1 &4476227343031721988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2548489492842245292, guid: dcf636ad78d55424aac751b33f013347, type: 3}
+  m_PrefabInstance: {fileID: 2107909740379409576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6888537768538562722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476227343031721988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0

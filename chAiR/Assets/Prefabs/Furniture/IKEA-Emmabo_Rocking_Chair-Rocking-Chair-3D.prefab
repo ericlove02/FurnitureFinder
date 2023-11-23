@@ -65,6 +65,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 42aec9734bba24822b0229f5e840c216, type: 3}
       insertIndex: -1
       addedObject: {fileID: 937182480960624384}
+    - targetCorrespondingSourceObject: {fileID: -1223844722264232277, guid: 42aec9734bba24822b0229f5e840c216, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3540524536095232677}
+    - targetCorrespondingSourceObject: {fileID: 5671067988210932658, guid: 42aec9734bba24822b0229f5e840c216, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 530829237766826673}
   m_SourcePrefab: {fileID: 100100000, guid: 42aec9734bba24822b0229f5e840c216, type: 3}
 --- !u!1 &2319567761756268577 stripped
 GameObject:
@@ -90,7 +96,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 67.42, y: 49.8, z: 73.08}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2103456599425083969
 MonoBehaviour:
@@ -131,3 +137,41 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!1 &4897010327479598043 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1223844722264232277, guid: 42aec9734bba24822b0229f5e840c216, type: 3}
+  m_PrefabInstance: {fileID: 3238557928820774256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3540524536095232677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4897010327479598043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+--- !u!1 &7080227125986709186 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5671067988210932658, guid: 42aec9734bba24822b0229f5e840c216, type: 3}
+  m_PrefabInstance: {fileID: 3238557928820774256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &530829237766826673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080227125986709186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0

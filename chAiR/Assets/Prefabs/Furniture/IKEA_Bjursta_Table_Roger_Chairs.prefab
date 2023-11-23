@@ -53,7 +53,14 @@ PrefabInstance:
       value: IKEA_Bjursta_Table_Roger_Chairs
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 825156562957880139, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+    - {fileID: 7670154797897460765, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+    - {fileID: 9168779672603258448, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+    - {fileID: 2950461917342442254, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+    - {fileID: 8488753828270246290, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+    - {fileID: -4560884380629454036, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+    - {fileID: 1143238392761963169, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
@@ -65,7 +72,29 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8149116538174580722}
+    - targetCorrespondingSourceObject: {fileID: -122828261115192467, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7690411283452743496}
   m_SourcePrefab: {fileID: 100100000, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+--- !u!1 &2073699300294855474 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -122828261115192467, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
+  m_PrefabInstance: {fileID: 7101300156419838047}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7690411283452743496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073699300294855474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &7948161817524153614 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1bd0b1196c62f406d8efe74b676b0a61, type: 3}
@@ -90,8 +119,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 179.9, y: 75.32, z: 98.5}
+  m_Center: {x: -10.5, y: 34.9, z: -4.36}
 --- !u!114 &8542983630182156288
 MonoBehaviour:
   m_ObjectHideFlags: 0

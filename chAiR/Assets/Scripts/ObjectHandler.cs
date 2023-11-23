@@ -333,9 +333,17 @@ public class ObjectHandler : MonoBehaviour
                             Quaternion rotation = selectedFurniture.furnModel.transform.rotation;
                             instantiatedFurniture.Remove(selectedFurniture);
                             Destroy(selectedFurniture.furnModel);
-                            newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurnData.FUR_ID - 1], position, rotation);
-                            CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
-                            instantiatedFurniture.Add(newFurnitureObject);
+                            GameObject newPrefab = furniturePrefabs[selectedFurnData.FUR_ID - 1];
+                            if (newPrefab != null)
+                            {
+                                newFurnitureObject.furnModel = Instantiate(newPrefab, position, rotation);
+                                CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                                instantiatedFurniture.Add(newFurnitureObject);
+                            }
+                            else
+                            {
+                                debugText.text = "Prefab not yet created for id " + selectedFurnData.FUR_ID.ToString();
+                            }
                             selectedFurniture = newFurnitureObject;
 
                         }
@@ -482,9 +490,17 @@ public class ObjectHandler : MonoBehaviour
                             }
                             FurnitureObject newFurnitureObject = new FurnitureObject();
                             newFurnitureObject.furnData = selectedFurn;
-                            newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurn.FUR_ID - 1], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
-                            CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
-                            instantiatedFurniture.Add(newFurnitureObject);
+                            GameObject newPrefab = furniturePrefabs[selectedFurn.FUR_ID - 1];
+                            if (newPrefab != null)
+                            {
+                                newFurnitureObject.furnModel = Instantiate(newPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                                instantiatedFurniture.Add(newFurnitureObject);
+                            }
+                            else
+                            {
+                                debugText.text = "Prefab not yet created for id " + selectedFurn.FUR_ID.ToString();
+                            }
                         }
                         catch (Exception e)
                         {

@@ -120,6 +120,7 @@ public class ObjectHandler : MonoBehaviour
         rotateButton.gameObject.SetActive(false);
         regenButton.gameObject.SetActive(false);
 
+        loadingPanelText.text = "Waiting for data...";
         loadingPanel.SetActive(true);
         updateDisplay.SetActive(false);
         updateDisplay.transform.localPosition = new Vector3(9999f, 0f, 0f);
@@ -144,7 +145,10 @@ public class ObjectHandler : MonoBehaviour
             string apiUrl = "https://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
             // alternate endpoint to test on retry, finishes with another try on main endpoint
             if (retryCount == 1)
+            {
                 apiUrl = "http://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
+                loadingPanelText.text = "Sorry, couldn't get the data. Retrying...";
+            }
             using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
             {
                 yield return www.SendWebRequest();
@@ -333,9 +337,51 @@ public class ObjectHandler : MonoBehaviour
                             Quaternion rotation = selectedFurniture.furnModel.transform.rotation;
                             instantiatedFurniture.Remove(selectedFurniture);
                             Destroy(selectedFurniture.furnModel);
-                            newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurnData.FUR_ID - 1], position, rotation);
-                            CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
-                            instantiatedFurniture.Add(newFurnitureObject);
+                            GameObject newPrefab = furniturePrefabs[selectedFurnData.FUR_ID - 1];
+                            if (newPrefab != null)
+                            {
+                                newFurnitureObject.furnModel = Instantiate(newPrefab, position, rotation);
+                                CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                                instantiatedFurniture.Add(newFurnitureObject);
+                            }
+                            else
+                            {
+                                debugText.text = "Prefab not yet created for id " + selectedFurnData.FUR_ID.ToString();
+                            }
+
+                            Renderer pRenderer = newFurnitureObject.furnModel.GetComponent<Renderer>();
+                            if (pRenderer != null)
+                            {
+                                Bounds bounds = pRenderer.bounds;
+
+                                // scale the object to correct dimensions
+                                float scaleX = selectedFurnData.FUR_DIM_L / 100f / bounds.size.x;
+                                float scaleY = selectedFurnData.FUR_DIM_W / 100f / bounds.size.y;
+                                float scaleZ = selectedFurnData.FUR_DIM_H / 100f / bounds.size.z;
+
+                                newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                            }
+                            else
+                            {
+                                // renderer is not in parent, use the childrens renderers
+                                Renderer[] childRenderers = newFurnitureObject.furnModel.GetComponentsInChildren<Renderer>();
+
+                                if (childRenderers.Length > 0)
+                                {
+                                    // encapsulate the object bounds
+                                    Bounds combinedBounds = childRenderers[0].bounds;
+                                    for (int i = 1; i < childRenderers.Length; i++)
+                                    {
+                                        combinedBounds.Encapsulate(childRenderers[i].bounds);
+                                    }
+                                    // scale the object to correct dimensions
+                                    float scaleX = selectedFurnData.FUR_DIM_L / 100f / combinedBounds.size.x;
+                                    float scaleY = selectedFurnData.FUR_DIM_W / 100f / combinedBounds.size.y;
+                                    float scaleZ = selectedFurnData.FUR_DIM_H / 100f / combinedBounds.size.z;
+
+                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                                }
+                            }
                             selectedFurniture = newFurnitureObject;
 
                         }
@@ -482,9 +528,63 @@ public class ObjectHandler : MonoBehaviour
                             }
                             FurnitureObject newFurnitureObject = new FurnitureObject();
                             newFurnitureObject.furnData = selectedFurn;
-                            newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurn.FUR_ID - 1], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
-                            CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
-                            instantiatedFurniture.Add(newFurnitureObject);
+                            GameObject newPrefab = furniturePrefabs[selectedFurn.FUR_ID - 1];
+                            if (newPrefab != null)
+                            {
+                                newFurnitureObject.furnModel = Instantiate(newPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                                instantiatedFurniture.Add(newFurnitureObject);
+                            }
+                            else
+                            {
+                                debugText.text = "Prefab not yet created for id " + selectedFurn.FUR_ID.ToString();
+                            }
+
+                            // scale the object to correct dimensions
+                            // get object's renderer to measure its current size
+                            // check if renderer is on the parent object first
+                            Renderer pRenderer = newFurnitureObject.furnModel.GetComponent<Renderer>();
+                            if (pRenderer != null)
+                            {
+                                Bounds bounds = pRenderer.bounds;
+
+                                // get the scale factors for each dimension
+                                float scaleX = selectedFurn.FUR_DIM_L / 100f / bounds.size.x;
+                                float scaleY = selectedFurn.FUR_DIM_W / 100f / bounds.size.y;
+                                float scaleZ = selectedFurn.FUR_DIM_H / 100f / bounds.size.z;
+
+                                // average the scale factors to get one factor
+                                float avgScale = (scaleX + scaleY + scaleZ) / 3;
+
+                                // apply scale to object
+                                newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
+                            }
+                            else
+                            {
+                                // renderer is not in parent, use the children's renderers
+                                Renderer[] childRenderers = newFurnitureObject.furnModel.GetComponentsInChildren<Renderer>();
+
+                                if (childRenderers.Length > 0)
+                                {
+                                    // encapsulate the object bounds
+                                    Bounds combinedBounds = childRenderers[0].bounds;
+                                    for (int i = 1; i < childRenderers.Length; i++)
+                                    {
+                                        combinedBounds.Encapsulate(childRenderers[i].bounds);
+                                    }
+
+                                    // get the scale factors for each dimension
+                                    float scaleX = selectedFurn.FUR_DIM_L / 100f / combinedBounds.size.x;
+                                    float scaleY = selectedFurn.FUR_DIM_W / 100f / combinedBounds.size.y;
+                                    float scaleZ = selectedFurn.FUR_DIM_H / 100f / combinedBounds.size.z;
+
+                                    // average the scale factors to get one factor
+                                    float avgScale = (scaleX + scaleY + scaleZ) / 3;
+
+                                    // apply scale to object
+                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
+                                }
+                            }
                         }
                         catch (Exception e)
                         {

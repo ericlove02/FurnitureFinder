@@ -76,12 +76,13 @@ public class FurnInfoController : MonoBehaviour
                         Debug.Log(furnitureName.text);
                         Debug.Log(furniture.FUR_NAME);
                         furnitureCostText.text = "$" + furniture.FUR_COST.ToString();
-                        furniturePurchaseLink = furniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
+                        Debug.Log(furniture.FUR_LINK);
+                        SelectedFurniture.furniturePurchaseLink = furniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
                         Debug.Log(furniturePurchaseLink);
                     }
                     catch (Exception e)
                     {
-                        // debugText.text = e.Message;
+                        Debug.LogError(e);
                     }
                 }
             }
@@ -89,7 +90,7 @@ public class FurnInfoController : MonoBehaviour
 
     public void OpenWebpageOnClick()
     {
-        Application.OpenURL(FurnInfoController.furniturePurchaseLink);
-        Debug.Log(FurnInfoController.furniturePurchaseLink);
+        Application.OpenURL(SelectedFurniture.furniturePurchaseLink);
+        Debug.Log(SelectedFurniture.furniturePurchaseLink);
     }
 }

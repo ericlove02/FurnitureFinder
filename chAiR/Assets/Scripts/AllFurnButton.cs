@@ -58,9 +58,16 @@ public class ButtonClickScript : MonoBehaviour
 
             Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
             Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            Image furnitureSprite = panel.transform.Find("FurnImage").GetComponent<Image>(); // Replace "TextObjectName" with the actual name of your Text component
+
+            if(furnitureId < SelectedFurniture.furniturePics.Length)
+            {
+                furnitureSprite.sprite = SelectedFurniture.furniturePics[furnitureId - 1];
+            }
+
             furnitureName.text = selectedFurniture.FUR_NAME;
-            furnitureCost.text = selectedFurniture.FUR_COST.ToString();
-            furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
+            furnitureCost.text = "$" + selectedFurniture.FUR_COST.ToString();
+            SelectedFurniture.furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
             panel.SetActive(!panel.activeSelf);
             
 
@@ -78,24 +85,20 @@ public class ButtonClickScript : MonoBehaviour
             return null;
         }
 
-        // Check if the current object has a canvas component
         Canvas canvas = obj.GetComponent<Canvas>();
 
         if (canvas != null)
         {
-            // Canvas found, return it
             return canvas;
         }
         else
         {
-            // If the current object doesn't have the canvas, recursively check its parent
             return FindCanvasInHierarchy(obj.parent);
         }
     }
 
     public void OpenWebpageOnClick()
     {
-        Application.OpenURL(furniturePurchaseLink);
-        Debug.Log(furniturePurchaseLink);
+        Application.OpenURL(SelectedFurniture.furniturePurchaseLink);
     }
 }

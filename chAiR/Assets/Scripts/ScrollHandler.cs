@@ -75,6 +75,12 @@ public class ScrollViewManager : MonoBehaviour
                             if(i < SelectedFurniture.furniturePics.Length){
                                 furnitureImages[1].sprite = SelectedFurniture.furniturePics[i];
                             }
+                            RectTransform buttonRectTransform = newObject.GetComponent<RectTransform>();
+                            /*
+                            buttonRectTransform.anchorMin = new Vector2(0, 0.5f);
+                            buttonRectTransform.anchorMax = new Vector2(1, 0.5f);
+                            buttonRectTransform.sizeDelta = new Vector2(0, newObject.GetComponent<RectTransform>().sizeDelta.y);
+                            */
                         }
                         yield break;
                     }

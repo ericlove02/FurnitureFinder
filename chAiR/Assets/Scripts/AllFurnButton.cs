@@ -59,19 +59,15 @@ public class ButtonClickScript : MonoBehaviour
             Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
             Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
             Image furnitureSprite = panel.transform.Find("FurnImage").GetComponent<Image>(); // Replace "TextObjectName" with the actual name of your Text component
-            try
+
+            if(furnitureId < SelectedFurniture.furniturePics.Length)
             {
-                if(furnitureId < SelectedFurniture.furniturePics.Length)
-                {
-                    furnitureSprite.sprite = SelectedFurniture.furniturePics[furnitureId - 1];
-                }
-            }catch(Exception e){
-                Debug.LogError(e);
+                furnitureSprite.sprite = SelectedFurniture.furniturePics[furnitureId - 1];
             }
+
             furnitureName.text = selectedFurniture.FUR_NAME;
             furnitureCost.text = "$" + selectedFurniture.FUR_COST.ToString();
             SelectedFurniture.furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
-            Debug.Log("New Furniture Purchase Link: " + SelectedFurniture.furniturePurchaseLink);
             panel.SetActive(!panel.activeSelf);
             
 
@@ -89,17 +85,14 @@ public class ButtonClickScript : MonoBehaviour
             return null;
         }
 
-        // Check if the current object has a canvas component
         Canvas canvas = obj.GetComponent<Canvas>();
 
         if (canvas != null)
         {
-            // Canvas found, return it
             return canvas;
         }
         else
         {
-            // If the current object doesn't have the canvas, recursively check its parent
             return FindCanvasInHierarchy(obj.parent);
         }
     }
@@ -107,6 +100,5 @@ public class ButtonClickScript : MonoBehaviour
     public void OpenWebpageOnClick()
     {
         Application.OpenURL(SelectedFurniture.furniturePurchaseLink);
-        Debug.Log("Clicked link: " + SelectedFurniture.furniturePurchaseLink);
     }
 }

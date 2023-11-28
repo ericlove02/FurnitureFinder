@@ -35,10 +35,11 @@ public class ScrollViewManager : MonoBehaviour
         public float FUR_DIM_H { get; set; }
         public string FUR_TYPE { get; set; }
     }
+    private float scaleMultiplier = 1f;
 
     void Start()
     {
-        panelInScene.SetActive(!panelInScene.activeSelf);
+        panelInScene.SetActive(false);
         SelectedFurniture.furniturePics = furnitureSprites;
         StartCoroutine(PopulateScrollView());
         staticPanel = panelInScene;
@@ -49,51 +50,68 @@ public class ScrollViewManager : MonoBehaviour
         int retryCount = 0;
         string apiUrl = "https://hammy-exchanges.000webhostapp.com/all_furn.php";
         using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
-            {
-                yield return www.SendWebRequest();
+        {
+            yield return www.SendWebRequest();
 
-                if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError(www.error);
+                yield return new WaitForSeconds(3);
+                retryCount++;
+            }
+            else
+            {
+                string json = www.downloadHandler.text;
+                try
                 {
-                    Debug.LogError(www.error);
-                    yield return new WaitForSeconds(3);
-                    retryCount++;
-                }
-                else
-                {
-                    string json = www.downloadHandler.text;
-                    try
+                    furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
+                    for (int i = 0; i < furnitureData.Count; i++)
                     {
-                        furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
-                        for(int i = 0; i < furnitureData.Count; i++)
+
+                        GameObject newObject = Instantiate(prefab, content);
+                        Text[] textComponent = newObject.GetComponentsInChildren<Text>();
+                        Image[] furnitureImages = newObject.GetComponentsInChildren<Image>();
+                        textComponent[0].text = furnitureData[i].FUR_NAME;
+                        textComponent[1].text = furnitureData[i].FUR_ID.ToString();
+                        if (i < SelectedFurniture.furniturePics.Length)
                         {
-                            
-                            GameObject newObject = Instantiate(prefab, content);
-                            Text[] textComponent = newObject.GetComponentsInChildren<Text>();
-                            Image[] furnitureImages = newObject.GetComponentsInChildren<Image>();
-                            textComponent[0].text = furnitureData[i].FUR_NAME;
-                            textComponent[1].text = furnitureData[i].FUR_ID.ToString(); 
-                            if(i < SelectedFurniture.furniturePics.Length){
-                                furnitureImages[1].sprite = SelectedFurniture.furniturePics[i];
-                            }
-                            RectTransform buttonRectTransform = newObject.GetComponent<RectTransform>();
-                            /*
-                            buttonRectTransform.anchorMin = new Vector2(0, 0.5f);
-                            buttonRectTransform.anchorMax = new Vector2(1, 0.5f);
-                            buttonRectTransform.sizeDelta = new Vector2(0, newObject.GetComponent<RectTransform>().sizeDelta.y);
-                            */
+                            furnitureImages[1].sprite = SelectedFurniture.furniturePics[i];
                         }
-                        yield break;
+                        RectTransform buttonRectTransform = newObject.GetComponent<RectTransform>();
+                        /*
+                        buttonRectTransform.anchorMin = new Vector2(0, 0.5f);
+                        buttonRectTransform.anchorMax = new Vector2(1, 0.5f);
+                        buttonRectTransform.sizeDelta = new Vector2(0, newObject.GetComponent<RectTransform>().sizeDelta.y);
+                        */
+
+                        // Resize the prefab to fit the scroll view
+                        float targetWidth = content.GetComponent<RectTransform>().rect.width;
+
+                        // Calculate the target scale based on the target width and the aspect ratio
+                        float prefabWidth = newObject.GetComponent<RectTransform>().rect.width;
+                        float prefabHeight = newObject.GetComponent<RectTransform>().rect.height;
+                        float targetAspect = targetWidth / prefabHeight;
+                        float currentAspect = prefabWidth / prefabHeight;
+                        float scaleMultiplier = targetAspect / currentAspect;
+
+                        // Apply the scale while maintaining the aspect ratio
+                        newObject.transform.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1f);
+                        // After setting the scale, adjust the localPosition
+                        float yOffset = i * (newObject.GetComponent<RectTransform>().rect.height * scaleMultiplier);
+                        newObject.transform.localPosition = new Vector3(newObject.transform.localPosition.x, -yOffset, newObject.transform.localPosition.z);
+
                     }
-                    catch (Exception e)
-                    {
-                        Debug.LogError(e);
-                    }
+                    yield break;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
                 }
             }
-            
+        }
         RectTransform contentRect = content.GetComponent<RectTransform>();
-        float contentHeight = furnitureData.Count * prefab.GetComponent<RectTransform>().rect.height;
-        contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, contentHeight);
+        float totalHeight = furnitureData.Count * prefab.GetComponent<RectTransform>().rect.height * scaleMultiplier;
+        content.GetComponent<RectTransform>().sizeDelta = new Vector2(contentRect.sizeDelta.x, totalHeight);
     }
 
     public void OpenWebpageOnClick()

@@ -13,7 +13,7 @@ public class ButtonClickScript : MonoBehaviour
 {
     // Set the scene name you want to load in the inspector
     public string furniturePurchaseLink;
-    Canvas canvas; 
+    Canvas canvas;
     GameObject panel;
 
     void Start()
@@ -56,11 +56,13 @@ public class ButtonClickScript : MonoBehaviour
             List<ScrollViewManager.FurnitureData> furnitureData = ScrollViewManager.furnitureData;
             ScrollViewManager.FurnitureData selectedFurniture = furnitureData[furnitureId - 1];
 
-            Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
-            Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            TMP_Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<TMP_Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            TMP_Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<TMP_Text>(); // Replace "TextObjectName" with the actual name of your Text component
             Image furnitureSprite = panel.transform.Find("FurnImage").GetComponent<Image>(); // Replace "TextObjectName" with the actual name of your Text component
+            TMP_Text furnitureDims = panel.transform.Find("Dimensions").GetComponent<TMP_Text>();
+            TMP_Text furnitureDesc = panel.transform.Find("Desc").GetComponent<TMP_Text>();
 
-            if(furnitureId < SelectedFurniture.furniturePics.Length)
+            if (furnitureId < SelectedFurniture.furniturePics.Length)
             {
                 furnitureSprite.sprite = SelectedFurniture.furniturePics[furnitureId - 1];
             }
@@ -68,8 +70,9 @@ public class ButtonClickScript : MonoBehaviour
             furnitureName.text = selectedFurniture.FUR_NAME;
             furnitureCost.text = "$" + selectedFurniture.FUR_COST.ToString();
             SelectedFurniture.furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
+            furnitureDims.text = selectedFurniture.FUR_DIM_L.ToString() + "x" + selectedFurniture.FUR_DIM_W.ToString() + "x" + selectedFurniture.FUR_DIM_H.ToString() + " cm";
+            furnitureDesc.text = selectedFurniture.FUR_DESC;
             panel.SetActive(!panel.activeSelf);
-            
 
         }
         else

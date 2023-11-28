@@ -119,7 +119,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -410,6 +410,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   furniturePurchaseLink: 
+  favoriteButtonImage: {fileID: 0}
+  filledHeart: {fileID: 21300000, guid: a192e0e2d8b509a478fc4761cec3dd28, type: 3}
+  unfilledHeart: {fileID: 21300000, guid: 3d40fb667c5f729488aa344415b51a3a, type: 3}
 --- !u!1 &6538109896383642744
 GameObject:
   m_ObjectHideFlags: 0

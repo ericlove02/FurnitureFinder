@@ -7,13 +7,6 @@ public class SceneChanger : MonoBehaviour
 {
 	public void ChangeScene(string sceneName)
 	{
-		PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
 		SceneManager.LoadScene(sceneName);
-	}
-
-	public void ReturnToLastScene()
-	{
-		SceneManager.LoadScene(PlayerPrefs.GetString("LastScene"));
-		PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
 	}
 }

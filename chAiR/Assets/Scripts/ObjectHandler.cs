@@ -92,6 +92,8 @@ public class ObjectHandler : MonoBehaviour
     private bool isLoading = true;
     [SerializeField] private GameObject updateDisplay;
 
+    public TMP_Text dropdownLabel;
+
 
     // info panel references
     [SerializeField] private GameObject infoPanel;
@@ -138,6 +140,12 @@ public class ObjectHandler : MonoBehaviour
         // retrive stored vibe or if not set, vibeError
         selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
         StartCoroutine(GetFurnitureData(selectedVibe));
+
+        CostDisplayText.onValueChanged.AddListener(delegate
+        {
+            // Always update the selected text to the placeholder
+            DropdownValueChanged();
+        });
     }
 
     private IEnumerator GetFurnitureData(string vibeName)
@@ -207,29 +215,13 @@ public class ObjectHandler : MonoBehaviour
         loadingPanelIcon.SetActive(false);
     }
 
-    // private IEnumerator DisplayFurnitureCosts()
-    // {
-    //     while (true)
-    //     {
-    //         yield return new WaitForSeconds(1f); // Update the cost display every 1 second (you can adjust this interval)
-
-    //         // Calculate the total cost of all instantiated furniture
-    //         totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
-
-    //         // Update the UI Dropdown with the total cost and individual furniture items
-    //         UpdateDropdown(totalCost);
-    //     }
-    // }
-
-    private void UpdateDropdown(float totalCost)
+    private void UpdateDropdown()
     {
         // Clear existing options in the dropdown
         CostDisplayText.ClearOptions();
 
         // Create a list of dropdown options (furniture items and their costs)
         List<string> options = new List<string>();
-        // Add the total cost to the options
-        options.Add($"Total Cost: ${totalCost:F2}");
         foreach (FurnitureObject furniture in instantiatedFurniture)
         {
             options.Add($"{furniture.furnData.FUR_NAME}: ${furniture.furnData.FUR_COST:F2}");
@@ -242,6 +234,11 @@ public class ObjectHandler : MonoBehaviour
             item.text = $"<size=50>{item.text}</size>"; // Adjust the font size (e.g., 20)
         }
 
+    }
+
+    void DropdownValueChanged()
+    {
+        dropdownLabel.text = $"Total Cost: ${totalCost:F2}";
     }
 
     private void Update()
@@ -427,7 +424,7 @@ public class ObjectHandler : MonoBehaviour
                             totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
 
                             // Update the UI Dropdown with the total cost and individual furniture items
-                            UpdateDropdown(totalCost);
+                            UpdateDropdown();
                         }
                         catch (Exception e)
                         {
@@ -633,7 +630,7 @@ public class ObjectHandler : MonoBehaviour
                             totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
 
                             // Update the UI Dropdown with the total cost and individual furniture items
-                            UpdateDropdown(totalCost);
+                            UpdateDropdown();
                         }
                         catch (Exception e)
                         {
@@ -741,7 +738,7 @@ public class ObjectHandler : MonoBehaviour
         Destroy(selectedFurniture.furnModel);
 
         // Update the UI Dropdown with the new total cost
-        UpdateDropdown(totalCost);
+        UpdateDropdown();
 
         DeselectObject();
     }

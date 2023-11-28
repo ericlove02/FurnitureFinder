@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
@@ -11,6 +12,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using System.Linq;
+using System.IO;
 
 public class ObjectHandler : MonoBehaviour
 {
@@ -59,6 +61,7 @@ public class ObjectHandler : MonoBehaviour
     // we will store all of the indices of the prefabs to the db and use that to retrieve the correct
     // prefab for the piece of furniture
     public GameObject[] furniturePrefabs;
+    public Sprite[] furnitureSprites;
 
     [SerializeField] TMP_Text debugText;
 
@@ -83,6 +86,27 @@ public class ObjectHandler : MonoBehaviour
     private FurnitureData[] tables;
     private FurnitureData[] desks;
     private FurnitureData[] drawers;
+    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private TMP_Text loadingPanelText;
+    [SerializeField] private GameObject loadingPanelIcon;
+    private bool isLoading = true;
+    [SerializeField] private GameObject updateDisplay;
+
+
+    // info panel references
+    [SerializeField] private GameObject infoPanel;
+    [SerializeField] private TMP_Text infoName;
+    [SerializeField] private TMP_Text infoDesc;
+    [SerializeField] private TMP_Text infoDims;
+    [SerializeField] private TMP_Text infoCost;
+    [SerializeField] private Image infoImage;
+    private string productUrl;
+    private bool showingInfoPanel = false;
+    // favorite button references
+    [SerializeField] private Image favoriteButtonImage;
+    [SerializeField] private Sprite filledHeart;
+    [SerializeField] private Sprite unfilledHeart;
+    private int[] favFurnIds;
 
 
     private void Awake()
@@ -99,6 +123,18 @@ public class ObjectHandler : MonoBehaviour
         rotateButton.gameObject.SetActive(false);
         regenButton.gameObject.SetActive(false);
 
+        loadingPanelText.text = "Waiting for data...";
+        loadingPanel.SetActive(true);
+        updateDisplay.SetActive(false);
+        updateDisplay.transform.localPosition = new Vector3(9999f, 0f, 0f);
+
+        infoPanel.SetActive(false);
+        infoPanel.transform.localPosition = new Vector3(9999f, 0f, 0f);
+
+        // parse favorites file into array
+        LoadFavoriteFurnitureIds();
+        // debugText.text = string.Join(", ", favFurnIds.Select(id => id.ToString()).ToArray());
+
         // retrive stored vibe or if not set, vibeError
         selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
         StartCoroutine(GetFurnitureData(selectedVibe));
@@ -106,37 +142,69 @@ public class ObjectHandler : MonoBehaviour
 
     private IEnumerator GetFurnitureData(string vibeName)
     {
-        string apiUrl = "https://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
-
-        using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
+        int retryCount = 0;
+        do
         {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            string apiUrl = "https://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
+            // alternate endpoint to test on retry, finishes with another try on main endpoint
+            if (retryCount == 1)
             {
-                Debug.LogError(www.error);
+                apiUrl = "http://hammy-exchanges.000webhostapp.com/index.php?vibe_name=" + vibeName;
+                loadingPanelText.text = "Sorry, couldn't get the data. Retrying...";
             }
-            else
+            using (UnityWebRequest www = UnityWebRequest.Get(apiUrl))
             {
-                // parse JSON and store data
-                string json = www.downloadHandler.text;
-                try
-                {
-                    furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
-                    sofas = furnitureData.Where(furniture => furniture.FUR_TYPE == "Sofa").ToArray();
-                    chairs = furnitureData.Where(furniture => furniture.FUR_TYPE == "Chair").ToArray();
-                    lamps = furnitureData.Where(furniture => furniture.FUR_TYPE == "Lamp").ToArray();
-                    tables = furnitureData.Where(furniture => furniture.FUR_TYPE == "Table").ToArray();
-                    desks = furnitureData.Where(furniture => furniture.FUR_TYPE == "Desk").ToArray();
-                    drawers = furnitureData.Where(furniture => furniture.FUR_TYPE == "Drawers").ToArray();
-                }
-                catch (Exception e)
-                {
-                    debugText.text = e.Message;
-                }
+                yield return www.SendWebRequest();
 
+                if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    loadingPanel.SetActive(true);
+                    Debug.LogError(www.error);
+                    // wait 3 seconds before retrying
+                    yield return new WaitForSeconds(3);
+                    retryCount++;
+                }
+                else
+                {
+                    // parse JSON and store data
+                    string json = www.downloadHandler.text;
+                    try
+                    {
+                        furnitureData = JsonConvert.DeserializeObject<List<FurnitureData>>(json);
+                        sofas = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Sofa" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        chairs = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Chair" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        lamps = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Lamp" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        tables = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Table" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        desks = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Desk" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        drawers = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Drawer" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+
+                        loadingPanel.SetActive(false);
+                        isLoading = false;
+
+                        // check that all FUR_ID are within the bounds of the prefab array
+                        foreach (var furnitureItem in furnitureData)
+                        {
+                            if (furnitureItem.FUR_ID <= furniturePrefabs.Length)
+                            {
+                                updateDisplay.SetActive(true);
+                                updateDisplay.transform.localPosition = Vector3.zero;
+                            }
+                        }
+
+                        yield break;
+                    }
+                    catch (Exception e)
+                    {
+                        debugText.text = e.Message;
+                    }
+
+                }
             }
-        }
+        } while (retryCount < 4);
+
+        // if reached here, all retry attempts failed
+        loadingPanelText.text = "Failed to retrieve data after multiple attempts";
+        loadingPanelIcon.SetActive(false);
     }
 
     // private IEnumerator DisplayFurnitureCosts()
@@ -183,11 +251,11 @@ public class ObjectHandler : MonoBehaviour
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(selectedFurniture.furnModel.transform.position);
 
-            deleteButton.transform.position = screenPos + new Vector3(0, 200, 0);
-            viewModelButton.transform.position = screenPos + new Vector3(200, 200, 0);
-            moveButton.transform.position = screenPos + new Vector3(0, 0, 0);
-            rotateButton.transform.position = screenPos + new Vector3(200, 0, 0);
-            regenButton.transform.position = screenPos + new Vector3(100, 0, 0);
+            deleteButton.transform.position = screenPos + new Vector3(-300, 300, 0);
+            regenButton.transform.position = screenPos + new Vector3(-150, 300, 0);
+            viewModelButton.transform.position = screenPos + new Vector3(300, 300, 0);
+            moveButton.transform.position = screenPos + new Vector3(-100, -150, 0);
+            rotateButton.transform.position = screenPos + new Vector3(100, -150, 0);
         }
         else
         {
@@ -222,7 +290,7 @@ public class ObjectHandler : MonoBehaviour
 
     private void FingerDown(EnhancedTouch.Finger finger)
     {
-        if (isDragging) return;
+        if (isDragging || isLoading || showingInfoPanel) return;
 
         // selecting a default drag sprite
         foreach (Image uiSprite in uiSprites)
@@ -298,7 +366,7 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 selectedFurnData = desks[Random.Range(0, desks.Length)];
                             }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "Drawers") // FUR_TYPE: "Drawers"
+                            else if (selectedFurniture.furnData.FUR_TYPE == "Drawer") // FUR_TYPE: "Drawer"
                             {
                                 selectedFurnData = drawers[Random.Range(0, drawers.Length)];
                             }
@@ -309,9 +377,51 @@ public class ObjectHandler : MonoBehaviour
                             Quaternion rotation = selectedFurniture.furnModel.transform.rotation;
                             instantiatedFurniture.Remove(selectedFurniture);
                             Destroy(selectedFurniture.furnModel);
-                            newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurnData.FUR_ID - 1], position, rotation);
-                            CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
-                            instantiatedFurniture.Add(newFurnitureObject);
+                            GameObject newPrefab = furniturePrefabs[selectedFurnData.FUR_ID - 1];
+                            if (newPrefab != null)
+                            {
+                                newFurnitureObject.furnModel = Instantiate(newPrefab, position, rotation);
+                                CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                                instantiatedFurniture.Add(newFurnitureObject);
+                            }
+                            else
+                            {
+                                debugText.text = "Prefab not yet created for id " + selectedFurnData.FUR_ID.ToString();
+                            }
+
+                            Renderer pRenderer = newFurnitureObject.furnModel.GetComponent<Renderer>();
+                            if (pRenderer != null)
+                            {
+                                Bounds bounds = pRenderer.bounds;
+
+                                // scale the object to correct dimensions
+                                float scaleX = selectedFurnData.FUR_DIM_L / 100f / bounds.size.x;
+                                float scaleY = selectedFurnData.FUR_DIM_W / 100f / bounds.size.y;
+                                float scaleZ = selectedFurnData.FUR_DIM_H / 100f / bounds.size.z;
+
+                                newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                            }
+                            else
+                            {
+                                // renderer is not in parent, use the childrens renderers
+                                Renderer[] childRenderers = newFurnitureObject.furnModel.GetComponentsInChildren<Renderer>();
+
+                                if (childRenderers.Length > 0)
+                                {
+                                    // encapsulate the object bounds
+                                    Bounds combinedBounds = childRenderers[0].bounds;
+                                    for (int i = 1; i < childRenderers.Length; i++)
+                                    {
+                                        combinedBounds.Encapsulate(childRenderers[i].bounds);
+                                    }
+                                    // scale the object to correct dimensions
+                                    float scaleX = selectedFurnData.FUR_DIM_L / 100f / combinedBounds.size.x;
+                                    float scaleY = selectedFurnData.FUR_DIM_W / 100f / combinedBounds.size.y;
+                                    float scaleZ = selectedFurnData.FUR_DIM_H / 100f / combinedBounds.size.z;
+
+                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                                }
+                            }
                             selectedFurniture = newFurnitureObject;
                             // Calculate the total cost of all instantiated furniture
                             totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
@@ -326,6 +436,20 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 errorAudio.Play();
                             }
+                        }
+                    }
+                }
+                else if (button == viewModelButton)
+                {
+                    if (selectedFurniture?.furnData != null)
+                    {
+                        OpenInfoPanel();
+                    }
+                    else
+                    {
+                        if (errorAudio != null)
+                        {
+                            errorAudio.Play();
                         }
                     }
                 }
@@ -442,15 +566,69 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 selectedFurn = desks[Random.Range(0, desks.Length)];
                             }
-                            else if (selectedIndex == 5) // FUR_TYPE: "Drawers"
+                            else if (selectedIndex == 5) // FUR_TYPE: "Drawer"
                             {
                                 selectedFurn = drawers[Random.Range(0, drawers.Length)];
                             }
                             FurnitureObject newFurnitureObject = new FurnitureObject();
                             newFurnitureObject.furnData = selectedFurn;
-                            newFurnitureObject.furnModel = Instantiate(furniturePrefabs[selectedFurn.FUR_ID - 1], pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
-                            CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
-                            instantiatedFurniture.Add(newFurnitureObject);
+                            GameObject newPrefab = furniturePrefabs[selectedFurn.FUR_ID - 1];
+                            if (newPrefab != null)
+                            {
+                                newFurnitureObject.furnModel = Instantiate(newPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
+                                CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
+                                instantiatedFurniture.Add(newFurnitureObject);
+                            }
+                            else
+                            {
+                                debugText.text = "Prefab not yet created for id " + selectedFurn.FUR_ID.ToString();
+                            }
+
+                            // scale the object to correct dimensions
+                            // get object's renderer to measure its current size
+                            // check if renderer is on the parent object first
+                            Renderer pRenderer = newFurnitureObject.furnModel.GetComponent<Renderer>();
+                            if (pRenderer != null)
+                            {
+                                Bounds bounds = pRenderer.bounds;
+
+                                // get the scale factors for each dimension
+                                float scaleX = selectedFurn.FUR_DIM_L / 100f / bounds.size.x;
+                                float scaleY = selectedFurn.FUR_DIM_W / 100f / bounds.size.y;
+                                float scaleZ = selectedFurn.FUR_DIM_H / 100f / bounds.size.z;
+
+                                // average the scale factors to get one factor
+                                float avgScale = (scaleX + scaleY + scaleZ) / 3;
+
+                                // apply scale to object
+                                newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
+                            }
+                            else
+                            {
+                                // renderer is not in parent, use the children's renderers
+                                Renderer[] childRenderers = newFurnitureObject.furnModel.GetComponentsInChildren<Renderer>();
+
+                                if (childRenderers.Length > 0)
+                                {
+                                    // encapsulate the object bounds
+                                    Bounds combinedBounds = childRenderers[0].bounds;
+                                    for (int i = 1; i < childRenderers.Length; i++)
+                                    {
+                                        combinedBounds.Encapsulate(childRenderers[i].bounds);
+                                    }
+
+                                    // get the scale factors for each dimension
+                                    float scaleX = selectedFurn.FUR_DIM_L / 100f / combinedBounds.size.x;
+                                    float scaleY = selectedFurn.FUR_DIM_W / 100f / combinedBounds.size.y;
+                                    float scaleZ = selectedFurn.FUR_DIM_H / 100f / combinedBounds.size.z;
+
+                                    // average the scale factors to get one factor
+                                    float avgScale = (scaleX + scaleY + scaleZ) / 3;
+
+                                    // apply scale to object
+                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
+                                }
+                            }
                             // Calculate the total cost of all instantiated furniture
                             totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
 
@@ -566,6 +744,99 @@ public class ObjectHandler : MonoBehaviour
         UpdateDropdown(totalCost);
 
         DeselectObject();
+    }
+
+    public void CloseUpdatePanel()
+    {
+        if (uiButtonAudioSource != null)
+        {
+            uiButtonAudioSource.Play();
+        }
+        updateDisplay.SetActive(false);
+        updateDisplay.transform.localPosition = new Vector3(9999f, 0f, 0f);
+    }
+
+    private void OpenInfoPanel()
+    {
+        showingInfoPanel = true;
+        infoImage.sprite = furnitureSprites[selectedFurniture.furnData.FUR_ID - 1];
+        infoName.text = selectedFurniture.furnData.FUR_NAME;
+        infoDesc.text = selectedFurniture.furnData.FUR_DESC;
+        infoCost.text = "$" + selectedFurniture.furnData.FUR_COST.ToString();
+        infoDims.text = selectedFurniture.furnData.FUR_DIM_L.ToString() + "x" + selectedFurniture.furnData.FUR_DIM_W.ToString() + "x" + selectedFurniture.furnData.FUR_DIM_H.ToString() + " cm";
+        productUrl = selectedFurniture.furnData.FUR_LINK.Replace("\\/", "/").Replace("\n", "").Replace("\r", "");
+        if (favFurnIds.Contains(selectedFurniture.furnData.FUR_ID))
+            favoriteButtonImage.sprite = filledHeart;
+        else
+            favoriteButtonImage.sprite = unfilledHeart;
+        infoPanel.transform.localPosition = Vector3.zero;
+        infoPanel.SetActive(true);
+    }
+
+    public void CloseInfoPanel()
+    {
+        showingInfoPanel = false;
+        infoPanel.SetActive(false);
+        infoPanel.transform.localPosition = new Vector3(9999f, 0f, 0f);
+    }
+
+    public void OpenProductLink()
+    {
+        Application.OpenURL(productUrl);
+    }
+
+    public void ClickedFavoriteButton()
+    {
+        int selectedFurnitureId = selectedFurniture.furnData.FUR_ID;
+        // check if in array
+        if (favFurnIds.Contains(selectedFurnitureId))
+        {
+            // if in, remove and change sprite to empty
+            favFurnIds = favFurnIds.Where(id => id != selectedFurnitureId).ToArray();
+            favoriteButtonImage.sprite = unfilledHeart;
+        }
+        else
+        {
+            // if not in, add and cahnge sprite to filled
+            favFurnIds = favFurnIds.Concat(new[] { selectedFurnitureId }).ToArray();
+            favoriteButtonImage.sprite = filledHeart;
+        }
+
+        // save array back to the file
+        SaveFavoriteFurnitureIds();
+    }
+
+    private void LoadFavoriteFurnitureIds()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
+
+        if (File.Exists(filePath))
+        {
+            string[] idStrings = File.ReadAllLines(filePath);
+            favFurnIds = new int[idStrings.Length];
+
+            for (int i = 0; i < idStrings.Length; i++)
+            {
+                if (int.TryParse(idStrings[i], out int id))
+                {
+                    favFurnIds[i] = id;
+                }
+                else
+                {
+                    Debug.LogError("Error parsing furniture ID from file.");
+                }
+            }
+        }
+        else
+        {
+            favFurnIds = new int[0];
+        }
+    }
+
+    private void SaveFavoriteFurnitureIds()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
+        File.WriteAllLines(filePath, favFurnIds.Select(id => id.ToString()).ToArray());
     }
 
     private void OnDestroy()

@@ -55,7 +55,7 @@ public class ObjectHandler : MonoBehaviour
     private Vector2 initialFingerPosition;
 
     private string selectedVibe;
-    private float totalCost = 0;
+    private float totalCost = 0f;
 
     // array to hold available prefab options
     // we will store all of the indices of the prefabs to the db and use that to retrieve the correct
@@ -140,12 +140,17 @@ public class ObjectHandler : MonoBehaviour
         // retrive stored vibe or if not set, vibeError
         selectedVibe = PlayerPrefs.GetString("Vibe", "VibeERROR");
         StartCoroutine(GetFurnitureData(selectedVibe));
+    }
 
+    private void Start()
+    {
         CostDisplayText.onValueChanged.AddListener(delegate
         {
             // Always update the selected text to the placeholder
             DropdownValueChanged();
         });
+        // call initially to set drop down label
+        DropdownValueChanged();
     }
 
     private IEnumerator GetFurnitureData(string vibeName)
@@ -234,6 +239,7 @@ public class ObjectHandler : MonoBehaviour
             item.text = $"<size=50>{item.text}</size>"; // Adjust the font size (e.g., 20)
         }
 
+        dropdownLabel.text = $"Total Cost: ${totalCost:F2}";
     }
 
     void DropdownValueChanged()

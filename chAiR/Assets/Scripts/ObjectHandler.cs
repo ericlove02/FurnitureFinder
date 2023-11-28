@@ -29,6 +29,8 @@ public class ObjectHandler : MonoBehaviour
     [SerializeField] private AudioSource dropFurnitureAudioSource;
     [SerializeField] private AudioSource errorAudio;
 
+    [SerializeField] private TMP_Dropdown CostDisplayText;
+
     // state for user dragging ui icons into ar view
     private bool isDragging = false;
     // state for user moving ar objects
@@ -53,6 +55,7 @@ public class ObjectHandler : MonoBehaviour
     private Vector2 initialFingerPosition;
 
     private string selectedVibe;
+    private float totalCost = 0;
 
     // array to hold available prefab options
     // we will store all of the indices of the prefabs to the db and use that to retrieve the correct
@@ -202,6 +205,43 @@ public class ObjectHandler : MonoBehaviour
         // if reached here, all retry attempts failed
         loadingPanelText.text = "Failed to retrieve data after multiple attempts";
         loadingPanelIcon.SetActive(false);
+    }
+
+    // private IEnumerator DisplayFurnitureCosts()
+    // {
+    //     while (true)
+    //     {
+    //         yield return new WaitForSeconds(1f); // Update the cost display every 1 second (you can adjust this interval)
+
+    //         // Calculate the total cost of all instantiated furniture
+    //         totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
+
+    //         // Update the UI Dropdown with the total cost and individual furniture items
+    //         UpdateDropdown(totalCost);
+    //     }
+    // }
+
+    private void UpdateDropdown(float totalCost)
+    {
+        // Clear existing options in the dropdown
+        CostDisplayText.ClearOptions();
+
+        // Create a list of dropdown options (furniture items and their costs)
+        List<string> options = new List<string>();
+        // Add the total cost to the options
+        options.Add($"Total Cost: ${totalCost:F2}");
+        foreach (FurnitureObject furniture in instantiatedFurniture)
+        {
+            options.Add($"{furniture.furnData.FUR_NAME}: ${furniture.furnData.FUR_COST:F2}");
+        }
+        // Update the dropdown options
+        CostDisplayText.AddOptions(options);
+
+        foreach (var item in CostDisplayText.options)
+        {
+            item.text = $"<size=50>{item.text}</size>"; // Adjust the font size (e.g., 20)
+        }
+
     }
 
     private void Update()
@@ -383,7 +423,11 @@ public class ObjectHandler : MonoBehaviour
                                 }
                             }
                             selectedFurniture = newFurnitureObject;
+                            // Calculate the total cost of all instantiated furniture
+                            totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
 
+                            // Update the UI Dropdown with the total cost and individual furniture items
+                            UpdateDropdown(totalCost);
                         }
                         catch (Exception e)
                         {
@@ -585,6 +629,11 @@ public class ObjectHandler : MonoBehaviour
                                     newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
                                 }
                             }
+                            // Calculate the total cost of all instantiated furniture
+                            totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
+
+                            // Update the UI Dropdown with the total cost and individual furniture items
+                            UpdateDropdown(totalCost);
                         }
                         catch (Exception e)
                         {
@@ -661,6 +710,7 @@ public class ObjectHandler : MonoBehaviour
         }
     }
 
+
     private void DeselectObject()
     {
         deleteButton.gameObject.SetActive(false);
@@ -676,6 +726,7 @@ public class ObjectHandler : MonoBehaviour
     {
         if (selectedFurniture?.furnModel != null)
         {
+            totalCost -= selectedFurniture.furnData.FUR_COST;
             // move the object out of the scene
             selectedFurniture.furnModel.transform.position = new Vector3(-10000, -10000, -10000);
             StartCoroutine(DestroyObjectAfterFixedUpdate());
@@ -688,6 +739,10 @@ public class ObjectHandler : MonoBehaviour
         yield return new WaitForFixedUpdate();
         instantiatedFurniture.Remove(selectedFurniture);
         Destroy(selectedFurniture.furnModel);
+
+        // Update the UI Dropdown with the new total cost
+        UpdateDropdown(totalCost);
+
         DeselectObject();
     }
 
@@ -782,5 +837,10 @@ public class ObjectHandler : MonoBehaviour
     {
         string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
         File.WriteAllLines(filePath, favFurnIds.Select(id => id.ToString()).ToArray());
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines(); // Stop the coroutine when the script is destroyed
     }
 }

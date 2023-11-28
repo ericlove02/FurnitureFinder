@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
@@ -11,6 +12,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using System.Linq;
+using System.IO;
 
 public class ScrollViewManager : MonoBehaviour
 {
@@ -18,9 +20,13 @@ public class ScrollViewManager : MonoBehaviour
     public Transform content; // Content transform of the scroll view
     public Sprite[] furnitureSprites;
     public static List<FurnitureData> furnitureData;
+    public Sprite unfilledHeart;
+    public Sprite filledHeart;
+    public Button likeButton;
     public GameObject panelInScene;
     public static GameObject staticPanel;
     [SerializeField] TMP_Text debugText;
+    private int[] favFurnIds;
 
     [System.Serializable]
     public class FurnitureData
@@ -41,6 +47,7 @@ public class ScrollViewManager : MonoBehaviour
     {
         panelInScene.SetActive(false);
         SelectedFurniture.furniturePics = furnitureSprites;
+        LoadFavoriteFurnitureIds();
         StartCoroutine(PopulateScrollView());
         staticPanel = panelInScene;
     }
@@ -78,12 +85,7 @@ public class ScrollViewManager : MonoBehaviour
                             furnitureImages[1].sprite = SelectedFurniture.furniturePics[i];
                         }
                         RectTransform buttonRectTransform = newObject.GetComponent<RectTransform>();
-                        /*
-                        buttonRectTransform.anchorMin = new Vector2(0, 0.5f);
-                        buttonRectTransform.anchorMax = new Vector2(1, 0.5f);
-                        buttonRectTransform.sizeDelta = new Vector2(0, newObject.GetComponent<RectTransform>().sizeDelta.y);
-                        */
-
+                        
                         // Resize the prefab to fit the scroll view
                         float targetWidth = content.GetComponent<RectTransform>().rect.width;
 
@@ -123,5 +125,59 @@ public class ScrollViewManager : MonoBehaviour
     {
         SelectedFurniture.furniturePurchaseLink = "";
         panelInScene.SetActive(!panelInScene.activeSelf);
+    }
+
+    public void FavoriteFurniture()
+    {
+        int selectedFurnitureId = SelectedFurniture.clickedFurnitureId;
+        // check if in array
+        if (favFurnIds.Contains(selectedFurnitureId))
+        {
+            // if in, remove and change sprite to empty
+            favFurnIds = favFurnIds.Where(id => id != selectedFurnitureId).ToArray();
+            likeButton.GetComponent<Image>().sprite = unfilledHeart;
+        }
+        else
+        {
+            // if not in, add and cahnge sprite to filled
+            favFurnIds = favFurnIds.Concat(new[] { selectedFurnitureId }).ToArray();
+            likeButton.GetComponent<Image>().sprite = filledHeart;
+        }
+
+        // save array back to the file
+        SaveFavoriteFurnitureIds();
+    }
+
+    private void LoadFavoriteFurnitureIds()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
+
+        if (File.Exists(filePath))
+        {
+            string[] idStrings = File.ReadAllLines(filePath);
+            favFurnIds = new int[idStrings.Length];
+
+            for (int i = 0; i < idStrings.Length; i++)
+            {
+                if (int.TryParse(idStrings[i], out int id))
+                {
+                    favFurnIds[i] = id;
+                }
+                else
+                {
+                    Debug.LogError("Error parsing furniture ID from file.");
+                }
+            }
+        }
+        else
+        {
+            favFurnIds = new int[0];
+        }
+    }
+
+    private void SaveFavoriteFurnitureIds()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
+        File.WriteAllLines(filePath, favFurnIds.Select(id => id.ToString()).ToArray());
     }
 }

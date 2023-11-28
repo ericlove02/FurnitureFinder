@@ -83,7 +83,8 @@ public class ButtonClickScript : MonoBehaviour
             if (favFurnIds.Contains(furnitureId))
             {
                 favoriteButton.GetComponent<Image>().sprite = fillFavButton;
-            }else
+            }
+            else
             {
                 favoriteButton.GetComponent<Image>().sprite = unfilledFavButton;
             }

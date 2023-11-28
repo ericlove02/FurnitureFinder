@@ -173,7 +173,7 @@ public class ObjectHandler : MonoBehaviour
                         lamps = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Lamp" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
                         tables = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Table" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
                         desks = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Desk" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
-                        drawers = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Drawers" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        drawers = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Drawer" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
 
                         loadingPanel.SetActive(false);
                         isLoading = false;
@@ -326,7 +326,7 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 selectedFurnData = desks[Random.Range(0, desks.Length)];
                             }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "Drawers") // FUR_TYPE: "Drawers"
+                            else if (selectedFurniture.furnData.FUR_TYPE == "Drawer") // FUR_TYPE: "Drawer"
                             {
                                 selectedFurnData = drawers[Random.Range(0, drawers.Length)];
                             }
@@ -522,7 +522,7 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 selectedFurn = desks[Random.Range(0, desks.Length)];
                             }
-                            else if (selectedIndex == 5) // FUR_TYPE: "Drawers"
+                            else if (selectedIndex == 5) // FUR_TYPE: "Drawer"
                             {
                                 selectedFurn = drawers[Random.Range(0, drawers.Length)];
                             }

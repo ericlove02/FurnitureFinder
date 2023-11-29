@@ -1,20 +1,28 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEditor;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using Random = UnityEngine.Random;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using System.Linq;
+using System.IO;
 
 public class ButtonClickScript : MonoBehaviour
 {
     // Set the scene name you want to load in the inspector
     public string furniturePurchaseLink;
-    Canvas canvas; 
+    Canvas canvas;
     GameObject panel;
+    Sprite unfilledFavButton;
+    Sprite fillFavButton;
+    private int[] favFurnIds;
 
     void Start()
     {
@@ -30,6 +38,8 @@ public class ButtonClickScript : MonoBehaviour
     void OnClick()
     {
         // Find the Text component among the children
+        LoadFavoriteFurnitureIds();
+
         Transform parentTransform = transform.parent;
 
         Text[] textComponent = parentTransform.GetComponentsInChildren<Text>();
@@ -54,15 +64,54 @@ public class ButtonClickScript : MonoBehaviour
 
             // Change the scene
             List<ScrollViewManager.FurnitureData> furnitureData = ScrollViewManager.furnitureData;
+            if (furnitureData == null)
+            {
+                furnitureData = FavoriteHandler.furnitureData
+                .Select(favoriteData => new ScrollViewManager.FurnitureData
+                {
+                    FUR_ID = favoriteData.FUR_ID,
+                    FUR_NAME = favoriteData.FUR_NAME,
+                    FUR_LINK = favoriteData.FUR_LINK,
+                    FUR_DESC = favoriteData.FUR_DESC,
+                    FUR_COST = favoriteData.FUR_COST,
+                    FUR_DIM_L = favoriteData.FUR_DIM_L,
+                    FUR_DIM_W = favoriteData.FUR_DIM_W,
+                    FUR_DIM_H = favoriteData.FUR_DIM_H,
+                    FUR_TYPE = favoriteData.FUR_TYPE
+                })
+                .ToList();
+            }
             ScrollViewManager.FurnitureData selectedFurniture = furnitureData[furnitureId - 1];
 
-            Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
-            Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            TMP_Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<TMP_Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            TMP_Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<TMP_Text>(); // Replace "TextObjectName" with the actual name of your Text component
+            Image furnitureSprite = panel.transform.Find("FurnImage").GetComponent<Image>(); // Replace "TextObjectName" with the actual name of your Text component
+            Button favoriteButton = panel.transform.Find("FavoriteButton").GetComponent<Button>();
+            unfilledFavButton = panel.transform.Find("UnfilledFavoriteButton").GetComponent<Button>().GetComponent<Image>().sprite;
+            fillFavButton = panel.transform.Find("FilledFavoriteButton").GetComponent<Button>().GetComponent<Image>().sprite; // Replace "TextObjectName" with the actual name of your Text component
+            TMP_Text furnitureDims = panel.transform.Find("Dimensions").GetComponent<TMP_Text>();
+            TMP_Text furnitureDesc = panel.transform.Find("Desc").GetComponent<TMP_Text>();
+
+            if (furnitureId < SelectedFurniture.furniturePics.Length)
+            {
+                furnitureSprite.sprite = SelectedFurniture.furniturePics[furnitureId - 1];
+            }
+
+            if (favFurnIds.Contains(furnitureId))
+            {
+                favoriteButton.GetComponent<Image>().sprite = fillFavButton;
+            }
+            else
+            {
+                favoriteButton.GetComponent<Image>().sprite = unfilledFavButton;
+            }
+
             furnitureName.text = selectedFurniture.FUR_NAME;
-            furnitureCost.text = selectedFurniture.FUR_COST.ToString();
-            furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
+            furnitureCost.text = "$" + selectedFurniture.FUR_COST.ToString();
+            SelectedFurniture.furniturePurchaseLink = selectedFurniture.FUR_LINK.Replace(@"\/", "/").Replace("\n", "").Replace("\r", "");
+            furnitureDims.text = selectedFurniture.FUR_DIM_L.ToString() + "x" + selectedFurniture.FUR_DIM_W.ToString() + "x" + selectedFurniture.FUR_DIM_H.ToString() + " cm";
+            furnitureDesc.text = selectedFurniture.FUR_DESC;
             panel.SetActive(!panel.activeSelf);
-            
 
         }
         else
@@ -78,24 +127,53 @@ public class ButtonClickScript : MonoBehaviour
             return null;
         }
 
-        // Check if the current object has a canvas component
         Canvas canvas = obj.GetComponent<Canvas>();
 
         if (canvas != null)
         {
-            // Canvas found, return it
             return canvas;
         }
         else
         {
-            // If the current object doesn't have the canvas, recursively check its parent
             return FindCanvasInHierarchy(obj.parent);
         }
     }
 
     public void OpenWebpageOnClick()
     {
-        Application.OpenURL(furniturePurchaseLink);
-        Debug.Log(furniturePurchaseLink);
+        Application.OpenURL(SelectedFurniture.furniturePurchaseLink);
+    }
+
+    private void LoadFavoriteFurnitureIds()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
+
+        if (File.Exists(filePath))
+        {
+            string[] idStrings = File.ReadAllLines(filePath);
+            favFurnIds = new int[idStrings.Length];
+
+            for (int i = 0; i < idStrings.Length; i++)
+            {
+                if (int.TryParse(idStrings[i], out int id))
+                {
+                    favFurnIds[i] = id;
+                }
+                else
+                {
+                    Debug.LogError("Error parsing furniture ID from file.");
+                }
+            }
+        }
+        else
+        {
+            favFurnIds = new int[0];
+        }
+    }
+
+    private void SaveFavoriteFurnitureIds()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
+        File.WriteAllLines(filePath, favFurnIds.Select(id => id.ToString()).ToArray());
     }
 }

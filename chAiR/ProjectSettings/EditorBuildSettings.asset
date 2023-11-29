@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FurnInfoScene.unity
     guid: b5580618e38af1944a68850f39e6d8e4
+  - enabled: 1
+    path: Assets/Scenes/FavoritePage.unity
+    guid: b978fb7108d77a149959647b1b5ee288
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 8762b2ef4a0f5df40afdd89adf1b8741, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 5a55d4bc81268304099f6493903eddc5, type: 2}

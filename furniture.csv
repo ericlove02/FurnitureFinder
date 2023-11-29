@@ -1,17 +1,71 @@
-61,Classy Chair 1089,https://www.archiproducts.com/en/products/et-al/swivel-height-adjustable-polypropylene-office-chair-classy-1089_533902,FOO,355,58,61,89,Chair
-62,Moroso Lounge Chair,https://clippings.com/products/take-a-line-for-a-walk-chaise-lounge-1224121?selection=Base%20Finish%3ASteel%21Upholstery%3AStamskin%20Top%204340-07478%20-%20Q&variation=74962691,FOO,4115,149,90,90,Char
-63,Erica Outdoor Armchair,https://www.longhoshop.com/en/outdoor-sofas-and-armchairs/3578-bb-italia-poltrona-erica.html?SubmitCurrency=1&id_currency=3&utm_campaign=google_dinamica&utm_source=google&utm_medium=cpc&countryselect=US&gclid=CjwKCAiAgeeqBhBAEiwAoDDhn_7zBPKkVM8xYYSDe6LbaGCKdpH5gRTrgX2TDq9kr-fNc13H1elwpRoChOUQAvD_BwE,FOO,2753,86,90,65.5,Chair
-64,Libra Chair,https://www.bauhaus2yourhouse.com/products/libra-armchair-by-tonon,FOO,1774,61,60,81,Chair
-65,Plan Armchair,https://www.miliashop.com/en/chair/20748-plan-internoitaliano-chair-with-armrests.html,FOO,786,54.5,55,86,Char
-66,Flint 535A,https://www.archiproducts.com/en/products/et-al/garden-chair-with-armrests-flint-535-am_331343,FOO,388,50,55,74,Chair
-67,Flint 535B,https://www.valitalia.com/us/en_us/et-al-flint-535-b.html,FOO,442,53,53,81,Chair
-68,Pacific Armchair,https://hivemodern.com/pages/product15646/pacific-armchair-patricia-urquiola-moroso?gclid=CjwKCAiAgeeqBhBAEiwAoDDhn5YJ1JSlEu8hN6iywsuZCXoyIA61d189JGDqwRLmFUbsUK6Ziui0ghoCwvgQAvD_BwE,FOO,3155,92,100,73,Char
-69,Neil Twist Armchair,https://www.longhoshop.com/en/outdoor-sofas-and-armchairs/13843-mdf-italia-neil-twist-armchair-with-armrests.html?SubmitCurrency=1&id_currency=3&utm_campaign=google_dinamica&utm_source=google&utm_medium=cpc&countryselect=US&gclid=CjwKCAiAgeeqBhBAEiwAoDDhn02FkuXdHD_g089gu6zbQYN1mZEIh-uM8hdguNW23CezCTXCVuifJhoCPtEQAvD_BwE,FOO,2678,66,79.6,71,Chair
+FUR_ID,FUR_NAME,FUR_LINK,FUR_DESC,FUR_COST,FUR_DIM_L,FUR_DIM_W,FUR_DIM_H,FUR_TYPE
+1,Allak Swivel Chair,https://www.carousell.sg/p/ikea-allak-swivel-chair-212252846/,Black plastic chair,15,47,40,79,Chair
+2,Jules Swivel Chair,https://www.remodelista.com/products/jules-junior-desk-chair/,n/a,40,53,62,140,Chair
+3,Henriksdal Chair,https://www.ikea.com/es/en/p/henriksdal-chair-dark-brown-dansbo-dark-grey-s29220308/,Black cotton and wood chair,62,58,51,97,Chair
+4,Markus Swivel Chair,https://www.ikea.com/us/en/p/markus-office-chair-vissle-dark-gray-90289172/,Black office swivel chair,290,53,62,140,Chair
+5,Ivar Chair,https://www.ikea.com/us/en/p/ivar-chair-pine-90263902/,Wood pine chair,40,49,41,96,Chair
+6,Emmabo Rocking Chair,https://offerup.com/item/detail/12768905,Plastic blue rocking chair,40,94,59,70,Chair
+7,Norraker Chair,https://www.remodelista.com/products/norraker-chair/,Wood birch chair,59,49,41,79,Chair
+8,Poang Armchair,https://www.ikea.com/us/en/p/poaeng-armchair-birch-veneer-hillared-dark-blue-s99305926/,Cushioned blue and wood arm chair,189,82,68,101,Chair
+9,Tullsta Armchair,https://www.ikea.com/us/en/p/tullsta-armchair-lofallet-beige-s89272714/,Sofa style suede cushioned arm chair,270,69,79,77,Chair
+10,Skruvsta Swivel Chair,https://www.ikea.pr/puertorico/en/pd/skruvsta-swivel-chair-white-art-90403002,Swivel suede white rolling chair,229,69,69,89,Chair
+11,Tylosand 3 Seat Sofa Bed,"https://www.comfortly.com/products/tylosand-3-seat-ikea-sofa-bed-cover?variant=43699494519024&currency=USD&gad=1&gclid=Cj0KCQjwhL6pBhDjARIsAGx8D5-7Q75mCNP1M55ZGTk7b1iT4EOZyQEbqFIVM0IRin5Hiu2jHCi6-cgaAl59EALw_wcB
+",FOO,429,89,240,52,Sofa
+12,Ekekog 3 Seat Sofa,https://bemz.com/en-us/products/EKE1-C-CTW103?gclid=Cj0KCQjwhL6pBhDjARIsAGx8D59VIVeOAdCsrlhIvRPeRZLiYSHsSwA_GG-FaRMf292TaFiHnmbhkP8aAomhEALw_wcB,FOO,479,106,236,95,Sofa
+13,Ektorp Sofa Dark Blue,"https://www.ikea.com/es/en/p/ektorp-3-seat-sofa-hillared-dark-blue-s39430532/
+",FOO,525.83,88,218,88,Sofa
+14,Kramfors 2 Seat Sofa,"https://www.comfortly.com/products/kramfors-2-seat-ikea-sofa-cover?variant=43699714982128&currency=USD&gad=1&gclid=CjwKCAjws9ipBhB1EiwAccEi1PSmFdQEnivdN3QRipa2ayEUr5qmBg-IY8mlDbOrsEAXXd6WBokdpxoCiNUQAvD_BwE
+",FOO,235,95,178,66,Sofa
+15,Alrid 2 Seat Sofa,"https://kaiyo.com/ikea-ikea-arild-two-cushion-sofa/
+",FOO,604,91,203,76,Sofa
+16,Solsta 2 Seat Sofa,"https://offerup.com/item/detail/1416445132
+",FOO,85,79,137,72,Sofa
+17,Vreta 3 Seat Sofa Mjuk Ivory,"https://www.showmethead.com/evanston-il/furniture/450-obo-beautiful-ikea-vreta-leather-sofa-like-new-retail-799_19018492.html
+",FOO,450,95,207,88,Sofa
+18,Kipplan 2 Seat Sofa,"https://www.ikea.com/us/en/p/klippan-loveseat-vissle-gray-s09010617/
+",FOO,399,89,177,66,Sofa
+19,Lilberg 2 Seat Sofa,"https://bemz.com/en-us/products/LIL2
+",FOO,175,94,128,85,Sofa
+20,Kvart Floor Lamp Red,https://www.etsy.com/listing/1266822152/very-unique-ikea-kvart-floor-lamp-red?show_sold_out_detail=1&ref=nla_listing_details,FOO,142,15,160,20,Lamp
+21,Kroby Table Lamp,https://www.ebay.com/itm/126107430940,FOO,55,23,49,18,Lamp 
+22,Stockholm Floor Lamp,https://www.ikea.com/sg/en/p/stockholm-2017-floor-lamp-chrome-plated-50343538/,FOO,149,30,140,28,Lamp
+23,Lykta Table Lamp,https://www.etsy.com/listing/1106219426/vintage-handmade-white-ikea-lykta?ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=lykta+lamp+ikea&ref=sr_gallery-1-3&sts=1&organic_search_click=1,FOO,55,13,24,13,Lamp
+24,Orgel Table Lamp,https://poshmark.com/listing/IKEA-ORGEL-Table-Lamps-6212765cac970237b2429d6c,FOO,45,15,56,15,Lamp
+25,Candy Light Lamp,https://www.rueroyalemaison.com/index.php?route=product/product&product_id=1430,FOO,3190,25,53,25,Lamp
+26,Louxor Table Lamp,https://www.select-interiorworld.com/dz_en/baccarat-table-lamp-louxor-2807838.html,FOO,2600,28,41,18,Lamp
+27,NYFORS Floor Lamp,https://www.ikea.com/us/en/p/nyfors-floor-lamp-with-led-bulb-nickel-plated-white-00416283/,FOO,90,38,137,28,Lamp
+28,TISDAG LED Floor Lamp,https://shopperboard.com/TISDAG-LED-floor-lamp-IKEA/product/1631,FOO,199,55,58,13,Lamp
+29,Bjursta Table ,https://www.remodelista.com/products/bjursta-extendable-ding-table/,FOO,199,180,73,84,Table
+30,Lack Side Table,https://offerup.com/item/detail/535779608,FOO,17,56,46,56,Table
+31,Markor Dining Table,https://offerup.com/item/detail/535779608,FOO,40,190,75,95,Table
+32,Liatrop Dining Table,https://www.ikea.com/us/en/p/ingatorp-extendable-table-white-40217069/,FOO,499,155,74,110,Table
+33,Mella Table,https://www.ikea.com/us/en/p/melltorp-adde-table-and-4-chairs-white-s99014376/?utm_source=google&utm_medium=surfaces&utm_campaign=shopping_feed&utm_content=free_google_shopping_clicks_Dining&region_id=10601192314786955162336659916054086938&gclid=CjwKCAjw1t2pBhAFEiwA_-A-NPYvznQbaFr_Pr_Sd-PRp4Qv7bFdqepMbmCKkUte8CO_O1v-6rk95xoCv54QAvD_BwE,FOO,160,125,74,74,Table
+34,Jokkmokk Table,https://www.ikea.com/us/en/p/jokkmokk-table-and-4-chairs-antique-stain-50211104/,FOO,200,117,74,74,Table
+35,Lisabo Coffe Table,https://www.ikea.com/us/en/p/lisabo-coffee-table-ash-veneer-70297658/,FOO,170,117,48,48,Table
+36,Stornas Extending Table,https://www.ikea.com/cz/en/p/stornaes-extendable-table-antique-stain-40176846/,FOO,344,147,74,95,Table
+37,Norden Folding Table,https://www.ikea.com/us/en/p/norden-gateleg-table-birch-90423887/,FOO,350,89,74,81,Table
+38,Vejmon Coffee Table,https://www.ikea.com/sa/en/p/vejmon-coffee-table-black-brown-60136680/,FOO,160,95,5,93,Table
+39,Sit/stand Desk,https://us.usm.com/,FOO,250,72,70,150,Desk
+40,Tensos Desk,https://www.assmann.de/en/product/tensos/,FOO,300,80,62,180,Desk
+41,Battery Desk,https://www.assmann.de/en/product/tensos/,FOO,175,74,65,170,Desk
+42,Executive Desk,https://us.usm.com/,FOO,200,62,70,150,Desk
+43,Gustav Desk,https://offerup.com/item/detail/429935227,FOO,50,60,85,110,Desk
+44,Alve Desk,https://kaiyo.com/ikea-ikea-alve-desk/,FOO,300,66,74,152,Desk
+45,PAHL Desk,https://www.ikea.com/us/en/p/pahl-desk-white-s49128945/,FOO,100,58,59,96,Desk
+46,MICKE Desk,https://www.ikea.com/us/en/p/micke-desk-white-80213074/,FOO,100,50,75,105,Desk
+47,L Desk,https://us.usm.com/,FOO,120,55,65,140,Desk
+48,Aiport Desk,https://us.usm.com/,FOO,100,58,68,130,Desk
+49,Aspelund Chest of 2 Drawers,https://www.aptdeco.com/product/ikea-aspelund-2-drawer-dresser,FOO,50,44,79,87,Drawer
+50,Birkeland 6 Drawer Chest of Drawers,https://offerup.com/item/detail/350589624,FOO,300,52,112,109,Drawer
+51,Helmer Drawer Unit with Casters,https://www.ikea.com/us/en/p/helmer-drawer-unit-on-casters-white-10251045/,FOO,80,44,69,28,Drawer
+52,Lennart Drawer Unit,https://www.ikea.com/us/en/p/lennart-drawer-unit-white-30326177/,FOO,15,34,56,30,Drawer
+53,Alex Drawer Unit,https://www.ikea.com/us/en/p/alex-drawer-unit-white-00473546/,FOO,90,58,70,36,Drawer
+54,Hemnes Chest of 3 Drawers,https://www.ikea.com/us/en/p/hemnes-3-drawer-chest-white-stain-70360414/,FOO,270,50,96,108,Drawer
+55,Hemnes Chest of 6 Drawers,https://www.ikea.com/us/en/p/hemnes-6-drawer-chest-white-stain-80360418/,FOO,350,50,131,108,Drawer
+56,Aspelund 3 Drawer Dresser,https://www.aptdeco.com/product/ikea-aspelund-3-drawer-dresser-2,FOO,65,44,110,88,Drawer
+57,Malm 2 Drawer Chest,https://www.ikea.com/us/en/p/malm-2-drawer-chest-black-brown-00103343/,FOO,90,48,55,40,Drawer
+68,Pacific Armchair,https://hivemodern.com/pages/product15646/pacific-armchair-patricia-urquiola-moroso?gclid=CjwKCAiAgeeqBhBAEiwAoDDhn5YJ1JSlEu8hN6iywsuZCXoyIA61d189JGDqwRLmFUbsUK6Ziui0ghoCwvgQAvD_BwE,FOO,3155,92,100,73,Chair
 70,Neil Leather Chair,https://www.monologuelondon.com/products/neil-chair,FOO,1650,58,50,80,Chair
-71,Neil Textile Chair,https://www.archiproducts.com/en/products/mdf-italia/sled-base-fabric-chair-neil-textile-chair_520396,FOO,1435,58,50,80,Chair
-72,Tribeca Chair,https://artemest.com/en-us/products/tribeca-gray-chair-by-studio-balutto?utm_source=google&utm_medium=cpc&utm_campaign=us_pmax_shopping_google_prospect_shopping-only_low_low-budget_groupa&utm_content=&utm_term=&gad_source=1&gclid=CjwKCAiAgeeqBhBAEiwAoDDhn1MATvwRr_O50lCbiLITAOglexFUGWOvw06YZ5c519VodaouP4IpoBoCDeIQAvD_BwE,FOO,955,50,47,85,Chair
-73,Nizza Chair,https://www.einrichten-design.com/en_us/nizza-chair-moroso-diesel.html,FOO,328,60,50,82,Chair
-74,Libra Lounge Chair,https://www.bauhaus2yourhouse.com/products/libra-lounge-chair-by-tonon,FOO,3686,78,89,72,Chair
 75,Overdyed Chair,https://progarr.com/chair-diesel-with-moroso-overdyed/?srsltid=AfmBOoqEnMVoA9NTCN-Z1yQOaHsm9toOtjWWAVm4cFSNBQokckM_ed2FYMY,FOO,643,56,50,86,Chair
 76,Tender Vis-A-Vis Sofa,https://www.archiproducts.com/en/products/moroso/2-seater-vis-a-vis-fabric-sofa-tender-vis-a-vis_453464,FOO,5352,110,185,83,Sofa
 77,Gentry Extra Light 3 Seater Sofa,https://www.jangeorge.com/products/gentry-x-light-3-seater-sofa-927,FOO,8715,90,255,85,Sofa

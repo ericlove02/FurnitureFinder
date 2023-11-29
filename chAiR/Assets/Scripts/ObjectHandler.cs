@@ -443,7 +443,7 @@ public class ObjectHandler : MonoBehaviour
                         }
                         catch (Exception e)
                         {
-                            debugText.text = e.Message;
+                            // debugText.text = e.Message;
                             if (errorAudio != null)
                             {
                                 errorAudio.Play();
@@ -649,7 +649,7 @@ public class ObjectHandler : MonoBehaviour
                         }
                         catch (Exception e)
                         {
-                            debugText.text = e.Message;
+                            // debugText.text = e.Message;
                             if (errorAudio != null)
                             {
                                 errorAudio.Play();

@@ -397,16 +397,20 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 Bounds bounds = pRenderer.bounds;
 
-                                // scale the object to correct dimensions
-                                float scaleX = selectedFurnData.FUR_DIM_L / 100f / bounds.size.x;
-                                float scaleY = selectedFurnData.FUR_DIM_W / 100f / bounds.size.y;
-                                float scaleZ = selectedFurnData.FUR_DIM_H / 100f / bounds.size.z;
+                                // get the scale factors for each dimension
+                                float scaleX = selectedFurn.FUR_DIM_L / 100f / bounds.size.x;
+                                float scaleY = selectedFurn.FUR_DIM_W / 100f / bounds.size.y;
+                                float scaleZ = selectedFurn.FUR_DIM_H / 100f / bounds.size.z;
 
-                                newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                                // average the scale factors to get one factor
+                                float avgScale = (scaleX + scaleY + scaleZ) / 3;
+
+                                // apply scale to object
+                                newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
                             }
                             else
                             {
-                                // renderer is not in parent, use the childrens renderers
+                                // renderer is not in parent, use the children's renderers
                                 Renderer[] childRenderers = newFurnitureObject.furnModel.GetComponentsInChildren<Renderer>();
 
                                 if (childRenderers.Length > 0)
@@ -417,12 +421,17 @@ public class ObjectHandler : MonoBehaviour
                                     {
                                         combinedBounds.Encapsulate(childRenderers[i].bounds);
                                     }
-                                    // scale the object to correct dimensions
-                                    float scaleX = selectedFurnData.FUR_DIM_L / 100f / combinedBounds.size.x;
-                                    float scaleY = selectedFurnData.FUR_DIM_W / 100f / combinedBounds.size.y;
-                                    float scaleZ = selectedFurnData.FUR_DIM_H / 100f / combinedBounds.size.z;
 
-                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                                    // get the scale factors for each dimension
+                                    float scaleX = selectedFurn.FUR_DIM_L / 100f / combinedBounds.size.x;
+                                    float scaleY = selectedFurn.FUR_DIM_W / 100f / combinedBounds.size.y;
+                                    float scaleZ = selectedFurn.FUR_DIM_H / 100f / combinedBounds.size.z;
+
+                                    // average the scale factors to get one factor
+                                    float avgScale = (scaleX + scaleY + scaleZ) / 3;
+
+                                    // apply scale to object
+                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
                                 }
                             }
                             selectedFurniture = newFurnitureObject;

@@ -42,10 +42,15 @@ public class FavoriteHandler : MonoBehaviour
         public string FUR_TYPE { get; set; }
     }
     private float scaleMultiplier = 1f;
+    private List<GameObject> instantiatedPrefabs = new List<GameObject>();
+    [SerializeField] private GameObject loadingIcon;
+    [SerializeField] private GameObject favsEmptyPopup;
 
     void Start()
     {
         panelInScene.SetActive(false);
+        loadingIcon.SetActive(true);
+        favsEmptyPopup.SetActive(false);
         SelectedFurniture.furniturePics = furnitureSprites;
         LoadFavoriteFurnitureIds();
         StartCoroutine(PopulateScrollView());
@@ -68,6 +73,7 @@ public class FavoriteHandler : MonoBehaviour
             }
             else
             {
+                loadingIcon.SetActive(false);
                 string json = www.downloadHandler.text;
                 try
                 {
@@ -75,9 +81,18 @@ public class FavoriteHandler : MonoBehaviour
                     for (int i = 0; i < furnitureData.Count; i++)
                     {
                         int tempFurnitureId = furnitureData[i].FUR_ID;
-                        if(favFurnIds.Contains(tempFurnitureId))
+                        if (favFurnIds.Length == 0)
+                        {
+                            favsEmptyPopup.SetActive(true);
+                        }
+                        else
+                        {
+                            favsEmptyPopup.SetActive(false);
+                        }
+                        if (favFurnIds.Contains(tempFurnitureId))
                         {
                             GameObject newObject = Instantiate(prefab, content);
+                            instantiatedPrefabs.Add(newObject);
                             Text[] textComponent = newObject.GetComponentsInChildren<Text>();
                             Image[] furnitureImages = newObject.GetComponentsInChildren<Image>();
                             textComponent[0].text = furnitureData[i].FUR_NAME;
@@ -87,7 +102,7 @@ public class FavoriteHandler : MonoBehaviour
                                 furnitureImages[1].sprite = SelectedFurniture.furniturePics[i];
                             }
                             RectTransform buttonRectTransform = newObject.GetComponent<RectTransform>();
-                            
+
                             // Resize the prefab to fit the scroll view
                             float targetWidth = content.GetComponent<RectTransform>().rect.width;
 
@@ -128,6 +143,20 @@ public class FavoriteHandler : MonoBehaviour
     {
         SelectedFurniture.furniturePurchaseLink = "";
         panelInScene.SetActive(!panelInScene.activeSelf);
+    }
+
+    public void OnClosePanel()
+    {
+        // reset the scroll items, may have changed favs
+        foreach (GameObject prefab in instantiatedPrefabs)
+        {
+            // Check if the GameObject is not null before attempting to destroy it
+            if (prefab != null)
+            {
+                Destroy(prefab);
+            }
+        }
+        StartCoroutine(PopulateScrollView());
     }
 
     public void FavoriteFurniture()

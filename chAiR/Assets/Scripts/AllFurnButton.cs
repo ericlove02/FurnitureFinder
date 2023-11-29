@@ -64,6 +64,23 @@ public class ButtonClickScript : MonoBehaviour
 
             // Change the scene
             List<ScrollViewManager.FurnitureData> furnitureData = ScrollViewManager.furnitureData;
+            if (furnitureData == null)
+            {
+                furnitureData = FavoriteHandler.furnitureData
+                .Select(favoriteData => new ScrollViewManager.FurnitureData
+                {
+                    FUR_ID = favoriteData.FUR_ID,
+                    FUR_NAME = favoriteData.FUR_NAME,
+                    FUR_LINK = favoriteData.FUR_LINK,
+                    FUR_DESC = favoriteData.FUR_DESC,
+                    FUR_COST = favoriteData.FUR_COST,
+                    FUR_DIM_L = favoriteData.FUR_DIM_L,
+                    FUR_DIM_W = favoriteData.FUR_DIM_W,
+                    FUR_DIM_H = favoriteData.FUR_DIM_H,
+                    FUR_TYPE = favoriteData.FUR_TYPE
+                })
+                .ToList();
+            }
             ScrollViewManager.FurnitureData selectedFurniture = furnitureData[furnitureId - 1];
 
             TMP_Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<TMP_Text>(); // Replace "TextObjectName" with the actual name of your Text component

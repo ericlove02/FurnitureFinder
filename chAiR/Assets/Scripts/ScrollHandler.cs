@@ -42,10 +42,12 @@ public class ScrollViewManager : MonoBehaviour
         public string FUR_TYPE { get; set; }
     }
     private float scaleMultiplier = 1f;
+    [SerializeField] private GameObject loadingIcon;
 
     void Start()
     {
         panelInScene.SetActive(false);
+        loadingIcon.SetActive(true);
         SelectedFurniture.furniturePics = furnitureSprites;
         LoadFavoriteFurnitureIds();
         StartCoroutine(PopulateScrollView());
@@ -68,6 +70,7 @@ public class ScrollViewManager : MonoBehaviour
             }
             else
             {
+                loadingIcon.SetActive(false);
                 string json = www.downloadHandler.text;
                 try
                 {
@@ -85,7 +88,7 @@ public class ScrollViewManager : MonoBehaviour
                             furnitureImages[1].sprite = SelectedFurniture.furniturePics[i];
                         }
                         RectTransform buttonRectTransform = newObject.GetComponent<RectTransform>();
-                        
+
                         // Resize the prefab to fit the scroll view
                         float targetWidth = content.GetComponent<RectTransform>().rect.width;
 

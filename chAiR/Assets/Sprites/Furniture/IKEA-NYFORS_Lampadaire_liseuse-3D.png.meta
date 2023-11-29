@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      IKEA-NYFORS_Lampadaire_liseuse-3D_0: 8196897052912574361
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

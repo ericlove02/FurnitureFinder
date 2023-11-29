@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Celeste_Lamp_0: 2330669113147710702
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

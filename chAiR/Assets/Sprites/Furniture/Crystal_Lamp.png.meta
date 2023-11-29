@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Crystal_Lamp_0: 64013610477194783
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

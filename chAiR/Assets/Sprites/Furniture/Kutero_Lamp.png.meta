@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Kutero_Lamp_0: 7779565988957763105
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

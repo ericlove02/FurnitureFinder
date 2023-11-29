@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Krysta_Lamp_0: 7134710437469454915
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

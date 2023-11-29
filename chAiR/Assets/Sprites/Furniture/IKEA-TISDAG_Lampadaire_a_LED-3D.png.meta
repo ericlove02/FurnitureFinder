@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      IKEA-TISDAG_Lampadaire_a_LED-3D_0: 4094105981548723228
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

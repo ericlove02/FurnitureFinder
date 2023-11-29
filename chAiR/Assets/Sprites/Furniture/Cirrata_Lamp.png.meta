@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Cirrata_Lamp_0: -6218260209250285619
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

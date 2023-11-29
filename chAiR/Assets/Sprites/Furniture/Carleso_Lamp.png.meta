@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Carleso_Lamp_0: 2535756250469907333
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

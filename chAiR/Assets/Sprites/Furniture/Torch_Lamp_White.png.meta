@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Torch_Lamp_White_0: 1976009551446580734
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

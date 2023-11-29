@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Petite_Modele_Lamp_0: 2462760895458262324
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -29,6 +29,8 @@ public class ObjectHandler : MonoBehaviour
     [SerializeField] private AudioSource dropFurnitureAudioSource;
     [SerializeField] private AudioSource errorAudio;
 
+    [SerializeField] private TMP_Dropdown CostDisplayText;
+
     // state for user dragging ui icons into ar view
     private bool isDragging = false;
     // state for user moving ar objects
@@ -53,6 +55,7 @@ public class ObjectHandler : MonoBehaviour
     private Vector2 initialFingerPosition;
 
     private string selectedVibe;
+    private float totalCost = 0f;
 
     // array to hold available prefab options
     // we will store all of the indices of the prefabs to the db and use that to retrieve the correct
@@ -88,6 +91,8 @@ public class ObjectHandler : MonoBehaviour
     [SerializeField] private GameObject loadingPanelIcon;
     private bool isLoading = true;
     [SerializeField] private GameObject updateDisplay;
+
+    public TMP_Text dropdownLabel;
 
 
     // info panel references
@@ -137,6 +142,17 @@ public class ObjectHandler : MonoBehaviour
         StartCoroutine(GetFurnitureData(selectedVibe));
     }
 
+    private void Start()
+    {
+        CostDisplayText.onValueChanged.AddListener(delegate
+        {
+            // Always update the selected text to the placeholder
+            DropdownValueChanged();
+        });
+        // call initially to set drop down label
+        DropdownValueChanged();
+    }
+
     private IEnumerator GetFurnitureData(string vibeName)
     {
         int retryCount = 0;
@@ -173,7 +189,7 @@ public class ObjectHandler : MonoBehaviour
                         lamps = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Lamp" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
                         tables = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Table" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
                         desks = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Desk" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
-                        drawers = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Drawers" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
+                        drawers = furnitureData.Where(furniture => (furniture.FUR_TYPE == "Drawer" && furniture.FUR_ID <= furniturePrefabs.Length)).ToArray();
 
                         loadingPanel.SetActive(false);
                         isLoading = false;
@@ -202,6 +218,33 @@ public class ObjectHandler : MonoBehaviour
         // if reached here, all retry attempts failed
         loadingPanelText.text = "Failed to retrieve data after multiple attempts";
         loadingPanelIcon.SetActive(false);
+    }
+
+    private void UpdateDropdown()
+    {
+        // Clear existing options in the dropdown
+        CostDisplayText.ClearOptions();
+
+        // Create a list of dropdown options (furniture items and their costs)
+        List<string> options = new List<string>();
+        foreach (FurnitureObject furniture in instantiatedFurniture)
+        {
+            options.Add($"{furniture.furnData.FUR_NAME}: ${furniture.furnData.FUR_COST:F2}");
+        }
+        // Update the dropdown options
+        CostDisplayText.AddOptions(options);
+
+        foreach (var item in CostDisplayText.options)
+        {
+            item.text = $"<size=50>{item.text}</size>"; // Adjust the font size (e.g., 20)
+        }
+
+        dropdownLabel.text = $"Total Cost: ${totalCost:F2}";
+    }
+
+    void DropdownValueChanged()
+    {
+        dropdownLabel.text = $"Total Cost: ${totalCost:F2}";
     }
 
     private void Update()
@@ -326,7 +369,7 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 selectedFurnData = desks[Random.Range(0, desks.Length)];
                             }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "Drawers") // FUR_TYPE: "Drawers"
+                            else if (selectedFurniture.furnData.FUR_TYPE == "Drawer") // FUR_TYPE: "Drawer"
                             {
                                 selectedFurnData = drawers[Random.Range(0, drawers.Length)];
                             }
@@ -348,8 +391,46 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 debugText.text = "Prefab not yet created for id " + selectedFurnData.FUR_ID.ToString();
                             }
-                            selectedFurniture = newFurnitureObject;
 
+                            Renderer pRenderer = newFurnitureObject.furnModel.GetComponent<Renderer>();
+                            if (pRenderer != null)
+                            {
+                                Bounds bounds = pRenderer.bounds;
+
+                                // scale the object to correct dimensions
+                                float scaleX = selectedFurnData.FUR_DIM_L / 100f / bounds.size.x;
+                                float scaleY = selectedFurnData.FUR_DIM_W / 100f / bounds.size.y;
+                                float scaleZ = selectedFurnData.FUR_DIM_H / 100f / bounds.size.z;
+
+                                newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                            }
+                            else
+                            {
+                                // renderer is not in parent, use the childrens renderers
+                                Renderer[] childRenderers = newFurnitureObject.furnModel.GetComponentsInChildren<Renderer>();
+
+                                if (childRenderers.Length > 0)
+                                {
+                                    // encapsulate the object bounds
+                                    Bounds combinedBounds = childRenderers[0].bounds;
+                                    for (int i = 1; i < childRenderers.Length; i++)
+                                    {
+                                        combinedBounds.Encapsulate(childRenderers[i].bounds);
+                                    }
+                                    // scale the object to correct dimensions
+                                    float scaleX = selectedFurnData.FUR_DIM_L / 100f / combinedBounds.size.x;
+                                    float scaleY = selectedFurnData.FUR_DIM_W / 100f / combinedBounds.size.y;
+                                    float scaleZ = selectedFurnData.FUR_DIM_H / 100f / combinedBounds.size.z;
+
+                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                                }
+                            }
+                            selectedFurniture = newFurnitureObject;
+                            // Calculate the total cost of all instantiated furniture
+                            totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
+
+                            // Update the UI Dropdown with the total cost and individual furniture items
+                            UpdateDropdown();
                         }
                         catch (Exception e)
                         {
@@ -488,7 +569,7 @@ public class ObjectHandler : MonoBehaviour
                             {
                                 selectedFurn = desks[Random.Range(0, desks.Length)];
                             }
-                            else if (selectedIndex == 5) // FUR_TYPE: "Drawers"
+                            else if (selectedIndex == 5) // FUR_TYPE: "Drawer"
                             {
                                 selectedFurn = drawers[Random.Range(0, drawers.Length)];
                             }
@@ -507,25 +588,27 @@ public class ObjectHandler : MonoBehaviour
                             }
 
                             // scale the object to correct dimensions
-                            // get objects renderer to measures its current size
+                            // get object's renderer to measure its current size
                             // check if renderer is on the parent object first
                             Renderer pRenderer = newFurnitureObject.furnModel.GetComponent<Renderer>();
-
                             if (pRenderer != null)
                             {
                                 Bounds bounds = pRenderer.bounds;
 
-                                // scale the object to correct dimensions
-                                Vector3 rescale = newFurnitureObject.furnModel.transform.localScale;
-                                rescale.x = (selectedFurn.FUR_DIM_L / 100f) * rescale.x / bounds.size.x;
-                                rescale.y = (selectedFurn.FUR_DIM_W / 100f) * rescale.y / bounds.size.y;
-                                rescale.z = (selectedFurn.FUR_DIM_H / 100f) * rescale.z / bounds.size.z;
-                                // debugText.text = "normalBounds: " + rescale.ToString();
-                                newFurnitureObject.furnModel.transform.localScale = rescale;
+                                // get the scale factors for each dimension
+                                float scaleX = selectedFurn.FUR_DIM_L / 100f / bounds.size.x;
+                                float scaleY = selectedFurn.FUR_DIM_W / 100f / bounds.size.y;
+                                float scaleZ = selectedFurn.FUR_DIM_H / 100f / bounds.size.z;
+
+                                // average the scale factors to get one factor
+                                float avgScale = (scaleX + scaleY + scaleZ) / 3;
+
+                                // apply scale to object
+                                newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
                             }
                             else
                             {
-                                // renderer is not in parent, use the childrens renderers
+                                // renderer is not in parent, use the children's renderers
                                 Renderer[] childRenderers = newFurnitureObject.furnModel.GetComponentsInChildren<Renderer>();
 
                                 if (childRenderers.Length > 0)
@@ -536,15 +619,24 @@ public class ObjectHandler : MonoBehaviour
                                     {
                                         combinedBounds.Encapsulate(childRenderers[i].bounds);
                                     }
-                                    // scale the object to correct dimensions
-                                    Vector3 rescale = newFurnitureObject.furnModel.transform.localScale;
-                                    rescale.x = (selectedFurn.FUR_DIM_L / 100f) * rescale.x / combinedBounds.size.x;
-                                    rescale.y = (selectedFurn.FUR_DIM_W / 100f) * rescale.y / combinedBounds.size.y;
-                                    rescale.z = (selectedFurn.FUR_DIM_H / 100f) * rescale.z / combinedBounds.size.z;
-                                    // debugText.text = "combinedBounds: " + rescale.ToString();
-                                    newFurnitureObject.furnModel.transform.localScale = rescale;
+
+                                    // get the scale factors for each dimension
+                                    float scaleX = selectedFurn.FUR_DIM_L / 100f / combinedBounds.size.x;
+                                    float scaleY = selectedFurn.FUR_DIM_W / 100f / combinedBounds.size.y;
+                                    float scaleZ = selectedFurn.FUR_DIM_H / 100f / combinedBounds.size.z;
+
+                                    // average the scale factors to get one factor
+                                    float avgScale = (scaleX + scaleY + scaleZ) / 3;
+
+                                    // apply scale to object
+                                    newFurnitureObject.furnModel.transform.localScale = new Vector3(avgScale, avgScale, avgScale);
                                 }
                             }
+                            // Calculate the total cost of all instantiated furniture
+                            totalCost = instantiatedFurniture.Sum(furniture => furniture.furnData.FUR_COST);
+
+                            // Update the UI Dropdown with the total cost and individual furniture items
+                            UpdateDropdown();
                         }
                         catch (Exception e)
                         {
@@ -621,6 +713,7 @@ public class ObjectHandler : MonoBehaviour
         }
     }
 
+
     private void DeselectObject()
     {
         deleteButton.gameObject.SetActive(false);
@@ -636,6 +729,7 @@ public class ObjectHandler : MonoBehaviour
     {
         if (selectedFurniture?.furnModel != null)
         {
+            totalCost -= selectedFurniture.furnData.FUR_COST;
             // move the object out of the scene
             selectedFurniture.furnModel.transform.position = new Vector3(-10000, -10000, -10000);
             StartCoroutine(DestroyObjectAfterFixedUpdate());
@@ -648,6 +742,10 @@ public class ObjectHandler : MonoBehaviour
         yield return new WaitForFixedUpdate();
         instantiatedFurniture.Remove(selectedFurniture);
         Destroy(selectedFurniture.furnModel);
+
+        // Update the UI Dropdown with the new total cost
+        UpdateDropdown();
+
         DeselectObject();
     }
 
@@ -742,5 +840,10 @@ public class ObjectHandler : MonoBehaviour
     {
         string filePath = Path.Combine(Application.persistentDataPath, "favFurnIds.txt");
         File.WriteAllLines(filePath, favFurnIds.Select(id => id.ToString()).ToArray());
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines(); // Stop the coroutine when the script is destroyed
     }
 }

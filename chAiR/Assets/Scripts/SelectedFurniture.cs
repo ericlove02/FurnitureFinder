@@ -16,4 +16,5 @@ public class SelectedFurniture
     public static string previousPage = "None";
     public static List<ScrollViewManager.FurnitureData> furnitureData;
     public static string furniturePurchaseLink = "";
+    public static Sprite[] furniturePics; 
 }

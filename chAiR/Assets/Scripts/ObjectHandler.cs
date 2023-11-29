@@ -347,6 +347,7 @@ public class ObjectHandler : MonoBehaviour
                     {
                         try
                         {
+                            //
                             FurnitureData selectedFurnData = furnitureData[0];
                             // find random piece of furniture in data that matches type and instantiate it
                             if (selectedFurniture.furnData.FUR_TYPE == "Sofa") // FUR_TYPE: "Sofa"

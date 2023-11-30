@@ -382,11 +382,10 @@ public class ObjectHandler : MonoBehaviour
                                     selectedFurnData = drawers[Random.Range(0, drawers.Length)];
                                 }
                                 loops += 1;
-                                lastFurnData = selectedFurnData;
-                            } while (selectedFurnData == lastFurnData && sofas.Length > 1 && chairs.Length > 1 && lamps.Length > 1 && tables.Length > 1 && desks.Length > 1 && drawers.Length > 1 && furniturePrefabs[selectedFurnData.FUR_ID - 1] == null && loops < 15);
+                            } while (selectedFurnData.FUR_ID == lastFurnData.FUR_ID && sofas.Length > 1 && chairs.Length > 1 && lamps.Length > 1 && tables.Length > 1 && desks.Length > 1 && drawers.Length > 1 && furniturePrefabs[selectedFurnData.FUR_ID - 1] == null && loops < 15);
                             if (loops == 15)
                             {
-                                debugText.text = "No furniture available for that type!";
+                                StartCoroutine(NoFurnAvailText());
                             }
                             // instantiate the new prefab in the place of the old one, destroy old one
                             FurnitureObject newFurnitureObject = new FurnitureObject();
@@ -605,7 +604,7 @@ public class ObjectHandler : MonoBehaviour
                             } while (furniturePrefabs[selectedFurn.FUR_ID - 1] == null && loops < 15);
                             if (loops == 15)
                             {
-                                debugText.text = "No furniture available for that type!";
+                                StartCoroutine(NoFurnAvailText());
                             }
                             FurnitureObject newFurnitureObject = new FurnitureObject();
                             newFurnitureObject.furnData = selectedFurn;
@@ -880,5 +879,12 @@ public class ObjectHandler : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines(); // Stop the coroutine when the script is destroyed
+    }
+
+    IEnumerator NoFurnAvailText()
+    {
+        debugText.text = "No furniture available for that type!";
+        yield return new WaitForSeconds(3);
+        debugText.text = "";
     }
 }

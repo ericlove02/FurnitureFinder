@@ -81,7 +81,7 @@ public class ButtonClickScript : MonoBehaviour
                 })
                 .ToList();
             }
-            ScrollViewManager.FurnitureData selectedFurniture = furnitureData[furnitureId - 1];
+            ScrollViewManager.FurnitureData selectedFurniture = furnitureData.FirstOrDefault(item => item.FUR_ID == furnitureId);
 
             TMP_Text furnitureName = panel.transform.Find("Furniture Name").GetComponent<TMP_Text>(); // Replace "TextObjectName" with the actual name of your Text component
             TMP_Text furnitureCost = panel.transform.Find("Furniture Cost").GetComponent<TMP_Text>(); // Replace "TextObjectName" with the actual name of your Text component

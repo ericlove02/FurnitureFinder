@@ -236,6 +236,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: lighting-desk-table--baccarat-baccarat-celestetablelamp-3d
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: deca2ccf1272b4ac19f155cc80444cd9, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     - target: {fileID: 929506095835649046, guid: deca2ccf1272b4ac19f155cc80444cd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.1292868

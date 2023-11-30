@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IKEA-NYFORS_Lampadaire_liseuse-3D
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cb719d07152ee4b80bce3a2200250cf8, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     - target: {fileID: 7471340277151831656, guid: cb719d07152ee4b80bce3a2200250cf8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -123.32212

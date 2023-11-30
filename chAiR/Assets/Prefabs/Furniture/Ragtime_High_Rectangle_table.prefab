@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7796838649854792395}
   - component: {fileID: 8211244223911689069}
   - component: {fileID: 2348877729053235347}
+  - component: {fileID: 3589959541801465822}
   m_Layer: 0
   m_Name: IfcBuildin
   m_TagString: Untagged
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3589959541801465822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74515098092916240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &694822996231937584
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,6 +195,7 @@ GameObject:
   - component: {fileID: 1849680838859658474}
   - component: {fileID: 2039375730001587643}
   - component: {fileID: 3299852610288287315}
+  - component: {fileID: 4928901354745835155}
   m_Layer: 0
   m_Name: IfcBuild18
   m_TagString: Untagged
@@ -252,6 +268,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4928901354745835155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721117892959895889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &764969294666610618
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +341,7 @@ GameObject:
   - component: {fileID: 7359921647087186556}
   - component: {fileID: 1843691273187150028}
   - component: {fileID: 284834337957510188}
+  - component: {fileID: 6771887538705812734}
   m_Layer: 0
   m_Name: IfcWall_01
   m_TagString: Untagged
@@ -383,6 +414,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6771887538705812734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191466527505554923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &1252529519826633063
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +439,7 @@ GameObject:
   - component: {fileID: 7348326684507251818}
   - component: {fileID: 4245043114262878971}
   - component: {fileID: 8556605151155112271}
+  - component: {fileID: 5114354034752268735}
   m_Layer: 0
   m_Name: IfcBuild24
   m_TagString: Untagged
@@ -466,6 +512,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5114354034752268735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252529519826633063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &1577673992171724054
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,6 +537,7 @@ GameObject:
   - component: {fileID: 3510059986858803477}
   - component: {fileID: 119499552190513874}
   - component: {fileID: 3000993451806279950}
+  - component: {fileID: 6221357686523683291}
   m_Layer: 0
   m_Name: IfcBuild09
   m_TagString: Untagged
@@ -549,6 +610,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6221357686523683291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577673992171724054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &1732427546087729701
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +723,7 @@ GameObject:
   - component: {fileID: 4432159827821379338}
   - component: {fileID: 1316772079826242520}
   - component: {fileID: 7510364000793671533}
+  - component: {fileID: 9075116811685801317}
   m_Layer: 0
   m_Name: IfcBuild01
   m_TagString: Untagged
@@ -720,6 +796,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9075116811685801317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872875173794788640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &2382730850933787487
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,6 +821,7 @@ GameObject:
   - component: {fileID: 548106740640825929}
   - component: {fileID: 4406532756065382921}
   - component: {fileID: 1757287033222989431}
+  - component: {fileID: 7666007712335426304}
   m_Layer: 0
   m_Name: IfcBuild19
   m_TagString: Untagged
@@ -803,6 +894,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7666007712335426304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2382730850933787487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &3571119360115387222
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +919,7 @@ GameObject:
   - component: {fileID: 4596888955612200580}
   - component: {fileID: 5143130545454801171}
   - component: {fileID: 2285929528925992877}
+  - component: {fileID: 3426959540723435101}
   m_Layer: 0
   m_Name: IfcBeam_02
   m_TagString: Untagged
@@ -886,6 +992,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3426959540723435101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3571119360115387222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &3717353557095080653
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,6 +1017,7 @@ GameObject:
   - component: {fileID: 6846055158599496495}
   - component: {fileID: 4920769908819638899}
   - component: {fileID: 8075802062158676738}
+  - component: {fileID: 1797055440948964445}
   m_Layer: 0
   m_Name: IfcBuild20
   m_TagString: Untagged
@@ -969,6 +1090,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1797055440948964445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3717353557095080653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &3770765564871229472
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,6 +1115,7 @@ GameObject:
   - component: {fileID: 2837473347501057800}
   - component: {fileID: 8776191416449272924}
   - component: {fileID: 8136298594376570256}
+  - component: {fileID: 7197404301091915730}
   m_Layer: 0
   m_Name: IfcBuild14
   m_TagString: Untagged
@@ -1052,6 +1188,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7197404301091915730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770765564871229472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &4038103417954561127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,6 +1213,7 @@ GameObject:
   - component: {fileID: 5567032975793020488}
   - component: {fileID: 8438063099522204073}
   - component: {fileID: 6256002346055821794}
+  - component: {fileID: 2834000294690911676}
   m_Layer: 0
   m_Name: IfcBeam_03
   m_TagString: Untagged
@@ -1135,6 +1286,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2834000294690911676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4038103417954561127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &4046121087868834534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1311,7 @@ GameObject:
   - component: {fileID: 5282513628012056427}
   - component: {fileID: 508674766501392973}
   - component: {fileID: 555677712046493495}
+  - component: {fileID: 7599237083295921407}
   m_Layer: 0
   m_Name: IfcBuild04
   m_TagString: Untagged
@@ -1218,6 +1384,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7599237083295921407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4046121087868834534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &4522358276134109371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,6 +1409,7 @@ GameObject:
   - component: {fileID: 5988742357162608448}
   - component: {fileID: 7217086946998096777}
   - component: {fileID: 9210168422409731294}
+  - component: {fileID: 1364550507727934381}
   m_Layer: 0
   m_Name: IfcBuild12
   m_TagString: Untagged
@@ -1301,6 +1482,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1364550507727934381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522358276134109371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &4657861116734691499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,6 +1507,7 @@ GameObject:
   - component: {fileID: 6078344177785762502}
   - component: {fileID: 6911297521826662877}
   - component: {fileID: 4416648823528214373}
+  - component: {fileID: 747197585613929015}
   m_Layer: 0
   m_Name: IfcBuild15
   m_TagString: Untagged
@@ -1384,6 +1580,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &747197585613929015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4657861116734691499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &4766304030254967009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,6 +1605,7 @@ GameObject:
   - component: {fileID: 1393189556394880760}
   - component: {fileID: 5795593717699407456}
   - component: {fileID: 798081250102146011}
+  - component: {fileID: 5136079560718810915}
   m_Layer: 0
   m_Name: IfcWall___
   m_TagString: Untagged
@@ -1467,6 +1678,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5136079560718810915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766304030254967009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &4775681255209276444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1703,7 @@ GameObject:
   - component: {fileID: 3244632349878304636}
   - component: {fileID: 8993972767694686158}
   - component: {fileID: 8050643224735813537}
+  - component: {fileID: 4314628374476391311}
   m_Layer: 0
   m_Name: IfcBuild08
   m_TagString: Untagged
@@ -1550,6 +1776,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4314628374476391311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775681255209276444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &4973104928136414817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,6 +1801,7 @@ GameObject:
   - component: {fileID: 8796790962882403252}
   - component: {fileID: 7464818546147166104}
   - component: {fileID: 8569292723386507720}
+  - component: {fileID: 5856602596283961717}
   m_Layer: 0
   m_Name: IfcBuild07
   m_TagString: Untagged
@@ -1633,6 +1874,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5856602596283961717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4973104928136414817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &4975975915193878495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,6 +1899,7 @@ GameObject:
   - component: {fileID: 5576720205862012416}
   - component: {fileID: 3958489522834861547}
   - component: {fileID: 62840476098048108}
+  - component: {fileID: 1711024494009003496}
   m_Layer: 0
   m_Name: IfcBuild22
   m_TagString: Untagged
@@ -1716,6 +1972,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1711024494009003496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975975915193878495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &5160387350269321802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1727,6 +1997,7 @@ GameObject:
   - component: {fileID: 4498990592213791725}
   - component: {fileID: 5747170735835034877}
   - component: {fileID: 3839341428362868476}
+  - component: {fileID: 8313893413360718685}
   m_Layer: 0
   m_Name: IfcBuild06
   m_TagString: Untagged
@@ -1799,6 +2070,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8313893413360718685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160387350269321802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &6398646864336788442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1810,6 +2095,7 @@ GameObject:
   - component: {fileID: 148243021345297060}
   - component: {fileID: 8292581101617796482}
   - component: {fileID: 2536402820710642894}
+  - component: {fileID: 680988447990973742}
   m_Layer: 0
   m_Name: IfcBeam_04
   m_TagString: Untagged
@@ -1882,6 +2168,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &680988447990973742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6398646864336788442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &6447319545130628147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +2193,7 @@ GameObject:
   - component: {fileID: 4701745053950798331}
   - component: {fileID: 5175612791880611810}
   - component: {fileID: 1456846184525335363}
+  - component: {fileID: 8784115594573619021}
   m_Layer: 0
   m_Name: IfcBuild10
   m_TagString: Untagged
@@ -1965,6 +2266,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8784115594573619021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6447319545130628147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &6702147152237059964
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,6 +2377,7 @@ GameObject:
   - component: {fileID: 5841228675078149937}
   - component: {fileID: 4005901231896166776}
   - component: {fileID: 8588540086246652572}
+  - component: {fileID: 4609798798280464627}
   m_Layer: 0
   m_Name: IfcBuild17
   m_TagString: Untagged
@@ -2134,6 +2450,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4609798798280464627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6838264477407902477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &7344731420925831875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,6 +2475,7 @@ GameObject:
   - component: {fileID: 2440328990634971961}
   - component: {fileID: 6399789115700378786}
   - component: {fileID: 6847089545189266808}
+  - component: {fileID: 7786373814304421344}
   m_Layer: 0
   m_Name: IfcBuild02
   m_TagString: Untagged
@@ -2217,6 +2548,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7786373814304421344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7344731420925831875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8157829050472302099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2228,6 +2573,7 @@ GameObject:
   - component: {fileID: 2870725258005300327}
   - component: {fileID: 3871066406122109744}
   - component: {fileID: 8669211774759160257}
+  - component: {fileID: 894337119352356897}
   m_Layer: 0
   m_Name: IfcBuild21
   m_TagString: Untagged
@@ -2300,6 +2646,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &894337119352356897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8157829050472302099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8231222003869668851
 GameObject:
   m_ObjectHideFlags: 0
@@ -2327,7 +2687,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8231222003869668851}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24971442, y: -0.73923063, z: 0.0027291772, w: -0.6254386}
+  m_LocalRotation: {x: 0.24971387, y: -0.73923314, z: 0.0027328727, w: -0.6254359}
   m_LocalPosition: {x: 6874.6724, y: 56.25757, z: 3777.0981}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2408,6 +2768,7 @@ GameObject:
   - component: {fileID: 5391852352554095927}
   - component: {fileID: 8478974226023900062}
   - component: {fileID: 7430615210409449295}
+  - component: {fileID: 5347580847234692551}
   m_Layer: 0
   m_Name: IfcBuild23
   m_TagString: Untagged
@@ -2480,6 +2841,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5347580847234692551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8265909706559999041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8343180628175561912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2491,7 +2866,7 @@ GameObject:
   - component: {fileID: 6074532837793958803}
   - component: {fileID: 2065736727156593811}
   - component: {fileID: 2555742482242257761}
-  - component: {fileID: 5587091984653240155}
+  - component: {fileID: 2794257037498966756}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -2564,7 +2939,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5587091984653240155
+--- !u!114 &2794257037498966756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2573,12 +2948,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8343180628175561912}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8467460953614425138
 GameObject:
   m_ObjectHideFlags: 0
@@ -2590,6 +2964,7 @@ GameObject:
   - component: {fileID: 6036747272518105519}
   - component: {fileID: 2389114601110916902}
   - component: {fileID: 6244040155032093995}
+  - component: {fileID: 4373614341004982872}
   m_Layer: 0
   m_Name: IfcBeam_01
   m_TagString: Untagged
@@ -2662,6 +3037,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4373614341004982872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8467460953614425138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8812381954218852271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,6 +3062,7 @@ GameObject:
   - component: {fileID: 4399379613263495263}
   - component: {fileID: 5837385928420201509}
   - component: {fileID: 3924801592401777774}
+  - component: {fileID: 6888060929357762157}
   m_Layer: 0
   m_Name: IfcBuild05
   m_TagString: Untagged
@@ -2745,6 +3135,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6888060929357762157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812381954218852271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &8933687838103218608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2756,6 +3160,7 @@ GameObject:
   - component: {fileID: 7379199354694094850}
   - component: {fileID: 2373286404721482649}
   - component: {fileID: 1258915527459414909}
+  - component: {fileID: 6625800271129111002}
   m_Layer: 0
   m_Name: Ragtime_C1
   m_TagString: Untagged
@@ -2828,6 +3233,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6625800271129111002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933687838103218608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &9053302200567350010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,6 +3258,7 @@ GameObject:
   - component: {fileID: 6447913580826798244}
   - component: {fileID: 6176806268721768188}
   - component: {fileID: 2410850648442492177}
+  - component: {fileID: 3687373752256162915}
   m_Layer: 0
   m_Name: IfcBuild13
   m_TagString: Untagged
@@ -2911,6 +3331,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3687373752256162915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9053302200567350010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &9084650017372339918
 GameObject:
   m_ObjectHideFlags: 0
@@ -2990,6 +3424,7 @@ GameObject:
   - component: {fileID: 668362211952578259}
   - component: {fileID: 4038345578152867588}
   - component: {fileID: 1015984370916135932}
+  - component: {fileID: 2114165159145496264}
   m_Layer: 0
   m_Name: IfcBeam___
   m_TagString: Untagged
@@ -3062,3 +3497,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2114165159145496264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9098884075917669347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0

@@ -387,6 +387,7 @@ public class ObjectHandler : MonoBehaviour
                                 newFurnitureObject.furnModel = Instantiate(newPrefab, position, rotation);
                                 CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
                                 instantiatedFurniture.Add(newFurnitureObject);
+                                debugText.text = "Prefab id: " + selectedFurnData.FUR_ID.ToString() + "; model index: " + (selectedFurnData.FUR_ID - 1).ToString();
                             }
                             else
                             {
@@ -591,6 +592,7 @@ public class ObjectHandler : MonoBehaviour
                                 newFurnitureObject.furnModel = Instantiate(newPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
                                 CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
                                 instantiatedFurniture.Add(newFurnitureObject);
+                                debugText.text = "Prefab id: " + selectedFurn.FUR_ID.ToString() + "; model index: " + (selectedFurn.FUR_ID - 1).ToString();
                             }
                             else
                             {

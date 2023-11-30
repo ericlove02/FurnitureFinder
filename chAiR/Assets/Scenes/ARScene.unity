@@ -67,6 +67,9 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -8561,10 +8564,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3898504508662247605, guid: e14b5c4a70f22f84d8a34964c96147ca, type: 3}
+  - {fileID: 2997643112220151130, guid: bd5b76d81dcca3b4fa4fbb66b6d7f883, type: 3}
+  - {fileID: 8737757888966236808, guid: c4dea8906550d9f43b9ad75119fd54b9, type: 3}
+  - {fileID: 6239446170240672138, guid: 9a121ee4db7b6ea43b8babcb9507e722, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -8738,10 +8741,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
   - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
   - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
-  - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
-  - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
-  - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
-  - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
+  - {fileID: 21300000, guid: f6b5833501f4f5142818619faa2eb7b9, type: 3}
+  - {fileID: 21300000, guid: eda92144a3859a346af1a5057044c4e1, type: 3}
+  - {fileID: 21300000, guid: 1a3ff012fca86f841942944bda2dbec9, type: 3}
+  - {fileID: 21300000, guid: 29bab95ed63906044860e3b050959d6b, type: 3}
   - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
   - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}
   - {fileID: 21300000, guid: bb9a12c9dce07884d981a3918bc598f7, type: 3}

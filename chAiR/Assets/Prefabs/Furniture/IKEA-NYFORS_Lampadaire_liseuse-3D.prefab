@@ -155,17 +155,17 @@ PrefabInstance:
       addedObject: {fileID: 8853336988870624182}
     - targetCorrespondingSourceObject: {fileID: 2548489492842245292, guid: cb719d07152ee4b80bce3a2200250cf8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8034739907505691934}
+      addedObject: {fileID: 5868178274240099645}
     - targetCorrespondingSourceObject: {fileID: 1171954899114125784, guid: cb719d07152ee4b80bce3a2200250cf8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2272769833457854248}
+      addedObject: {fileID: 2841934093427421531}
   m_SourcePrefab: {fileID: 100100000, guid: cb719d07152ee4b80bce3a2200250cf8, type: 3}
 --- !u!1 &4885144476636614338 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1171954899114125784, guid: cb719d07152ee4b80bce3a2200250cf8, type: 3}
   m_PrefabInstance: {fileID: 6019091420543641370}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2272769833457854248
+--- !u!114 &2841934093427421531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,12 +174,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4885144476636614338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &6866144521224706635 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cb719d07152ee4b80bce3a2200250cf8, type: 3}
@@ -250,7 +249,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2548489492842245292, guid: cb719d07152ee4b80bce3a2200250cf8, type: 3}
   m_PrefabInstance: {fileID: 6019091420543641370}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8034739907505691934
+--- !u!114 &5868178274240099645
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -259,9 +258,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8130710853440211894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
+  color: 0
+  eraseRenderer: 0

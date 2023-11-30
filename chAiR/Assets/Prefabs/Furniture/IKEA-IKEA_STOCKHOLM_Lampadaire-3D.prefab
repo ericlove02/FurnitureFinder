@@ -106,10 +106,10 @@ PrefabInstance:
       addedObject: {fileID: 5694279579231902710}
     - targetCorrespondingSourceObject: {fileID: 2548489492842245292, guid: d33788a6a40bf439eb994ef6b54651e7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5878494590947360314}
+      addedObject: {fileID: 6990776450190681355}
     - targetCorrespondingSourceObject: {fileID: 1171954899114125784, guid: d33788a6a40bf439eb994ef6b54651e7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3253894383623370379}
+      addedObject: {fileID: 6356358506181935877}
   m_SourcePrefab: {fileID: 100100000, guid: d33788a6a40bf439eb994ef6b54651e7, type: 3}
 --- !u!1 &5145810721344509596 stripped
 GameObject:
@@ -196,7 +196,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1171954899114125784, guid: d33788a6a40bf439eb994ef6b54651e7, type: 3}
   m_PrefabInstance: {fileID: 5451886932968598477}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3253894383623370379
+--- !u!114 &6356358506181935877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,18 +205,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6623493791751209493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &7563500867698198369 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2548489492842245292, guid: d33788a6a40bf439eb994ef6b54651e7, type: 3}
   m_PrefabInstance: {fileID: 5451886932968598477}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5878494590947360314
+--- !u!114 &6990776450190681355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,9 +224,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7563500867698198369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
+  color: 0
+  eraseRenderer: 0

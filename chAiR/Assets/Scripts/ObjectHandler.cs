@@ -382,7 +382,7 @@ public class ObjectHandler : MonoBehaviour
                                     selectedFurnData = drawers[Random.Range(0, drawers.Length)];
                                 }
                                 loops += 1;
-                            } while (selectedFurnData.FUR_ID == lastFurnData.FUR_ID && sofas.Length > 1 && chairs.Length > 1 && lamps.Length > 1 && tables.Length > 1 && desks.Length > 1 && drawers.Length > 1 && furniturePrefabs[selectedFurnData.FUR_ID - 1] == null && loops < 15);
+                            } while ((furniturePrefabs[selectedFurnData.FUR_ID - 1] == null && loops < 15) || (selectedFurnData.FUR_ID == lastFurnData.FUR_ID && sofas.Length > 1 && chairs.Length > 1 && lamps.Length > 1 && tables.Length > 1 && desks.Length > 1 && drawers.Length > 1));
                             if (loops == 15)
                             {
                                 StartCoroutine(NoFurnAvailText());

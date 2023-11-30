@@ -398,9 +398,9 @@ public class ObjectHandler : MonoBehaviour
                                 Bounds bounds = pRenderer.bounds;
 
                                 // get the scale factors for each dimension
-                                float scaleX = selectedFurn.FUR_DIM_L / 100f / bounds.size.x;
-                                float scaleY = selectedFurn.FUR_DIM_W / 100f / bounds.size.y;
-                                float scaleZ = selectedFurn.FUR_DIM_H / 100f / bounds.size.z;
+                                float scaleX = selectedFurnData.FUR_DIM_L / 100f / bounds.size.x;
+                                float scaleY = selectedFurnData.FUR_DIM_W / 100f / bounds.size.y;
+                                float scaleZ = selectedFurnData.FUR_DIM_H / 100f / bounds.size.z;
 
                                 // average the scale factors to get one factor
                                 float avgScale = (scaleX + scaleY + scaleZ) / 3;
@@ -423,9 +423,9 @@ public class ObjectHandler : MonoBehaviour
                                     }
 
                                     // get the scale factors for each dimension
-                                    float scaleX = selectedFurn.FUR_DIM_L / 100f / combinedBounds.size.x;
-                                    float scaleY = selectedFurn.FUR_DIM_W / 100f / combinedBounds.size.y;
-                                    float scaleZ = selectedFurn.FUR_DIM_H / 100f / combinedBounds.size.z;
+                                    float scaleX = selectedFurnData.FUR_DIM_L / 100f / combinedBounds.size.x;
+                                    float scaleY = selectedFurnData.FUR_DIM_W / 100f / combinedBounds.size.y;
+                                    float scaleZ = selectedFurnData.FUR_DIM_H / 100f / combinedBounds.size.z;
 
                                     // average the scale factors to get one factor
                                     float avgScale = (scaleX + scaleY + scaleZ) / 3;

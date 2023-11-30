@@ -2313,7 +2313,7 @@ GameObject:
   - component: {fileID: -1881303727415896920}
   - component: {fileID: -3263113939624965130}
   m_Layer: 0
-  m_Name: Ragtime_High_Rectangle
+  m_Name: Ragtime_High_Rectangle_table
   m_TagString: Furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

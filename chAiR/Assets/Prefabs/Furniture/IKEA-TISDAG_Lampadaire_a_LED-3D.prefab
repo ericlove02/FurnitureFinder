@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IKEA-TISDAG_Lampadaire_a_LED-3D
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4b9fed52b3956409d80a2e2a30901ca5, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

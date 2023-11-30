@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pacific_Armchair
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dde8c41d85b4788449c3bc92f65be711, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

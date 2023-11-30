@@ -197,10 +197,11 @@ public class ObjectHandler : MonoBehaviour
                         // check that all FUR_ID are within the bounds of the prefab array
                         foreach (var furnitureItem in furnitureData)
                         {
-                            if (furnitureItem.FUR_ID <= furniturePrefabs.Length)
+                            if (furnitureItem.FUR_ID >= furniturePrefabs.Length)
                             {
                                 updateDisplay.SetActive(true);
                                 updateDisplay.transform.localPosition = Vector3.zero;
+                                break;
                             }
                         }
 
@@ -347,33 +348,39 @@ public class ObjectHandler : MonoBehaviour
                     {
                         try
                         {
-                            //
-                            FurnitureData selectedFurnData = furnitureData[0];
+                            // store the last item so we dont show it again unless we have to
+                            FurnitureData lastFurnData = selectedFurniture.furnData;
+                            // set to the current piece of furniture as default
+                            FurnitureData selectedFurnData = lastFurnData;
                             // find random piece of furniture in data that matches type and instantiate it
-                            if (selectedFurniture.furnData.FUR_TYPE == "Sofa") // FUR_TYPE: "Sofa"
+                            // the piece must be different than the last one that was shown, unless there is only one to show
+                            do
                             {
-                                selectedFurnData = sofas[Random.Range(0, sofas.Length)];
-                            }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "Chair") // FUR_TYPE: "Chair"
-                            {
-                                selectedFurnData = chairs[Random.Range(0, chairs.Length)];
-                            }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "Lamp") // FUR_TYPE: "Lamp"
-                            {
-                                selectedFurnData = lamps[Random.Range(0, lamps.Length)];
-                            }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "Table") // FUR_TYPE: "Table"
-                            {
-                                selectedFurnData = tables[Random.Range(0, tables.Length)];
-                            }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "Desk") // FUR_TYPE: "Desk"
-                            {
-                                selectedFurnData = desks[Random.Range(0, desks.Length)];
-                            }
-                            else if (selectedFurniture.furnData.FUR_TYPE == "Drawer") // FUR_TYPE: "Drawer"
-                            {
-                                selectedFurnData = drawers[Random.Range(0, drawers.Length)];
-                            }
+                                if (selectedFurniture.furnData.FUR_TYPE == "Sofa") // FUR_TYPE: "Sofa"
+                                {
+                                    selectedFurnData = sofas[Random.Range(0, sofas.Length)];
+                                }
+                                else if (selectedFurniture.furnData.FUR_TYPE == "Chair") // FUR_TYPE: "Chair"
+                                {
+                                    selectedFurnData = chairs[Random.Range(0, chairs.Length)];
+                                }
+                                else if (selectedFurniture.furnData.FUR_TYPE == "Lamp") // FUR_TYPE: "Lamp"
+                                {
+                                    selectedFurnData = lamps[Random.Range(0, lamps.Length)];
+                                }
+                                else if (selectedFurniture.furnData.FUR_TYPE == "Table") // FUR_TYPE: "Table"
+                                {
+                                    selectedFurnData = tables[Random.Range(0, tables.Length)];
+                                }
+                                else if (selectedFurniture.furnData.FUR_TYPE == "Desk") // FUR_TYPE: "Desk"
+                                {
+                                    selectedFurnData = desks[Random.Range(0, desks.Length)];
+                                }
+                                else if (selectedFurniture.furnData.FUR_TYPE == "Drawer") // FUR_TYPE: "Drawer"
+                                {
+                                    selectedFurnData = drawers[Random.Range(0, drawers.Length)];
+                                }
+                            } while (selectedFurnData == lastFurnData && sofas.Length > 1 && chairs.Length > 1 && lamps.Length > 1 && tables.Length > 1 && desks.Length > 1 && drawers.Length > 1);
                             // instantiate the new prefab in the place of the old one, destroy old one
                             FurnitureObject newFurnitureObject = new FurnitureObject();
                             newFurnitureObject.furnData = selectedFurnData;
@@ -387,6 +394,7 @@ public class ObjectHandler : MonoBehaviour
                                 newFurnitureObject.furnModel = Instantiate(newPrefab, position, rotation);
                                 CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
                                 instantiatedFurniture.Add(newFurnitureObject);
+                                debugText.text = "Prefab id: " + selectedFurnData.FUR_ID.ToString() + "; model index: " + (selectedFurnData.FUR_ID - 1).ToString();
                             }
                             else
                             {
@@ -591,6 +599,7 @@ public class ObjectHandler : MonoBehaviour
                                 newFurnitureObject.furnModel = Instantiate(newPrefab, pose.position, hit.pose.rotation * Quaternion.Euler(Vector3.up * 180));
                                 CollisionHandler collisionHandler = newFurnitureObject.furnModel.AddComponent<CollisionHandler>();
                                 instantiatedFurniture.Add(newFurnitureObject);
+                                debugText.text = "Prefab id: " + selectedFurn.FUR_ID.ToString() + "; model index: " + (selectedFurn.FUR_ID - 1).ToString();
                             }
                             else
                             {

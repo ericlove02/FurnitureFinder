@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Formiche_Table
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: edcc632830e9df346a778e4a03f1a56f, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     - target: {fileID: 4447524094563581954, guid: edcc632830e9df346a778e4a03f1a56f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -25

@@ -1,0 +1,181 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9147343300920780399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2994075087975548624}
+  - component: {fileID: 9199041061151968116}
+  - component: {fileID: 7070801203860433198}
+  - component: {fileID: 3527575842556165270}
+  m_Layer: 0
+  m_Name: UrbanChair-Orange
+  m_TagString: Furniture
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2994075087975548624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9147343300920780399}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5376662843758341793}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &9199041061151968116
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9147343300920780399}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!114 &7070801203860433198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9147343300920780399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b97de7f63de461b42892936d4158eed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &3527575842556165270
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9147343300920780399}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 570.1, y: 834.6, z: 569.81}
+  m_Center: {x: -202.4, y: 204, z: -178.5}
+--- !u!1001 &5554916516081469770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2994075087975548624}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -199.18007
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 122.21503
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -189.18729
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0000045961947
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0000045961947
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      propertyPath: m_Name
+      value: IKEA-Urban_Chair-3D
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 630573357058988027}
+  m_SourcePrefab: {fileID: 100100000, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+--- !u!1 &4744101243242263579 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+  m_PrefabInstance: {fileID: 5554916516081469770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &630573357058988027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744101243242263579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+--- !u!4 &5376662843758341793 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ed7a7b0e2569fd844a312b037eb8f975, type: 3}
+  m_PrefabInstance: {fileID: 5554916516081469770}
+  m_PrefabAsset: {fileID: 0}

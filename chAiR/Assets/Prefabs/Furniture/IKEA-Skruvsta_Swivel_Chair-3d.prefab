@@ -10,31 +10,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.01
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.01
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.01
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.88903356
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 35.214592
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.6464844
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.95958996
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -42,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.2814021
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_LocalRotation.z
@@ -60,9 +60,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
       propertyPath: m_Name
       value: IKEA-Skruvsta_Swivel_Chair-3d
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3a082004feeac4757a4fee3838b362f1, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

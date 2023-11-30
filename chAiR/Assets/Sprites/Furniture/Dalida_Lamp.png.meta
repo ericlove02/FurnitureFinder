@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Dalida_Lamp_0: 889507143972806734
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

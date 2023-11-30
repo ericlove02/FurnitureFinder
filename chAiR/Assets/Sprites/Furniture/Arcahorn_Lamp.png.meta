@@ -152,7 +152,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Arcahorn_Lamp_0: -2276533612270864934
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

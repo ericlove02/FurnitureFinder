@@ -197,10 +197,11 @@ public class ObjectHandler : MonoBehaviour
                         // check that all FUR_ID are within the bounds of the prefab array
                         foreach (var furnitureItem in furnitureData)
                         {
-                            if (furnitureItem.FUR_ID <= furniturePrefabs.Length)
+                            if (furnitureItem.FUR_ID >= furniturePrefabs.Length)
                             {
                                 updateDisplay.SetActive(true);
                                 updateDisplay.transform.localPosition = Vector3.zero;
+                                break;
                             }
                         }
 

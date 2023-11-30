@@ -71,7 +71,7 @@ PrefabInstance:
       addedObject: {fileID: 6287003449501932096}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8dad2d42d109f49e2b7e62aaa1fa8fa9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 673561986490725758}
+      addedObject: {fileID: 993486031535543877}
   m_SourcePrefab: {fileID: 100100000, guid: 8dad2d42d109f49e2b7e62aaa1fa8fa9, type: 3}
 --- !u!1 &1100723451021200824 stripped
 GameObject:
@@ -138,7 +138,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 324.5276, y: 685.7929, z: 360.3794}
   m_Center: {x: 51.75946, y: 146.8038, z: 0}
---- !u!114 &673561986490725758
+--- !u!114 &993486031535543877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,9 +147,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1100723451021200824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
+  color: 0
+  eraseRenderer: 0

@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Volfgang
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dd68feba1a5a25d48aab87e6de84900b, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

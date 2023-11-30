@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IVAR_Chair
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6936d1f42306c46249b6777faa4e4541, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lisbon_Lamp
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 266ca8af73d4fe544a0875d4f06e5c12, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MDF_MATE_sofa_2P_198_cm
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f3d3d3baaa4d4478ba007a55634f5313, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

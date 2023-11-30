@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DL0F41
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 47ca999082b674fbcbdbc4e42747910d, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

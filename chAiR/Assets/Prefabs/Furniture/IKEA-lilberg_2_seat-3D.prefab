@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IKEA-lilberg_2_seat-3D
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0fec2cc2756c18a4c9ac4205c528421b, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

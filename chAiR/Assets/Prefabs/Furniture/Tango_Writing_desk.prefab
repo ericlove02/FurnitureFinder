@@ -57,7 +57,8 @@ PrefabInstance:
       value: Furniture
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 121204859330779623, guid: 881a80ea32e4861448034e52f8dc849e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 881a80ea32e4861448034e52f8dc849e, type: 3}
@@ -261,9 +262,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6654246094846992734, guid: 881a80ea32e4861448034e52f8dc849e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3416305003482924348}
-    - targetCorrespondingSourceObject: {fileID: 121204859330779623, guid: 881a80ea32e4861448034e52f8dc849e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 853121128735849592}
   m_SourcePrefab: {fileID: 100100000, guid: 881a80ea32e4861448034e52f8dc849e, type: 3}
 --- !u!1 &200228609616166990 stripped
 GameObject:
@@ -1285,26 +1283,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!1 &7296992234744235441 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 121204859330779623, guid: 881a80ea32e4861448034e52f8dc849e, type: 3}
-  m_PrefabInstance: {fileID: 7271770696043240534}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &853121128735849592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7296992234744235441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &7506354038612271367 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 881a80ea32e4861448034e52f8dc849e, type: 3}

@@ -57,7 +57,8 @@ PrefabInstance:
       value: Furniture
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 121204859330779623, guid: 396fdf653c0abdf4fa12dd76361f2614, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 396fdf653c0abdf4fa12dd76361f2614, type: 3}

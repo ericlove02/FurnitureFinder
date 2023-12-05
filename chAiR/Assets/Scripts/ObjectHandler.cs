@@ -237,7 +237,7 @@ public class ObjectHandler : MonoBehaviour
 
         foreach (var item in CostDisplayText.options)
         {
-            item.text = $"<size=50>{item.text}</size>"; // Adjust the font size (e.g., 20)
+            item.text = item.text;
         }
 
         dropdownLabel.text = $"Total Cost: ${totalCost:F2}";

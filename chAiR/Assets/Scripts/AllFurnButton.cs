@@ -42,14 +42,12 @@ public class ButtonClickScript : MonoBehaviour
 
         Transform parentTransform = transform.parent;
 
-        Text[] textComponent = parentTransform.GetComponentsInChildren<Text>();
-
         // Check if the Text component is found
-        if (textComponent != null)
+        if (parentTransform != null)
         {
             // Get the text value from the Text component
-            string name = textComponent[0].text;
-            string id = textComponent[1].text;
+            string name = parentTransform.Find("ItemName")?.GetComponent<TMP_Text>().text;
+            string id = parentTransform.Find("FurId")?.GetComponent<TMP_Text>().text;
 
             // Set the text value to the static variable and record the page that we came from
             SelectedFurniture.clickedFurnitureName = name;

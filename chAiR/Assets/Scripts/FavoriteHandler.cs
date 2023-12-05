@@ -93,10 +93,18 @@ public class FavoriteHandler : MonoBehaviour
                         {
                             GameObject newObject = Instantiate(prefab, content);
                             instantiatedPrefabs.Add(newObject);
-                            Text[] textComponent = newObject.GetComponentsInChildren<Text>();
                             Image[] furnitureImages = newObject.GetComponentsInChildren<Image>();
-                            textComponent[0].text = furnitureData[i].FUR_NAME;
-                            textComponent[1].text = furnitureData[i].FUR_ID.ToString();
+                            Transform newObjectTransform = newObject.transform;
+                            TMP_Text itemNameText = newObjectTransform.Find("ItemName")?.GetComponent<TMP_Text>();
+                            if (itemNameText != null)
+                            {
+                                itemNameText.text = furnitureData[i].FUR_NAME;
+                            }
+                            TMP_Text furIdText = newObjectTransform.Find("FurId")?.GetComponent<TMP_Text>();
+                            if (furIdText != null)
+                            {
+                                furIdText.text = furnitureData[i].FUR_ID.ToString();
+                            }
                             if (i < SelectedFurniture.furniturePics.Length)
                             {
                                 furnitureImages[1].sprite = SelectedFurniture.furniturePics[i];

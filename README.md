@@ -1,6 +1,8 @@
-![](/ChAiR-Media/Aspose.Words.882d5acd-be1c-4576-be83-6a04ee5a984a.001.jpeg)
-
 # ChAiR
+
+https://github.com/ericlove02/FurnitureFinder/assets/53005525/07eaf976-b2db-49fe-91c8-6d637f5f9992
+
+![](/ChAiR-Media/Aspose.Words.882d5acd-be1c-4576-be83-6a04ee5a984a.001.jpeg)
 
 Eric Love, Preston Malaer, Trisha Narwekar, Erick Ordonez, Alex Tung, Bryce Watt
 
@@ -293,6 +295,7 @@ When users open the application they will be greeted by a dropdown menu listing 
 ![](/ChAiR-Media/Aspose.Words.882d5acd-be1c-4576-be83-6a04ee5a984a.016.jpeg)
 
 Once the user has selected their desired vibe they will be shown a scrolling image view of examples of what the vibe looks like in other rooms. If this isn’t what they’re looking for, they can use the dropdown menu to select a new vibe and the image examples will be updated to show the new vibe. Once the desired vibe is selected, they can press the AR View button to enter the AR view.
+
  ![](/ChAiR-Media/Aspose.Words.882d5acd-be1c-4576-be83-6a04ee5a984a.018.jpeg)![](/ChAiR-Media/Aspose.Words.882d5acd-be1c-4576-be83-6a04ee5a984a.019.jpeg)
 
 2. AR View
